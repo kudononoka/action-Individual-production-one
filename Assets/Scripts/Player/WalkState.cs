@@ -1,3 +1,4 @@
+using DG.Tweening;
 using System;
 using UnityEngine;
 
@@ -12,6 +13,9 @@ public class WalkState : PlayerStateBase
     float _rotateSpeed;
     Quaternion targetRotation;
     Transform _lockonTarget;
+    DirMovement _dirMovement = new();
+    float _layerWeightValue = 0f;
+    bool _pastIsLockon = false;
     public override void Init()
     {
         PlayerController playerController = _playerStateMachine.PlayerController;
@@ -29,37 +33,50 @@ public class WalkState : PlayerStateBase
     {
         _anim.SetFloat("move", 1);
         targetRotation = _playerTra.rotation;
+        _layerWeightValue = 0;
+        if (_inputAction.IsLockon)
+            SetLayerWeightChanging();
     }
 
     public override void OnUpdate()
     {
-        var _forward = Quaternion.AngleAxis(_mcTra.eulerAngles.y, Vector3.up);
         //移動
+        var _forward = Quaternion.AngleAxis(_mcTra.eulerAngles.y, Vector3.up);
         var moveDir = _forward * new Vector3(_inputAction.InputMove.x, 0, _inputAction.InputMove.y).normalized;
         _characterController.Move(moveDir * _walkSpeed * Time.deltaTime);
+
+        //ロックオン切り替え入力された時だけ処理を行う
+        if (_inputAction.IsLockon != _pastIsLockon)     
+        {
+            _pastIsLockon = _inputAction.IsLockon;
+            if(_inputAction.IsLockon)
+            {
+                SetLayerWeightChanging();
+            }
+        }
 
         //ロックオン中
         if (_inputAction.IsLockon)
         {
             //動く方向によってAnimationを切り替え
-            MoveDir dir = DirMovementJudge(_inputAction.InputMove);
+            DirMovement.MoveDir dir = _dirMovement.DirMovementJudge(_inputAction.InputMove);
             switch(dir)
             {
-                case MoveDir.Forward:
+                case DirMovement.MoveDir.Forward:
                     _anim.SetBool("IsMoveForward", true);
                     _anim.SetLayerWeight(2, 0);
                     break;
-                case MoveDir.Backward:
+                case DirMovement.MoveDir.Backward:
                     _anim.SetBool("IsMoveForward", false);
                     _anim.SetLayerWeight(2, 0);
                     break;
-                case MoveDir.Left:
+                case DirMovement.MoveDir.Left:
                     _anim.SetFloat("AnimationSpeed", 1);
-                    _anim.SetLayerWeight(2, 1);
+                    _anim.SetLayerWeight(2, _layerWeightValue);
                     break;
-                case MoveDir.Right:
+                case DirMovement.MoveDir.Right:
                     _anim.SetFloat("AnimationSpeed", -1);
-                    _anim.SetLayerWeight(2, 1);
+                    _anim.SetLayerWeight(2, _layerWeightValue);
                     break;
                 default:
                     break;
@@ -95,6 +112,9 @@ public class WalkState : PlayerStateBase
         if (_inputAction.IsGuard)
             _playerStateMachine.OnChangeState((int)PlayerStateMachine.StateType.Guard);
 
+        if(_inputAction.IsEvade)
+            _playerStateMachine.OnChangeState((int)PlayerStateMachine.StateType.Evade);
+
         if (moveDir.magnitude <= 0)     //突っ立ってる状態
         {
             _anim.SetLayerWeight(2, 0);
@@ -102,47 +122,13 @@ public class WalkState : PlayerStateBase
         }
     }
 
-    /// <summary>動いている方向</summary>
-    enum MoveDir
+    public override void OnEnd()
     {
-        Forward,
-        Backward,
-        Left,
-        Right,
-        NotMove,
-    }
-    /// <summary>前後右左どの方向に動いているのか計算</summary>
-    private MoveDir DirMovementJudge(Vector2 moveDir)
-    {
-        Vector3 vec = moveDir.normalized;
-        if (vec.magnitude == 0)
-        {
-            return MoveDir.NotMove;
-        }
-
-        if (vec.x >= -0.5 && vec.x <= 0.5)
-        {
-            if (vec.y >= 0)
-            {
-                return MoveDir.Forward;
-            }
-            else
-            {
-                return MoveDir.Backward;
-            }
-        }
-        else
-        {
-            if (vec.x >= 0)
-            {
-                return MoveDir.Right;
-            }
-            else
-            {
-                return MoveDir.Left;
-            }
-        }
+        _anim.SetLayerWeight(2, 0);
     }
 
-    public override void OnEnd() { }
+    public void SetLayerWeightChanging()
+    {
+        DOTween.To(() => _layerWeightValue, x => _layerWeightValue = x, 1f, 1);
+    }
 }

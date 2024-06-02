@@ -20,22 +20,27 @@ public class PlayerInputAction : MonoBehaviour
     bool _isGuard = false;
 
     [SerializeField] 
-    bool _isLockon = false;    
+    bool _isLockon = false;
+
+    [SerializeField]
+    bool _isEvade = false;
 
     /// <summary>入力値(移動)</summary>
     public Vector2 InputMove => _inputMove;
 
     /// <summary>入力値(弱攻撃)</summary>
-    public bool IsAttackWeak { get { return _isAttackWeak; } set { _isAttackWeak = value; } }
+    public bool IsAttackWeak { get => _isAttackWeak;  set => _isAttackWeak = value; }
 
     /// <summary>入力値(強攻撃)</summary>
-    public bool IsAttackStrong { get { return _isAttackStrong; } set { _isAttackStrong = value; } }
+    public bool IsAttackStrong { get => _isAttackStrong; set => _isAttackStrong = value; }
 
     /// <summary>入力値(ガード)</summary>
     public bool IsGuard => _isGuard;
 
     /// <summary>入力(ロックオン)</summary>
     public bool IsLockon => _isLockon;
+
+    public bool IsEvade { get => _isEvade; set => _isEvade = value; }
 
     /// <summary>移動Action</summary>
     public void OnMove(InputAction.CallbackContext context)
@@ -76,6 +81,14 @@ public class PlayerInputAction : MonoBehaviour
         if(context.performed)
         {
             _isLockon = !_isLockon;
+        }
+    }
+
+    public void OnEvade(InputAction.CallbackContext context)
+    {
+        if (context.performed)
+        {
+            _isEvade = true;
         }
     }
 }

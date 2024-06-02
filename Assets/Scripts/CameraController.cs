@@ -42,6 +42,7 @@ public class CameraController
         _mainCamera = Camera.main;
         _inputAction = inputAction;
         _lockonCursorImage = _lockonCursor.GetComponent<Image>();
+        _lockonCursorImage.enabled = false;
         CameraChange(false);    
     }
 

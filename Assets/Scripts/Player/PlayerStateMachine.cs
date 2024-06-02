@@ -9,6 +9,9 @@ public class PlayerStateMachine : StateMachine
     GuardState _guardState = new();
 
     [SerializeField]
+    EvadeState _evadeState = new();
+
+    [SerializeField]
     AttackWeakPatternAState _attackWeakPatternAState = new();
 
     [SerializeField]
@@ -29,6 +32,8 @@ public class PlayerStateMachine : StateMachine
         Walk,
         /// <summary>ガード</summary>
         Guard,
+        /// <summary>回避</summary>
+        Evade,
         /// <summary>弱攻撃(コンボ1回目・コンボ3回目)</summary>
         AttackWeakPatternA,
         /// <summary>弱攻撃(コンボ2回目)</summary>
@@ -48,6 +53,7 @@ public class PlayerStateMachine : StateMachine
         _idleState.Set(this);
         _walkState.Set(this);
         _guardState.Set(this);
+        _evadeState.Set(this);
         _attackWeakPatternAState.Set(this);
         _attackWeakPatternBState.Set(this);
         _attackStrongPatternAState.Set(this);
@@ -61,6 +67,7 @@ public class PlayerStateMachine : StateMachine
         StateAdd((int)StateType.Walk, _walkState);
         StateAdd((int)StateType.Idle, _idleState);
         StateAdd((int)StateType.Guard, _guardState);
+        StateAdd((int)StateType.Evade, _evadeState);
         StateAdd((int)StateType.AttackWeakPatternA, _attackWeakPatternAState);
         StateAdd((int)StateType.AttackWeakPatternB, _attackWeakPatternBState);
         StateAdd((int)StateType.AttackStrongPatternA, _attackStrongPatternAState);

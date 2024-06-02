@@ -32,5 +32,10 @@ public class IdleState : PlayerStateBase
         {
             _playerStateMachine.OnChangeState((int)PlayerStateMachine.StateType.Guard);
         }
+
+        if(_inputAction.IsEvade)
+        {
+            _playerStateMachine.OnChangeState((int)PlayerStateMachine.StateType.Evade);
+        }
     }
 }
