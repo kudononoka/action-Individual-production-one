@@ -1,14 +1,26 @@
 using System.Runtime.InteropServices.WindowsRuntime;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
 /// <summary>InputSystemを使った入力値の取得と管理</summary>
 public class PlayerInputAction : MonoBehaviour
 {
-    [SerializeField] Vector2 _inputMove = Vector2.zero;
-    [SerializeField] bool _isAttackWeak = false;
-    [SerializeField] bool _isAttackStrong = false;
-    [SerializeField] bool _isGuard = false;
+    [Header("入力を受け取っているかの確認")]
+    [SerializeField] 
+    Vector2 _inputMove = Vector2.zero;
+
+    [SerializeField] 
+    bool _isAttackWeak = false;
+
+    [SerializeField] 
+    bool _isAttackStrong = false;
+
+    [SerializeField] 
+    bool _isGuard = false;
+
+    [SerializeField] 
+    bool _isLockon = false;    
 
     /// <summary>入力値(移動)</summary>
     public Vector2 InputMove => _inputMove;
@@ -21,6 +33,9 @@ public class PlayerInputAction : MonoBehaviour
 
     /// <summary>入力値(ガード)</summary>
     public bool IsGuard => _isGuard;
+
+    /// <summary>入力(ロックオン)</summary>
+    public bool IsLockon => _isLockon;
 
     /// <summary>移動Action</summary>
     public void OnMove(InputAction.CallbackContext context)
@@ -53,6 +68,14 @@ public class PlayerInputAction : MonoBehaviour
         else if (context.canceled)
         {
             _isGuard = false;
+        }
+    }
+
+    public void OnLockon(InputAction.CallbackContext context)
+    {
+        if(context.performed)
+        {
+            _isLockon = !_isLockon;
         }
     }
 }

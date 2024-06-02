@@ -19,6 +19,9 @@ public class PlayerController : MonoBehaviour
     PlayerInputAction _inputAction;
 
     [SerializeField]
+    CameraController _cameraController;
+
+    [SerializeField]
     PlayerStateMachine _stateMachine = new();
 
     Transform _playerTra;
@@ -37,11 +40,13 @@ public class PlayerController : MonoBehaviour
         _playerTra = GetComponent<Transform>();
         _inputAction = GetComponent<PlayerInputAction>();
         _stateMachine.Init(this);
+        _cameraController.Init(_inputAction);
     }
 
     void Update()
     {
         _stateMachine.OnUpdate();
+        _cameraController.OnUpdate();
     }
 
 }
