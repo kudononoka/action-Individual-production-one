@@ -5,10 +5,14 @@ using UnityEngine;
 public class IdleState : PlayerStateBase
 {
     PlayerInputAction _inputAction;
+    PlayerHPSTController _playerHPSTController;
+    PlayerParameter _playerParameter;
     public override void Init()
     {
         PlayerController playerController = _playerStateMachine.PlayerController;
         _inputAction = playerController.InputAction;
+        _playerHPSTController = playerController.PlayerHPSTController;
+        _playerParameter = playerController.Parameter;
     }
     public override void OnUpdate()
     {
@@ -18,22 +22,22 @@ public class IdleState : PlayerStateBase
             _playerStateMachine.OnChangeState((int)PlayerStateMachine.StateType.Walk);
         }
 
-        if(_inputAction.IsAttackWeak)
+        if(_inputAction.IsAttackWeak && _playerHPSTController.CurrntStValue >= _playerParameter.AttackWeakSTCost)
         {
             _playerStateMachine.OnChangeState((int)PlayerStateMachine.StateType.AttackWeakPatternA);
         }
 
-        if (_inputAction.IsAttackStrong)
+        if (_inputAction.IsAttackStrong && _playerHPSTController.CurrntStValue >= _playerParameter.AttackStrongSTCost)
         {
             _playerStateMachine.OnChangeState((int)PlayerStateMachine.StateType.AttackStrongPatternA);
         }
 
-        if(_inputAction.IsGuard)
+        if(_inputAction.IsGuard && _playerHPSTController.CurrntStValue >= _playerParameter.GuardHitSTCost)
         {
             _playerStateMachine.OnChangeState((int)PlayerStateMachine.StateType.Guard);
         }
 
-        if(_inputAction.IsEvade)
+        if(_inputAction.IsEvade && _playerHPSTController.CurrntStValue >= _playerParameter.EvadeSTCost)
         {
             _playerStateMachine.OnChangeState((int)PlayerStateMachine.StateType.Evade);
         }

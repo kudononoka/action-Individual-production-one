@@ -20,16 +20,21 @@ public class AttackStrongPatternAState : PlayerStateBase
     Animator _anim;
     PlayerInputAction _inputAction;
     Transform _playerTra;
-
+    PlayerHPSTController _playerHPSTController;
+    PlayerParameter _playerParameter;
     public override void Init()
     {
-        PlayerController playerController = _playerStateMachine.PlayerController;
+        PlayerControllerÅ@playerController = _playerStateMachine.PlayerController;
         _anim = playerController.PlayerAnim;
         _playerTra = playerController.PlayerTra;
         _inputAction = playerController.InputAction;
+        _playerHPSTController = playerController.PlayerHPSTController;
+        _playerParameter = playerController.Parameter;
+        
     }
     public override void OnEnter()
     {
+        _playerHPSTController.STDown(_playerParameter.AttackStrongSTCost);
         _inputAction.IsAttackStrong = false;
         _coolTimer = _coolTime;
         _anim.SetTrigger("Attack");
@@ -43,7 +48,7 @@ public class AttackStrongPatternAState : PlayerStateBase
         {
             if (_coolTimer < _nextAttackTime)
             {
-                if (_inputAction.IsAttackStrong)
+                if (_inputAction.IsAttackStrong && _playerHPSTController.CurrntStValue >= _playerParameter.AttackStrongSTCost)
                 {
                     _playerStateMachine.OnChangeState((int)PlayerStateMachine.StateType.AttackStrongPatternB);
                 }

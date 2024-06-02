@@ -4,6 +4,8 @@ using UnityEngine;
 /// <summary>プレイヤー専用ステートマシーン</summary>
 public class PlayerStateMachine : StateMachine
 {
+    StateType _currentStateType;
+
     WalkState _walkState = new();
     IdleState _idleState = new();
     GuardState _guardState = new();
@@ -22,6 +24,8 @@ public class PlayerStateMachine : StateMachine
 
     [SerializeField]
     AttackStrongPatternBState _attackStrongPatternBState = new();
+
+    public StateType CurrentState => _currentStateType;
 
     /// <summary>プレイヤーの行動状態</summary>
     public enum StateType
@@ -81,6 +85,11 @@ public class PlayerStateMachine : StateMachine
         }
 
         Initialize((int)StateType.Idle);
+    }
+
+    public override void CurrentChangeState(int stateId)
+    {
+        _currentStateType = (StateType)stateId;
     }
 }
 /// <summary>プレイヤー専用ステートの基底クラス</summary>

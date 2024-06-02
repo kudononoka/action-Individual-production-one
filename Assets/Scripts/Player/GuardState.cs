@@ -15,6 +15,8 @@ public class GuardState : PlayerStateBase
     DirMovement _dirMovement = new();
     Quaternion targetRotation;
     Transform _lockonTarget;
+    PlayerHPSTController _playerHPSTController;
+    PlayerParameter _playerParameter;
     public override void Init()
     {
         PlayerController playerController = _playerStateMachine.PlayerController;
@@ -25,6 +27,8 @@ public class GuardState : PlayerStateBase
         _anim = playerController.PlayerAnim;
         _playerTra = playerController.PlayerTra;
         _lockonTarget = playerController.CameraController.LockonTarget;
+        _playerHPSTController = playerController.PlayerHPSTController;
+        _playerParameter = playerController.Parameter;
         _mcTra = Camera.main.transform;
     }
     public override void OnEnter()
@@ -101,7 +105,7 @@ public class GuardState : PlayerStateBase
                 _playerStateMachine.OnChangeState((int) PlayerStateMachine.StateType.Walk);
         }
 
-        if(_inputAction.IsEvade)
+        if(_inputAction.IsEvade && _playerHPSTController.CurrntStValue >= _playerParameter.EvadeSTCost)
             _playerStateMachine.OnChangeState((int)PlayerStateMachine.StateType.Evade);
     }
 

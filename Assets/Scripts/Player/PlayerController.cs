@@ -1,3 +1,4 @@
+using Unity.VisualScripting;
 using UnityEngine;
 
 /// <summary>プレイヤーの大まかな処理とデータの管理をするクラス</summary>
@@ -24,7 +25,12 @@ public class PlayerController : MonoBehaviour
     [SerializeField]
     PlayerStateMachine _stateMachine = new();
 
+    PlayerHPSTController _playerHPSTController = new();
+
     Transform _playerTra;
+
+    bool _isAction = false;
+    public bool IsAction { get => _isAction; set => _isAction = value; }
     public Animator PlayerAnim => _playerModelAnim;
 
     public PlayerInputAction InputAction => _inputAction;
@@ -35,6 +41,8 @@ public class PlayerController : MonoBehaviour
 
     public CameraController CameraController => _cameraController;
 
+    public PlayerHPSTController PlayerHPSTController => _playerHPSTController;
+
     void Start()
     {
         _characterController = GetComponent<CharacterController>();
@@ -42,11 +50,16 @@ public class PlayerController : MonoBehaviour
         _inputAction = GetComponent<PlayerInputAction>();
         _stateMachine.Init(this);
         _cameraController.Init(_inputAction);
+        _playerHPSTController.Init(_parameter.HPMax, _parameter.STMax, _parameter.StRecoverySpeed);
     }
 
     void Update()
     {
         _stateMachine.OnUpdate();
         _cameraController.OnUpdate();
+
+        if(_stateMachine.CurrentState == PlayerStateMachine.StateType.Idle
+            || _stateMachine.CurrentState == PlayerStateMachine.StateType.Walk)
+            _playerHPSTController.RecoveryST();
     }
 }

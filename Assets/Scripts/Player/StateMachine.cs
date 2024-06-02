@@ -6,7 +6,7 @@ using UnityEngine;
 /// このクラスを持つ場合ステートの状態を表すEnumを作成する必要がある
 /// </summary>
 /// <typeparam name="StateType">各ステートの状態(TypeはEnumのみ)</typeparam>
-public class StateMachine
+public abstract class StateMachine
 {
     /// <summary>ステートの基底クラス・各ステートはこのクラスを継承する</summary>
     public abstract class StateBase
@@ -56,6 +56,7 @@ public class StateMachine
         }
         //最初に行われるステートとして設定
         _currentState = _states[stateId];
+        CurrentChangeState(stateId);
         _currentState.OnEnter();
     }
     /// <summary>現在のステートを毎フレーム行う</summary>
@@ -70,11 +71,14 @@ public class StateMachine
         _currentState.OnFixedUpdate();
     }
 
+    public abstract void CurrentChangeState(int stateId);
+
     /// <summary>ステートの切り替え</summary>
     /// <param name="state">切り替えたいステートのタイプ</param>
     public void OnChangeState(int stateId)
     {
         _currentState.OnEnd();
+        CurrentChangeState(stateId);
         if (!_states.ContainsKey(stateId))
         {
             Debug.LogError("not set state! : " + stateId);

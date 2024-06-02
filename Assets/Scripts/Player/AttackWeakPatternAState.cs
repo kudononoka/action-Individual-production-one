@@ -20,6 +20,8 @@ public class AttackWeakPatternAState : PlayerStateBase
     Animator _anim;
     PlayerInputAction _inputAction;
     Transform _playerTra;
+    PlayerHPSTController _playerHPSTController;
+    PlayerParameter _playerParameter;
 
     public override void Init()
     {
@@ -27,9 +29,12 @@ public class AttackWeakPatternAState : PlayerStateBase
         _anim = playerController.PlayerAnim;
         _playerTra = playerController.PlayerTra;
         _inputAction = playerController.InputAction;
+        _playerHPSTController = playerController.PlayerHPSTController;
+        _playerParameter = playerController.Parameter;
     }
     public override void OnEnter()
     {
+        _playerHPSTController.STDown(_playerParameter.AttackWeakSTCost);
         _inputAction.IsAttackWeak = false;
         _coolTimer = _coolTime;
         _anim.SetTrigger("Attack");
@@ -43,11 +48,11 @@ public class AttackWeakPatternAState : PlayerStateBase
         {
             if (_coolTimer < _nextAttackTime)
             {
-                if (_inputAction.IsAttackWeak)
+                if (_inputAction.IsAttackWeak && _playerHPSTController.CurrntStValue >= _playerParameter.AttackWeakSTCost)
                 {
                     _playerStateMachine.OnChangeState((int)PlayerStateMachine.StateType.AttackWeakPatternB);
                 }
-                else if(_inputAction.IsAttackStrong)
+                else if(_inputAction.IsAttackStrong && _playerHPSTController.CurrntStValue >= _playerParameter.AttackStrongSTCost)
                 {
                     _playerStateMachine.OnChangeState((int)PlayerStateMachine.StateType.AttackStrongPatternA);
                 }

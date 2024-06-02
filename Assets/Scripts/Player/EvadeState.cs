@@ -3,7 +3,6 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Dynamic;
 using UnityEngine;
-using static DirMovement;
 
 [Serializable]
 public class EvadeState : PlayerStateBase
@@ -24,6 +23,8 @@ public class EvadeState : PlayerStateBase
     CharacterController _characterController;
     DirMovement _dirMovement = new();
     float _coolTimer;
+    PlayerHPSTController _playerHPSTController;
+    PlayerParameter _playerParameter;
     public override void Init()
     {
         PlayerController playerController = _playerStateMachine.PlayerController;
@@ -33,9 +34,13 @@ public class EvadeState : PlayerStateBase
         _lockonTarget = playerController.CameraController.LockonTarget;
         _characterController = playerController.CharacterController;
         _mcTra = Camera.main.transform;
+        _playerHPSTController = playerController.PlayerHPSTController;
+        _playerParameter = playerController.Parameter;
     }
     public override void OnEnter()
     {
+        _playerHPSTController.STDown(_playerParameter.EvadeSTCost);
+
         _inputAction.IsEvade = false;
 
         _coolTimer = _coolTime;
@@ -94,10 +99,10 @@ public class EvadeState : PlayerStateBase
 
         if (_coolTimer <= 0)
         {
-            if (_inputAction.IsAttackWeak)
+            if (_inputAction.IsAttackWeak && _playerHPSTController.CurrntStValue >= _playerParameter.AttackWeakSTCost)
                 _playerStateMachine.OnChangeState((int)PlayerStateMachine.StateType.AttackWeakPatternA);
 
-            else if (_inputAction.IsAttackStrong)
+            else if (_inputAction.IsAttackStrong && _playerHPSTController.CurrntStValue >= _playerParameter.AttackStrongSTCost)
                 _playerStateMachine.OnChangeState((int)PlayerStateMachine.StateType.AttackStrongPatternA);
 
             else if (_inputAction.InputMove.magnitude > 0.1f)

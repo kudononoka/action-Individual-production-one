@@ -16,6 +16,8 @@ public class WalkState : PlayerStateBase
     DirMovement _dirMovement = new();
     float _layerWeightValue = 0f;
     bool _pastIsLockon = false;
+    PlayerHPSTController _playerHPSTController;
+    PlayerParameter _playerParameter;
     public override void Init()
     {
         PlayerController playerController = _playerStateMachine.PlayerController;
@@ -26,6 +28,8 @@ public class WalkState : PlayerStateBase
         _anim = playerController.PlayerAnim;
         _playerTra = playerController.PlayerTra;
         _lockonTarget = playerController.CameraController.LockonTarget;
+        _playerHPSTController = playerController.PlayerHPSTController;
+        _playerParameter = playerController.Parameter;
         _mcTra = Camera.main.transform;
     }
 
@@ -103,16 +107,16 @@ public class WalkState : PlayerStateBase
         _anim.SetFloat("move", moveDir.magnitude);
 
         //‘JˆÚæ
-        if (_inputAction.IsAttackWeak)
+        if (_inputAction.IsAttackWeak && _playerHPSTController.CurrntStValue >= _playerParameter.AttackWeakSTCost)
             _playerStateMachine.OnChangeState((int)PlayerStateMachine.StateType.AttackWeakPatternA);
 
-        if (_inputAction.IsAttackStrong)
+        if (_inputAction.IsAttackStrong && _playerHPSTController.CurrntStValue >= _playerParameter.AttackStrongSTCost)
             _playerStateMachine.OnChangeState((int)PlayerStateMachine.StateType.AttackStrongPatternA);
 
-        if (_inputAction.IsGuard)
+        if (_inputAction.IsGuard && _playerHPSTController.CurrntStValue >= _playerParameter.GuardHitSTCost)
             _playerStateMachine.OnChangeState((int)PlayerStateMachine.StateType.Guard);
 
-        if(_inputAction.IsEvade)
+        if(_inputAction.IsEvade && _playerHPSTController.CurrntStValue >= _playerParameter.EvadeSTCost)
             _playerStateMachine.OnChangeState((int)PlayerStateMachine.StateType.Evade);
 
         if (moveDir.magnitude <= 0)     //“Ë‚Á—§‚Á‚Ä‚éó‘Ô
