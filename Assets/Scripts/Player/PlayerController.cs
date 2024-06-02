@@ -33,6 +33,7 @@ public class PlayerController : MonoBehaviour
 
     public Transform PlayerTra => _playerTra;
 
+    public CameraController CameraController => _cameraController;
 
     void Start()
     {
@@ -48,5 +49,4 @@ public class PlayerController : MonoBehaviour
         _stateMachine.OnUpdate();
         _cameraController.OnUpdate();
     }
-
 }
