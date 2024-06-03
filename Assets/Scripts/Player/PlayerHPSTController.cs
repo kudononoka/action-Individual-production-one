@@ -77,7 +77,7 @@ public class PlayerHPSTController
         return true;
     }
 
-    /// <summary>ST‚Ì‰ñ•œEDoTween‚ÅŠŠ‚ç‚©‚É‰ñ•œ</summary>
+    /// <summary>ST‚Ì‰ñ•œ</summary>
     public void RecoveryST()
     {
         if (_stNow == _stMax) return;

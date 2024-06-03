@@ -21,6 +21,12 @@ public class PlayerParameter
     [Header("ガード時の歩行速度")]
     [SerializeField] float _guardWalkSpeed;
 
+    [Header("弱攻撃力")]
+    [SerializeField] int _attackWeakPower;
+
+    [Header("強攻撃力")]
+    [SerializeField] int _attackStrongPower;
+
     [Header("方向転換速度")]
     [SerializeField] float _rotateSpeed;
 
@@ -51,6 +57,12 @@ public class PlayerParameter
     /// <summary>ST最大値</summary>
     public float STMax => _stMax;
 
+    /// <summary>弱攻撃力</summary>
+    public int AttackWeakPower => _attackWeakPower;
+
+    /// <summary>強攻撃力</summary>
+    public int AttackStrongPower => _attackStrongPower;
+
     /// <summary>弱攻撃にかかるST値</summary>
     public float AttackWeakSTCost => _attackWeakSTCost;
 
@@ -63,6 +75,7 @@ public class PlayerParameter
     /// <summary>カード時敵の攻撃が当たった時にかかるST値</summary>
     public float GuardHitSTCost => _guardHitSTCost;
 
+    /// <summary>STの回復スピード</summary>
     public float StRecoverySpeed => _stRecoverySpeed;
 
 }

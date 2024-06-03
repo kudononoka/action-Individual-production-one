@@ -2,7 +2,7 @@ using Unity.VisualScripting;
 using UnityEngine;
 
 /// <summary>プレイヤーの大まかな処理とデータの管理をするクラス</summary>
-public class PlayerController : MonoBehaviour
+public class PlayerController : MonoBehaviour, IDamage
 {
     [Header("設定")]
 
@@ -14,6 +14,9 @@ public class PlayerController : MonoBehaviour
 
     [SerializeField]
     Animator _playerModelAnim;
+
+    [SerializeField]
+    PlayerWeapon _playerWeapon;
 
     CharacterController _characterController;
 
@@ -43,6 +46,8 @@ public class PlayerController : MonoBehaviour
 
     public PlayerHPSTController PlayerHPSTController => _playerHPSTController;
 
+    public PlayerWeapon PlayerWeapon => _playerWeapon;
+
     void Start()
     {
         _characterController = GetComponent<CharacterController>();
@@ -51,6 +56,7 @@ public class PlayerController : MonoBehaviour
         _stateMachine.Init(this);
         _cameraController.Init(_inputAction);
         _playerHPSTController.Init(_parameter.HPMax, _parameter.STMax, _parameter.StRecoverySpeed);
+        _playerWeapon.DamageColliderEnabledSet(false);
     }
 
     void Update()
@@ -61,5 +67,10 @@ public class PlayerController : MonoBehaviour
         if(_stateMachine.CurrentState == PlayerStateMachine.StateType.Idle
             || _stateMachine.CurrentState == PlayerStateMachine.StateType.Walk)
             _playerHPSTController.RecoveryST();
+    }
+
+    public void Damage(int damage)
+    {
+        _playerHPSTController.HPDown(damage);
     }
 }

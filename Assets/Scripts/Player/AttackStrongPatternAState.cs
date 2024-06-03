@@ -22,6 +22,7 @@ public class AttackStrongPatternAState : PlayerStateBase
     Transform _playerTra;
     PlayerHPSTController _playerHPSTController;
     PlayerParameter _playerParameter;
+    PlayerWeapon _weapon;
     public override void Init()
     {
         PlayerControllerÅ@playerController = _playerStateMachine.PlayerController;
@@ -30,7 +31,7 @@ public class AttackStrongPatternAState : PlayerStateBase
         _inputAction = playerController.InputAction;
         _playerHPSTController = playerController.PlayerHPSTController;
         _playerParameter = playerController.Parameter;
-        
+        _weapon = playerController.PlayerWeapon;
     }
     public override void OnEnter()
     {
@@ -39,6 +40,8 @@ public class AttackStrongPatternAState : PlayerStateBase
         _coolTimer = _coolTime;
         _anim.SetTrigger("Attack");
         _anim.SetInteger("AttackType", 1);
+        _weapon.DamageColliderEnabledSet(true);
+        _weapon.Damage = _playerParameter.AttackStrongPower;
     }
 
     public override void OnUpdate()
@@ -71,5 +74,6 @@ public class AttackStrongPatternAState : PlayerStateBase
     public override void OnEnd()
     {
         _inputAction.IsAttackStrong = false;
+        _weapon.DamageColliderEnabledSet(false);
     }
 }

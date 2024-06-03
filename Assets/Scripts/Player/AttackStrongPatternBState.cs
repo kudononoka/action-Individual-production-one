@@ -12,13 +12,16 @@ public class AttackStrongPatternBState : PlayerStateBase
     Animator _anim;
     PlayerInputAction _inputAction;
     Transform _playerTra;
-
+    PlayerWeapon _weapon;
+    PlayerParameter _playerParameter;
     public override void Init()
     {
         PlayerController playerController = _playerStateMachine.PlayerController;
         _anim = playerController.PlayerAnim;
         _playerTra = playerController.PlayerTra;
         _inputAction = playerController.InputAction;
+        _weapon = playerController.PlayerWeapon;
+        _playerParameter = playerController.Parameter;
     }
     public override void OnEnter()
     {
@@ -26,6 +29,8 @@ public class AttackStrongPatternBState : PlayerStateBase
         _coolTimer = _coolTime;
         _anim.SetTrigger("Attack");
         _anim.SetInteger("AttackType", 1);
+        _weapon.DamageColliderEnabledSet(true);
+        _weapon.Damage = _playerParameter.AttackStrongPower;
     }
 
     public override void OnUpdate()
@@ -44,5 +49,6 @@ public class AttackStrongPatternBState : PlayerStateBase
     public override void OnEnd()
     {
         _inputAction.IsAttackStrong = false;
+        _weapon.DamageColliderEnabledSet(false);
     }
 }
