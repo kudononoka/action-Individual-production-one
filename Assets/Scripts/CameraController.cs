@@ -25,6 +25,10 @@ public class CameraController
     [SerializeField]
     Transform _lockonTarget;
 
+    [Header("カーソルの位置")]
+    [SerializeField]
+    Transform _lockonCursorTra;
+
     /// <summary>ロックオン中かどうか</summary>
     bool _isLockon = false;
 
@@ -55,8 +59,10 @@ public class CameraController
             CameraChange(_inputAction.IsLockon);
         }
 
-        if(_isLockon)   //ロックオン中カーソル
-            _lockonCursor.transform.position = _mainCamera.WorldToScreenPoint(_lockonTarget.transform.position);
+        if (_isLockon)//ロックオン中カーソル
+        {
+            _lockonCursor.transform.position = _mainCamera.WorldToScreenPoint(_lockonCursorTra.position);
+        }
     }
 
     /// <summary>カメラの切り替え</summary>
