@@ -16,7 +16,7 @@ public class PlayerController : MonoBehaviour, IDamage
     Animator _playerModelAnim;
 
     [SerializeField]
-    PlayerWeapon _playerWeapon;
+    Weapon _playerWeapon;
 
     CharacterController _characterController;
 
@@ -46,7 +46,7 @@ public class PlayerController : MonoBehaviour, IDamage
 
     public PlayerHPSTController PlayerHPSTController => _playerHPSTController;
 
-    public PlayerWeapon PlayerWeapon => _playerWeapon;
+    public Weapon PlayerWeapon => _playerWeapon;
 
     void Start()
     {

@@ -22,7 +22,7 @@ public class AttackStrongPatternAState : PlayerStateBase
     Transform _playerTra;
     PlayerHPSTController _playerHPSTController;
     PlayerParameter _playerParameter;
-    PlayerWeapon _weapon;
+    Weapon _weapon;
     public override void Init()
     {
         PlayerControllerÅ@playerController = _playerStateMachine.PlayerController;

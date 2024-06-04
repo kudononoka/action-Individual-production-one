@@ -44,7 +44,7 @@ public class UIController : MonoBehaviour
         _playerHpNow = _playerHpMax;
         _playerHpVer.maxValue = _playerHpMax;
         _playerHpVer.value = _playerHpMax;
-        _playerHpValueText.text = $"{_playerHpMax} / {_playerHpNow}";
+        _playerHpValueText.text = $"{_playerHpNow} / {_playerHpMax}";
     }
 
     public void SetUpMaxEnemyHP(int value)
@@ -96,7 +96,7 @@ public class UIController : MonoBehaviour
                     {
                         _playerHpNow = x;
                         _playerHpVer.value = _playerHpNow;
-                        _playerHpValueText.text = $"{$"{_playerHpMax} / {_playerHpNow}"}";
+                        _playerHpValueText.text = $"{$"{_playerHpNow} / {_playerHpMax}"}";
                     }, value, _changeTime);
     }
 

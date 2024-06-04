@@ -14,6 +14,9 @@ public class EnemyAI : MonoBehaviour, IDamage
     [SerializeField]
     EnemyParameter _parameter;
 
+    [SerializeField]
+    Weapon _weapon;
+
     EnemyAnimationController _animController;
 
     [SerializeField]
@@ -27,11 +30,14 @@ public class EnemyAI : MonoBehaviour, IDamage
 
     public EnemyParameter Parameter => _parameter;
 
+    public Weapon Weapon => _weapon;
+
 
     private void Start()
     {
         _stateMachine.Init(this);
         _enemyHPSTController.Init(_parameter.HPMax);
+        _weapon.DamageColliderEnabledSet(false);
     }
     // Update is called once per frame
     void Update()

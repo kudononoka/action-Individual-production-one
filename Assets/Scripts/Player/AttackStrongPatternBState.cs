@@ -12,7 +12,7 @@ public class AttackStrongPatternBState : PlayerStateBase
     Animator _anim;
     PlayerInputAction _inputAction;
     Transform _playerTra;
-    PlayerWeapon _weapon;
+    Weapon _weapon;
     PlayerParameter _playerParameter;
     public override void Init()
     {

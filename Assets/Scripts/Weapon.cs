@@ -1,10 +1,11 @@
-using System.Collections;
-using System.Collections.Generic;
-using TMPro.EditorUtilities;
 using UnityEngine;
 
-public class PlayerWeapon : MonoBehaviour
+/// <summary>武器の当たり判定を主に行う</summary>
+public class Weapon : MonoBehaviour
 {
+    [Header("武器を持っているキャラのTag")]
+    [SerializeField] string _ownerTagName;
+
     int _damage;
 
     [SerializeField]
@@ -26,18 +27,20 @@ public class PlayerWeapon : MonoBehaviour
 
     public void Update()
     {
-       if(_bloodParticleActive)
+       if(_bloodParticleActive)　　　　//血のParticalが表示されていた場合
         {
             _particlePlayTimer += Time.deltaTime;
-            if(_particlePlayTimer > _particlePlayTime )
+            if(_particlePlayTimer > _particlePlayTime)　//表示してから一定時間経過したら
             {
-                _particlePlayTimer = 0;
+                _particlePlayTimer = 0;　　　　　　　　　//血非表示
                 BloodParticalActive(false);
                 _bloodParticleActive = false;
             }
         }
     }
 
+    /// <summary>血のParticalの非表示と表示切り替え</summary>
+    /// <param name="isActive">表示する</param>
     public void BloodParticalActive(bool isActive)
     {
         for(int i = 0; i < _bloodParticle.Length; i++)
@@ -50,7 +53,7 @@ public class PlayerWeapon : MonoBehaviour
     }
 
     /// <summary>ダメージ判定となるコライダーの非表示・表示切り替え</summary>
-    /// <param name="isEnabled">表示するか</param>
+    /// <param name="isEnabled">表示する</param>
     public void DamageColliderEnabledSet(bool isEnabled)
     {
         _boxCollider.enabled = isEnabled;
@@ -58,12 +61,12 @@ public class PlayerWeapon : MonoBehaviour
     
     private void OnTriggerEnter(Collider other)
     {
-        if (!other.gameObject.CompareTag("Player"))
+        if (!other.gameObject.CompareTag(_ownerTagName))       //自分以外の当たり判定を行う
         {
-            if (other.gameObject.TryGetComponent<IDamage>(out var IDamage))
+            if (other.gameObject.TryGetComponent<IDamage>(out var IDamage))　　
             {
                 IDamage.Damage(_damage);
-                _bloodParticleActive = true;
+                _bloodParticleActive = true;　　　//血表示
                 BloodParticalActive(true);
             }
         }
