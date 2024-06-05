@@ -63,7 +63,7 @@ public abstract class StateMachine
     public void OnUpdate()
     {
         _currentState.OnUpdate();
-        Debug.Log(_currentState.ToString());
+        //Debug.Log(_currentState.ToString());
     }
 
     public void OnFixedUpdate()

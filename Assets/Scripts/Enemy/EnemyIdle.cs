@@ -4,23 +4,11 @@ using UnityEngine;
 
 public class EnemyIdle : EnemyStateBase
 {
-    public override void Init()
-    {
-       
-    }
-
-    public override void OnEnter()
-    {
-
-    }
-
     public override void OnUpdate()
     {
-
-    }
-
-    public override void OnEnd()
-    {
-
+        if(GameManager.Instance.IsBattle)
+        {
+            _enemyStateMachine.OnChangeState((int)EnemyStateMachine.StateType.Battle);
+        }
     }
 }

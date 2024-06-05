@@ -11,9 +11,11 @@ public class DecoratoeNodeCondition : BehaviorTreeBaseNode, IChildNodeSetting
         nodeData = new NodeData(NodeType.DecoratorNode, typeof(DecoratoeNodeCondition).FullName);
     }
 
+    [SerializeField]
     /// <summary>複数の条件ノード</summary>
     private List<BehaviorTreeBaseNode> _conditionsNodes = new List<BehaviorTreeBaseNode>();
 
+    [SerializeField]
     /// <summary>条件が全てそろったらおこすアクション</summary>
     BehaviorTreeBaseNode _action = null;
 
@@ -21,11 +23,11 @@ public class DecoratoeNodeCondition : BehaviorTreeBaseNode, IChildNodeSetting
     {
         switch (chileNode.NodeData.NodeType)
         {
-            case NodeType.ActionNode:
-                _action = chileNode;
-                break;
             case NodeType.ConditionNode:
                 _conditionsNodes.Add(chileNode);
+                break;
+            default:
+                _action = chileNode;
                 break;
         }
     }
@@ -34,11 +36,11 @@ public class DecoratoeNodeCondition : BehaviorTreeBaseNode, IChildNodeSetting
     {
         switch (chileNode.NodeData.NodeType)
         {
-            case NodeType.ActionNode:
-                _action = null;
-                break;
             case NodeType.ConditionNode:
                 _conditionsNodes.Remove(chileNode);
+                break;
+            default:
+                _action = null;
                 break;
         }
     }
@@ -60,7 +62,13 @@ public class DecoratoeNodeCondition : BehaviorTreeBaseNode, IChildNodeSetting
             return Result.Failure;         //条件が一つでも合わなかったら
         }
 
-        return _action.Evaluate();         //条件がすべてそろったら
+        Result resultAction = _action.Evaluate();         //条件がすべてそろったら
+
+        if(resultAction == Result.Success)
+        {
+            return Result.Success;
+        }
+        return Result.Runnimg;
     }
 
 }

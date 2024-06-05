@@ -1,7 +1,9 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
+[Serializable]
 public class SequenceNode : BehaviorTreeBaseNode, IChildNodeSetting
 {
     public SequenceNode()
@@ -10,6 +12,7 @@ public class SequenceNode : BehaviorTreeBaseNode, IChildNodeSetting
         nodeData = new NodeData(NodeType.CompositeNode, typeof(SequenceNode).FullName);
     }
 
+    [SerializeField]
     private List<BehaviorTreeBaseNode> _childNodes = new List<BehaviorTreeBaseNode>();
 
     BehaviorTreeBaseNode _current = null;
@@ -28,7 +31,7 @@ public class SequenceNode : BehaviorTreeBaseNode, IChildNodeSetting
 
     public override void Init(GameObject target, GameObject my)
     {
-        _childNodes.OrderBy(n => n.NodeData.Rect.position.y);
+        _childNodes = _childNodes.OrderBy(n => n.NodeData.Rect.position.y).ToList();
         _currentNodesIndex = 0;
         _current = _childNodes[_currentNodesIndex];
     }
@@ -37,6 +40,7 @@ public class SequenceNode : BehaviorTreeBaseNode, IChildNodeSetting
     {
         if( _current == null )
         {
+            _currentNodesIndex = 0;
             _current = _childNodes[_currentNodesIndex];
         }
 
@@ -48,7 +52,6 @@ public class SequenceNode : BehaviorTreeBaseNode, IChildNodeSetting
             if (_currentNodesIndex == _childNodes.Count)
             {
                 _current = null;
-                _currentNodesIndex = 0;
                 return Result.Success;
             }
             else
@@ -59,6 +62,7 @@ public class SequenceNode : BehaviorTreeBaseNode, IChildNodeSetting
 
         if (result == Result.Failure)
         {
+            _current = null;
             return Result.Failure;
         }
 

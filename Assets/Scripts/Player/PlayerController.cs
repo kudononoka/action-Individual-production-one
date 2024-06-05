@@ -28,6 +28,9 @@ public class PlayerController : MonoBehaviour, IDamage
     [SerializeField]
     PlayerStateMachine _stateMachine = new();
 
+    [SerializeField]
+    CapsuleCollider _capsuleCollider;
+
     PlayerHPSTController _playerHPSTController = new();
 
     Transform _playerTra;
@@ -47,6 +50,8 @@ public class PlayerController : MonoBehaviour, IDamage
     public PlayerHPSTController PlayerHPSTController => _playerHPSTController;
 
     public Weapon PlayerWeapon => _playerWeapon;
+
+    public CapsuleCollider CapsuleCollider => _capsuleCollider;
 
     void Start()
     {
@@ -71,6 +76,9 @@ public class PlayerController : MonoBehaviour, IDamage
 
     public void Damage(int damage)
     {
-        _playerHPSTController.HPDown(damage);
+        if(!_playerHPSTController.HPDown(damage))
+        {
+            GameManager.Instance.ChangeScene(SceneState.GameOver);
+        }
     }
 }

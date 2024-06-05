@@ -1,4 +1,3 @@
-using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 /// <summary>ノードのタイプ　タイプによってWindow上に表示する形が変わってくる</summary>
 public enum NodeType
@@ -30,6 +29,7 @@ public enum Result
 public abstract class BehaviorTreeBaseNode : ScriptableObject
 {
     protected string nodeName;
+    [SerializeField]
     protected NodeData nodeData;
     public string NodeName => nodeName;
     public NodeData NodeData => nodeData;

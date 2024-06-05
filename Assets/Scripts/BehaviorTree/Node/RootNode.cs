@@ -1,7 +1,10 @@
+using System;
 using UnityEngine;
 
+[Serializable]
 public class RootNode : BehaviorTreeBaseNode, IChildNodeSetting
 {
+    [SerializeField]
     BehaviorTreeBaseNode _childNode;
     public RootNode()
     {

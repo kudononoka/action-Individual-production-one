@@ -40,6 +40,5 @@ public class EnemyBattleState : EnemyStateBase
         {
             _enemyStateMachine.OnChangeState((int)EnemyStateMachine.StateType.Death);
         }
-        Debug.Log(Vector3.Distance(_target.transform.position, _my.transform.position));
     }
 }

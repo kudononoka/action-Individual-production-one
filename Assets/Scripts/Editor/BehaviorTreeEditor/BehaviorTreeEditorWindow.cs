@@ -69,10 +69,18 @@ public class BehaviorTreeEditorWindow : EditorWindow
         BehaviorTreeBaseNode node = ScriptableObject.CreateInstance(type) as BehaviorTreeBaseNode;
 
         //ScriptableObjectデータにNodeの情報を代入
-        if (root) _data.RootNodeDataOverwrite(node);
-        else _data.Nodes.Add(node);
-        node.NodeData.Rect = rect;　　　　　　　           
-        node.NodeData.ID = _data.Nodes.Count - 1;
+        if (root)
+        {
+            _data.RootNodeDataOverwrite(node);
+            node.NodeData.ID = -1;
+        }
+        else
+        {
+            _data.Nodes.Add(node);
+            node.NodeData.ID = _data.Nodes.Count - 1;
+        }
+        node.NodeData.Rect = rect;
+        
 
         AssetDatabase.AddObjectToAsset(node, _data);
         AssetDatabase.SaveAssets();
@@ -94,6 +102,7 @@ public class BehaviorTreeEditorWindow : EditorWindow
         {
             _data.Nodes[i].NodeData.ID -= 1;
         }
+        ChildIDChange(id);
     }
 
     /// <summary>親ノードデータに子ノード情報を保管</summary>
@@ -123,6 +132,31 @@ public class BehaviorTreeEditorWindow : EditorWindow
                 if (_data.Nodes[id].NodeData.ChildData[i].ID == childID)
                 {
                     _data.Nodes[id].NodeData.ChildDataRemoveAt(i);
+                    break;
+                }
+            }
+        }
+    }
+
+    public void ChildIDChange(int index)
+    {
+        if (_data.RootNodeData.NodeData.ChildData.Count > 0 
+            &&_data.RootNodeData.NodeData.ChildData[0].ID == index)
+        {
+            ChildNodeDataRemove(-1, index);
+        }
+
+        for (int i = 0; i < _data.Nodes.Count; i++)
+        {
+            for (int j = 0; j < _data.Nodes[i].NodeData.ChildData.Count; j++)
+            {
+                //if (_data.Nodes[i].NodeData.ChildData[j].ID == index)
+                //{
+                //    _data.Nodes[i].NodeData.ChildDataRemoveAt(j);
+                //}
+                if (_data.Nodes[i].NodeData.ChildData[j].ID > index)
+                {
+                    _data.Nodes[i].NodeData.ChildData[j].ID -= 1;
                 }
             }
         }

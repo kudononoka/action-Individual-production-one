@@ -5,8 +5,9 @@ using UnityEngine;
 [CreateAssetMenu]
 public class BehaviorTreeScriptableObject : ScriptableObject
 {
+    [SerializeField]
     BehaviorTreeBaseNode _root;
-
+    [SerializeField]
     List<BehaviorTreeBaseNode> _nodes = new List<BehaviorTreeBaseNode>();
 
     /// <summary>Save元の複数のノードを所持しているデータ</summary>
@@ -36,15 +37,15 @@ public class NodeData
         _nodeType = nodeType;
         _className = className;
     }
-
+    [SerializeField]
     private NodeType _nodeType;
-
+    [SerializeField]
     private string _className;
-
+    [SerializeField]
     private int _id;
-
+    [SerializeField]
     private Rect _rect;
-
+    [SerializeField]
     private List<ChildData> _childData = new List<ChildData>();
 
     /// <summary>NodeのID</summary>
@@ -80,14 +81,14 @@ public class ChildData
         _id = id;
         _nodeType = nodeType;
     }
-
+    [SerializeField]
     private int _id;
-
+    [SerializeField]
     private NodeType _nodeType;
 
     /// <summary>BehaviorTree用NodeType</summary>
     public NodeType NodeType => _nodeType;
 
     /// <summary>ID</summary>
-    public int ID  => _id;
+    public int ID { get => _id; set => _id = value; }
 }

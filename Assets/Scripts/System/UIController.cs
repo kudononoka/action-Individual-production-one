@@ -36,6 +36,17 @@ public class UIController : MonoBehaviour
     /// <summary>現在のHP</summary>
     int _enemyHpNow;
 
+    public void Start()
+    {
+        _enemyHpVer.enabled = false;　//Enemyのバーを非表示
+    }
+
+    /// <summary>バトル開始時</summary>
+    public void BattleStart()
+    {
+        _enemyHpVer.enabled = true;     //Enemyのバーを表示
+    }
+
     /// <summary>HPをMaxに設定する</summary>
     /// <param name="value">HP最大値</param>
     public void SetUpMaxHP(int value)

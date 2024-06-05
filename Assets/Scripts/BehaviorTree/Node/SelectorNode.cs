@@ -11,6 +11,7 @@ public class SelectorNode : BehaviorTreeBaseNode, IChildNodeSetting
         nodeData = new NodeData(NodeType.CompositeNode, typeof(SelectorNode).FullName);
     }
 
+    [SerializeField]
     private List<BehaviorTreeBaseNode> _childNodes = new List<BehaviorTreeBaseNode>();
 
     BehaviorTreeBaseNode _current = null;
@@ -19,7 +20,7 @@ public class SelectorNode : BehaviorTreeBaseNode, IChildNodeSetting
 
     public override void Init(GameObject target, GameObject my)
     {
-        _childNodes.OrderBy(n => n.NodeData.Rect.position.y);
+        _childNodes = _childNodes.OrderBy(n => n.NodeData.Rect.position.y).ToList();
         _currentChildIndex = 0;
         _current = _childNodes[_currentChildIndex];
     }
@@ -36,20 +37,26 @@ public class SelectorNode : BehaviorTreeBaseNode, IChildNodeSetting
 
     public override Result Evaluate()
     {
+        if (_current == null)
+        {
+            _currentChildIndex = 0;
+            _current = _childNodes[_currentChildIndex];
+        }
+
         Result result = _current.Evaluate();
 
         if (result == Result.Success)  
         {
             _current = null;
-            _currentChildIndex = 0;
             return Result.Success;
         }
 
         if (result == Result.Failure)
         {
             _currentChildIndex++;
-            if (_currentChildIndex >= _childNodes.Count)
+            if (_currentChildIndex == _childNodes.Count)
             {
+                _current = null;
                 return Result.Failure;
             }
             _current = _childNodes[_currentChildIndex];

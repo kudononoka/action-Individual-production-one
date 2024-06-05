@@ -36,7 +36,7 @@ public class SearchClassType
 
         foreach (Assembly assembly in _assemblyArray)　
         {
-            if (assembly.FullName.StartsWith("Assembly-CSharp"))　//自作クラスを対象にする
+            if (assembly.FullName.StartsWith("Assembly-CSharp"))　//アセンブリ内のCSharpを対象にする
             {
                 foreach (Type type in assembly.GetTypes())
                 {

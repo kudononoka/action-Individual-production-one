@@ -30,6 +30,11 @@ public class BehaviorTreeGraphSearchWindowProvider : ScriptableObject, ISearchWi
             { nameof(WaitNode), typeof(WaitNode) },
             { nameof(MoveToNode), typeof(MoveToNode) },
             { nameof(AttackNode), typeof(AttackNode) },
+            { nameof(RotateTowardTargetNode), typeof(RotateTowardTargetNode) },
+            { nameof(MyAttackAreaIsTarget), typeof(MyAttackAreaIsTarget) },
+            { nameof(NumberOrLess), typeof(NumberOrLess) },
+            { nameof(TargetIsBehind), typeof(TargetIsBehind) },
+            { nameof(RandomNode), typeof(RandomNode) },
         };
     }
 
@@ -44,6 +49,11 @@ public class BehaviorTreeGraphSearchWindowProvider : ScriptableObject, ISearchWi
         entries.Add(new SearchTreeEntry(new GUIContent(nameof(WaitNode))) { level = 1, userData = typeof(WaitNode).FullName});
         entries.Add(new SearchTreeEntry(new GUIContent(nameof(MoveToNode))) { level = 1, userData = typeof(MoveToNode).FullName});
         entries.Add(new SearchTreeEntry(new GUIContent(nameof(AttackNode))) { level = 1, userData = typeof(AttackNode).FullName});
+        entries.Add(new SearchTreeEntry(new GUIContent(nameof(RotateTowardTargetNode))) { level = 1, userData = typeof(RotateTowardTargetNode).FullName});
+        entries.Add(new SearchTreeEntry(new GUIContent(nameof(MyAttackAreaIsTarget))) { level = 1, userData = typeof(MyAttackAreaIsTarget).FullName});
+        entries.Add(new SearchTreeEntry(new GUIContent(nameof(NumberOrLess))) { level = 1, userData = typeof(NumberOrLess).FullName});
+        entries.Add(new SearchTreeEntry(new GUIContent(nameof(TargetIsBehind))) { level = 1, userData = typeof(TargetIsBehind).FullName});
+        entries.Add(new SearchTreeEntry(new GUIContent(nameof(RandomNode))) { level = 1, userData = typeof(RandomNode).FullName});
         return entries;
     }
 

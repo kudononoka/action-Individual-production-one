@@ -66,14 +66,14 @@ public class PlayerInputAction : MonoBehaviour
 
     public void OnGuard(InputAction.CallbackContext context)
     {
-        if (context.performed)
-        {
-            _isGuard = true;
-        }
-        else if (context.canceled)
-        {
-            _isGuard = false;
-        }
+        //if (context.performed)
+        //{
+        //    _isGuard = true;
+        //}
+        //else if (context.canceled)
+        //{
+        //    _isGuard = false;
+        //}
     }
 
     public void OnLockon(InputAction.CallbackContext context)

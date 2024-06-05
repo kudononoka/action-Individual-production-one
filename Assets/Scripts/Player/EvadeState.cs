@@ -25,6 +25,7 @@ public class EvadeState : PlayerStateBase
     float _coolTimer;
     PlayerHPSTController _playerHPSTController;
     PlayerParameter _playerParameter;
+    CapsuleCollider _capsuleCollider;
     public override void Init()
     {
         PlayerController playerController = _playerStateMachine.PlayerController;
@@ -36,6 +37,7 @@ public class EvadeState : PlayerStateBase
         _mcTra = Camera.main.transform;
         _playerHPSTController = playerController.PlayerHPSTController;
         _playerParameter = playerController.Parameter;
+        _capsuleCollider = playerController.CapsuleCollider;
     }
     public override void OnEnter()
     {
@@ -77,6 +79,7 @@ public class EvadeState : PlayerStateBase
         }
 
         _anim.SetTrigger("Evade");
+        _capsuleCollider.enabled = false; 
     }
 
     public override void OnUpdate()
@@ -115,5 +118,6 @@ public class EvadeState : PlayerStateBase
     public override void OnEnd()
     {
         _inputAction.IsEvade = false;
+        _capsuleCollider.enabled = true;
     }
 }

@@ -47,7 +47,10 @@ public class EnemyAI : MonoBehaviour, IDamage
 
     public void Damage(int damage)
     {
-        _enemyHPSTController.HPDown(damage);
+        if(!_enemyHPSTController.HPDown(damage))
+        {
+            GameManager.Instance.ChangeScene(SceneState.GameClear);
+        }
     }
 
 }
