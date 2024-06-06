@@ -55,8 +55,8 @@ public class EnemyStateMachine : StateMachine
             state.Value.Init();
         }
 
-        Initialize((int)StateType.Idle);
-        //Initialize((int)StateType.Battle);
+        //Initialize((int)StateType.Idle);
+        Initialize((int)StateType.Battle);
     }
 
     public override void CurrentChangeState(int stateId)

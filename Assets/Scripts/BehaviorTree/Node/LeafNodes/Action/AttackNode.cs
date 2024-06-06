@@ -90,3 +90,5 @@ public enum AttackType
     /// <summary>ステップからの攻撃</summary>
     StepAttack
 }
+
+

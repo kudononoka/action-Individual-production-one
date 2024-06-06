@@ -1,3 +1,4 @@
+using DG.Tweening;
 using System;
 using UnityEngine;
 
@@ -15,6 +16,8 @@ public class RotateTowardTargetNode : BehaviorTreeBaseNode
     bool _isDirection = false;
     /// <summary>‚Þ‚­•ûŒü</summary>
     Quaternion targetRotation;
+
+    bool _isComplete = false;
     public RotateTowardTargetNode()
     {
         nodeName = "rotate toward target";
@@ -30,21 +33,41 @@ public class RotateTowardTargetNode : BehaviorTreeBaseNode
 
     public override Result Evaluate()
     {
-        if(!_isDirection)                     //Œü‚­•ûŒü‚ðŒˆ‚ß‚é  
+        //var dir = _target.transform.position - _my.transform.position;
+        //dir.y = 0;
+
+        //if (!_isDirection)                     //Œü‚­•ûŒü‚ðŒˆ‚ß‚é  
+        //{
+        //    targetRotation = Quaternion.LookRotation(dir, Vector3.up);
+        //    _isDirection = true;
+        //}
+
+        ////Target‚Ì•û‚É‰ñ“]
+        //_my.rotation = Quaternion.RotateTowards(_my.rotation, targetRotation, _rotateSpeed * Time.deltaTime);
+
+        //float angle = Vector3.Angle(_my.transform.forward, dir);
+        //if (angle < 5)          
+        //{
+        //    _isDirection = false;
+        //    return Result.Success;
+        //}
+        if (!_isDirection)
         {
-            var vec = _target.transform.position - _my.transform.position;
-            targetRotation = Quaternion.LookRotation(vec, Vector3.up);
+            var to = _target.transform.position - _my.transform.position;
+            var from = _my.forward;
+            float angle = Vector2.SignedAngle(new Vector2(from.x, from.z), new Vector2(to.x,to.z));
+            if (angle < 0) angle += 360;
+            Debug.Log(angle);
+            _my.transform.DORotate(new Vector3(0f, angle, 0), 1, RotateMode.Fast).OnComplete(() => _isComplete = true);
             _isDirection = true;
         }
 
-        //Target‚Ì•û‚É‰ñ“]
-        _my.rotation = Quaternion.RotateTowards(_my.rotation, targetRotation, _rotateSpeed * Time.deltaTime);
-        if (MathF.Abs(_my.rotation.y - targetRotation.y) < 2)          
+        if (_isComplete)
         {
             _isDirection = false;
             return Result.Success;
         }
-        Debug.Log("‰ñ“]");
+
         return Result.Runnimg;
     }
 }
