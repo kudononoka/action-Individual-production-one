@@ -31,6 +31,9 @@ public class PlayerController : MonoBehaviour, IDamage
     [SerializeField]
     CapsuleCollider _capsuleCollider;
 
+    [SerializeField]
+    MakeASound _makeASound;
+
     PlayerHPSTController _playerHPSTController = new();
 
     Transform _playerTra;
@@ -52,6 +55,8 @@ public class PlayerController : MonoBehaviour, IDamage
     public Weapon PlayerWeapon => _playerWeapon;
 
     public CapsuleCollider CapsuleCollider => _capsuleCollider;
+
+    public MakeASound MakeASound => _makeASound;
 
     void Start()
     {

@@ -37,6 +37,10 @@ public class BehaviorTreeGraphSearchWindowProvider : ScriptableObject, ISearchWi
             { nameof(RandomNode), typeof(RandomNode) },
             { nameof(AttackAnimationNode), typeof(AttackAnimationNode) },
             { nameof(AnimMovingSpeedNode), typeof(AnimMovingSpeedNode) },
+            { nameof(LookAt), typeof(LookAt) },
+            { nameof(IsVisible), typeof(IsVisible) },
+            { nameof(IsAudible), typeof(IsAudible) },
+
         };
     }
 
@@ -58,6 +62,9 @@ public class BehaviorTreeGraphSearchWindowProvider : ScriptableObject, ISearchWi
         entries.Add(new SearchTreeEntry(new GUIContent(nameof(RandomNode))) { level = 1, userData = typeof(RandomNode).FullName});
         entries.Add(new SearchTreeEntry(new GUIContent(nameof(AttackAnimationNode))) { level = 1, userData = typeof(AttackAnimationNode).FullName});
         entries.Add(new SearchTreeEntry(new GUIContent(nameof(AnimMovingSpeedNode))) { level = 1, userData = typeof(AnimMovingSpeedNode).FullName});
+        entries.Add(new SearchTreeEntry(new GUIContent(nameof(LookAt))) { level = 1, userData = typeof(LookAt).FullName});
+        entries.Add(new SearchTreeEntry(new GUIContent(nameof(IsVisible))) { level = 1, userData = typeof(IsVisible).FullName});
+        entries.Add(new SearchTreeEntry(new GUIContent(nameof(IsAudible))) { level = 1, userData = typeof(IsAudible).FullName});
         return entries;
     }
 

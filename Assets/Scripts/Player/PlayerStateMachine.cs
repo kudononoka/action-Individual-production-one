@@ -6,9 +6,12 @@ public class PlayerStateMachine : StateMachine
 {
     StateType _currentStateType;
 
-    WalkState _walkState = new();
+    
     IdleState _idleState = new();
     GuardState _guardState = new();
+
+    [SerializeField]
+    WalkState _walkState = new();
 
     [SerializeField]
     EvadeState _evadeState = new();

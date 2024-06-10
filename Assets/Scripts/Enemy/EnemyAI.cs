@@ -25,6 +25,9 @@ public class EnemyAI : MonoBehaviour, IDamage
     [SerializeField]
     SightController _sightController;
 
+    [SerializeField]
+    AudibilityController _auribilityController;
+
     public EnemyAnimationController AnimController => _animController;
 
     public Animator EnemyAnimator => _enemyAnimator;
@@ -37,7 +40,7 @@ public class EnemyAI : MonoBehaviour, IDamage
 
     public SightController SightController => _sightController;
 
-
+    public AudibilityController AudibilityController => _auribilityController;
     private void Start()
     {
         _stateMachine.Init(this);

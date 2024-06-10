@@ -2,8 +2,14 @@ using DG.Tweening;
 using System;
 using UnityEngine;
 
+[Serializable]
 public class WalkState : PlayerStateBase
 {
+    [Header("入力によって音を立たせる")]
+    [Tooltip("入力値(移動)が決められた値を超えると音を立たせるようにする")]
+    [SerializeField, Range(0, 1)]
+    float _isSoundMoving;
+
     float _walkSpeed;
     PlayerInputAction _inputAction;
     CharacterController _characterController;
@@ -18,6 +24,7 @@ public class WalkState : PlayerStateBase
     bool _pastIsLockon = false;
     PlayerHPSTController _playerHPSTController;
     PlayerParameter _playerParameter;
+    MakeASound _makeASound;
     public override void Init()
     {
         PlayerController playerController = _playerStateMachine.PlayerController;
@@ -30,6 +37,7 @@ public class WalkState : PlayerStateBase
         _lockonTarget = playerController.CameraController.LockonTarget;
         _playerHPSTController = playerController.PlayerHPSTController;
         _playerParameter = playerController.Parameter;
+        _makeASound = playerController.MakeASound;
         _mcTra = Camera.main.transform;
     }
 
@@ -48,6 +56,14 @@ public class WalkState : PlayerStateBase
         var _forward = Quaternion.AngleAxis(_mcTra.eulerAngles.y, Vector3.up);
         var moveDir = _forward * new Vector3(_inputAction.InputMove.x, 0, _inputAction.InputMove.y).normalized;
         _characterController.Move(moveDir * _walkSpeed * Time.deltaTime);
+
+        //音をたたせる操作
+        if(_inputAction.InputMove.magnitude >= _isSoundMoving)
+            _makeASound.IsSoundChange(true);
+        else
+            _makeASound.IsSoundChange(false);
+
+        Debug.Log(_makeASound.IsSound);
 
         //ロックオン切り替え入力された時だけ処理を行う
         if (_inputAction.IsLockon != _pastIsLockon)     
