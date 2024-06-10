@@ -22,6 +22,9 @@ public class EnemyAI : MonoBehaviour, IDamage
     [SerializeField]
     EnemyHPController _enemyHPSTController = new();
 
+    [SerializeField]
+    SightController _sightController;
+
     public EnemyAnimationController AnimController => _animController;
 
     public Animator EnemyAnimator => _enemyAnimator;
@@ -31,6 +34,8 @@ public class EnemyAI : MonoBehaviour, IDamage
     public EnemyParameter Parameter => _parameter;
 
     public Weapon Weapon => _weapon;
+
+    public SightController SightController => _sightController;
 
 
     private void Start()
