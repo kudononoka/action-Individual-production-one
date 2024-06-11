@@ -5,12 +5,14 @@ using System.Collections.Generic;
 using UniRx;
 using UnityEngine;
 
+[Serializable]
 public class PlayerHPSTController
 {
     /// <summary>HPç≈ëÂíl</summary>
     int _hpMax;
     /// <summary>STç≈ëÂíl</summary>
     float _stMax;
+    [SerializeField]
     /// <summary>åªç›ÇÃHP</summary>
     int _hpNow;
     /// <summary>åªç›ÇÃSP</summary>

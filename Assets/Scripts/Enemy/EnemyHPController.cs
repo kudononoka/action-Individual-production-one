@@ -8,8 +8,10 @@ using VRM;
 [Serializable]
 public class EnemyHPController
 {
+
     /// <summary>HPç≈ëÂíl</summary>
     int _hpMax;
+    [SerializeField]
     /// <summary>åªç›ÇÃHP</summary>
     int _hpNow;
 
@@ -29,7 +31,7 @@ public class EnemyHPController
     public void Init(int hpMax)
     {
         _hpMax = hpMax;
-        _hpNow = hpMax;
+        _hpNow = _hpMax;
         _maxHp.Value = _hpMax;
         _currentHp.Value = _hpMax;
     }

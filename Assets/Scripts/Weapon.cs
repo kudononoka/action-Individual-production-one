@@ -6,6 +6,8 @@ public class Weapon : MonoBehaviour
     [Header("武器を持っているキャラのTag")]
     [SerializeField] string _ownerTagName;
 
+    [Header("与えるダメージ")]
+    [SerializeField]
     int _damage;
 
     [SerializeField]
@@ -61,14 +63,14 @@ public class Weapon : MonoBehaviour
     
     private void OnTriggerEnter(Collider other)
     {
-        //if (!other.gameObject.CompareTag(_ownerTagName))       //自分以外の当たり判定を行う
-        //{
-        //    if (other.gameObject.TryGetComponent<IDamage>(out var IDamage))　　
-        //    {
-        //        IDamage.Damage(_damage);
-        //        _bloodParticleActive = true;　　　//血表示
-        //        BloodParticalActive(true);
-        //    }
-        //}
+        if (!other.gameObject.CompareTag(_ownerTagName))       //自分以外の当たり判定を行う
+        {
+            if (other.gameObject.TryGetComponent<IDamage>(out var IDamage))
+            {
+                IDamage.Damage(_damage);
+                _bloodParticleActive = true;　　　//血表示
+                BloodParticalActive(true);
+            }
+        }
     }
 }
