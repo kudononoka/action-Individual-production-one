@@ -10,21 +10,47 @@ public class WalkState : PlayerStateBase
     [SerializeField, Range(0, 1)]
     float _isSoundMoving;
 
+    /// <summary>歩行速度</summary>
     float _walkSpeed;
-    PlayerInputAction _inputAction;
-    CharacterController _characterController;
-    Animator _anim;
-    Transform _playerTra;
+
+    /// <summary>ゆっくり歩いているかどうか</summary>
+    bool _isWalkSlow = false;
+
+    /// <summary>MainCamera</summary>
     Transform _mcTra;
+
+    /// <summary>方向転換時の回転速度</summary>
     float _rotateSpeed;
+
+    /// <summary>次に向くべき方向の格納用</summary>
     Quaternion targetRotation;
+
+    /// <summary>ロックオンするTarget</summary>
     Transform _lockonTarget;
+
+    /// <summary>ロックオン時どの方向(前後左右)に動いているか</summary>
     DirMovement _dirMovement = new();
+
+    /// <summary>ロックオン時のAnimatorのLayerのWeight切り替え</summary>
     float _layerWeightValue = 0f;
+
+    /// <summary>前フレームのロックオン状態</summary>
     bool _pastIsLockon = false;
+
     PlayerHPSTController _playerHPSTController;
+
     PlayerParameter _playerParameter;
+
     MakeASound _makeASound;
+
+    CharacterController _characterController;
+
+    Animator _anim;
+
+    Transform _playerTra;
+
+    PlayerInputAction _inputAction;
+
     public override void Init()
     {
         PlayerController playerController = _playerStateMachine.PlayerController;
@@ -55,15 +81,22 @@ public class WalkState : PlayerStateBase
         //移動
         var _forward = Quaternion.AngleAxis(_mcTra.eulerAngles.y, Vector3.up);
         var moveDir = _forward * new Vector3(_inputAction.InputMove.x, 0, _inputAction.InputMove.y).normalized;
-        _characterController.Move(moveDir * _walkSpeed * Time.deltaTime);
+        float walkSpeed = _isWalkSlow ? _walkSpeed / 3 : _walkSpeed;
+        _characterController.Move(moveDir * walkSpeed * Time.deltaTime);
 
-        //音をたたせる操作
-        if(_inputAction.InputMove.magnitude >= _isSoundMoving)
-            _makeASound.IsSoundChange(true);
+        //ゆっくり歩いているとき
+        if (_inputAction.InputMove.magnitude >= _isSoundMoving)
+        {
+            _isWalkSlow = false;
+            _anim.SetBool("IsWalkSlow",false);
+            _makeASound.IsSoundChange(true);         //音を立てる
+        }
         else
-            _makeASound.IsSoundChange(false);
-
-        Debug.Log(_makeASound.IsSound);
+        {
+            _isWalkSlow = true;
+            _anim.SetBool("IsWalkSlow", true);
+            _makeASound.IsSoundChange(false);       //音を立てない
+        }
 
         //ロックオン切り替え入力された時だけ処理を行う
         if (_inputAction.IsLockon != _pastIsLockon)     
@@ -144,6 +177,8 @@ public class WalkState : PlayerStateBase
 
     public override void OnEnd()
     {
+        _anim.SetBool("IsWalkSlow", false);
+        _isWalkSlow = false;
         _anim.SetLayerWeight(2, 0);
     }
 

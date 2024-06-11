@@ -9,11 +9,17 @@ public class AttackStrongPatternBState : PlayerStateBase
     float _coolTime;
 
     float _coolTimer;
+
     Animator _anim;
+
     PlayerInputAction _inputAction;
+
     Transform _playerTra;
+
     Weapon _weapon;
+
     PlayerParameter _playerParameter;
+
     public override void Init()
     {
         PlayerController playerController = _playerStateMachine.PlayerController;

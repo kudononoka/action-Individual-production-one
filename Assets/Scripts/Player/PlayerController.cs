@@ -10,17 +10,13 @@ public class PlayerController : MonoBehaviour, IDamage
     PlayerParameter _parameter;
 
     [Space]
-    [Header("PlayerModelComponent")]
+    [Header("PlayerComponent")]
 
     [SerializeField]
     Animator _playerModelAnim;
 
     [SerializeField]
     Weapon _playerWeapon;
-
-    CharacterController _characterController;
-
-    PlayerInputAction _inputAction;
 
     [SerializeField]
     CameraController _cameraController;
@@ -34,7 +30,12 @@ public class PlayerController : MonoBehaviour, IDamage
     [SerializeField]
     MakeASound _makeASound;
 
+    [SerializeField]
     PlayerHPSTController _playerHPSTController = new();
+
+    CharacterController _characterController;
+
+    PlayerInputAction _inputAction;
 
     Transform _playerTra;
 

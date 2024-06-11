@@ -17,11 +17,17 @@ public class AttackStrongPatternAState : PlayerStateBase
     float _nextAttackTime;
 
     float _coolTimer;
+
     Animator _anim;
+
     PlayerInputAction _inputAction;
+
     Transform _playerTra;
+
     PlayerHPSTController _playerHPSTController;
+
     PlayerParameter _playerParameter;
+
     Weapon _weapon;
     public override void Init()
     {

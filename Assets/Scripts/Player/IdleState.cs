@@ -5,8 +5,11 @@ using UnityEngine;
 public class IdleState : PlayerStateBase
 {
     PlayerInputAction _inputAction;
+
     PlayerHPSTController _playerHPSTController;
+
     PlayerParameter _playerParameter;
+
     public override void Init()
     {
         PlayerController playerController = _playerStateMachine.PlayerController;

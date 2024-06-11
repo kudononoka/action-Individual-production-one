@@ -15,17 +15,28 @@ public class EvadeState : PlayerStateBase
     [SerializeField]
     float _moveSpeed;
 
-    Animator _anim;
-    Transform _playerTra;
-    PlayerInputAction _inputAction;
-    Transform _lockonTarget;
-    Transform _mcTra;
-    CharacterController _characterController;
-    DirMovement _dirMovement = new();
     float _coolTimer;
+
+    Animator _anim;
+
+    Transform _playerTra;
+
+    PlayerInputAction _inputAction;
+
+    Transform _lockonTarget;
+
+    Transform _mcTra;
+
+    CharacterController _characterController;
+
+    DirMovement _dirMovement = new();
+
     PlayerHPSTController _playerHPSTController;
+
     PlayerParameter _playerParameter;
+
     CapsuleCollider _capsuleCollider;
+
     public override void Init()
     {
         PlayerController playerController = _playerStateMachine.PlayerController;
