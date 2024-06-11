@@ -5,6 +5,7 @@ public class MakeASound : MonoBehaviour
 {
     bool _isSound = false;
 
+    /// <summary>True‚¾‚Á‚½‚ç‰¹‚ð—§‚½‚¹‚Ä‚¢‚é</summary>
     public bool IsSound => _isSound;
 
     /// <summary>‰¹‚ð—§‚½‚¹‚é‚©‚Ç‚¤‚©</summary>

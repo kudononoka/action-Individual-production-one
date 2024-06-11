@@ -8,7 +8,13 @@ public class AudibilityController : MonoBehaviour
     float _earshot;
 
     bool _isAudible;
-    
+
+    /// <summary>•·‚±‚¦‚½êŠ</summary>
+    Vector3 _soundLocation = Vector3.zero;
+
+    /// <summary>•·‚±‚¦‚½êŠ</summary>
+    public Vector3 SoundLocation => _soundLocation;
+
     /// <summary>‘ÎÛ‚ª”­‚·‚é‰¹‚É•·‚±‚¦‚Ä‚¢‚é‚©‚Ç‚¤‚©</summary>
     /// <param name="target">‘ÎÛ‚Æ‚È‚é‚à‚Ì</param>
     /// <returns>•·‚±‚¦‚½‚çTrue‚ğ•Ô‚·</returns>
@@ -20,6 +26,7 @@ public class AudibilityController : MonoBehaviour
         {
             if (makeASound.IsSound)
             {
+                _soundLocation = target.transform.position;
                 return true;
             }
         }

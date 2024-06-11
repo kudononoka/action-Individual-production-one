@@ -1,12 +1,6 @@
-using System.Collections;
-using System.Collections.Generic;
-using System.Threading;
 using UnityEngine;
-using UnityEngine.Rendering;
 
-/// <summary>
-/// 相手が見えているかどうかの判定をおこなうクラス
-/// </summary>
+/// <summary>相手が見えているかどうかの判定をおこなうクラス</summary>
 public class SightController : MonoBehaviour
 {
     [Header("設定")]

@@ -16,7 +16,7 @@ public class IsVisible : BehaviorTreeBaseNode
 
     public override void Init(GameObject target, GameObject my)
     {
-        _sightController = my.GetComponent<EnemyAI>().SightController;
+        _sightController = my.GetComponent<SightController>();
         _target = target.GetComponent<Transform>();
     }
 

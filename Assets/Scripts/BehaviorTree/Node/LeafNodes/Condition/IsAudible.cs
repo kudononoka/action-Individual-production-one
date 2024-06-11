@@ -16,7 +16,7 @@ public class IsAudible : BehaviorTreeBaseNode
 
     public override void Init(GameObject target, GameObject my)
     {
-        _audibilityController = my.GetComponent<EnemyAI>().AudibilityController;
+        _audibilityController = my.GetComponent<AudibilityController>();
         _target = target;   
     }
 

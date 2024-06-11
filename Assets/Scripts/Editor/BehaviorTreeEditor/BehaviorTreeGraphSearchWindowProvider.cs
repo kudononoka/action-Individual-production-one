@@ -24,11 +24,12 @@ public class BehaviorTreeGraphSearchWindowProvider : ScriptableObject, ISearchWi
         _window = window;
         typeDictionary = new Dictionary<string, Type>
         {
+
             { nameof(SelectorNode), typeof(SelectorNode) },
             { nameof(SequenceNode), typeof(SequenceNode) },
             { nameof(DecoratoeNodeCondition), typeof(DecoratoeNodeCondition) },
             { nameof(WaitNode), typeof(WaitNode) },
-            { nameof(MoveToNode), typeof(MoveToNode) },
+            { nameof(MoveToTargetNode), typeof(MoveToTargetNode) },
             { nameof(AttackNode), typeof(AttackNode) },
             { nameof(RotateTowardTargetNode), typeof(RotateTowardTargetNode) },
             { nameof(MyAttackAreaIsTarget), typeof(MyAttackAreaIsTarget) },
@@ -40,6 +41,9 @@ public class BehaviorTreeGraphSearchWindowProvider : ScriptableObject, ISearchWi
             { nameof(LookAt), typeof(LookAt) },
             { nameof(IsVisible), typeof(IsVisible) },
             { nameof(IsAudible), typeof(IsAudible) },
+            { nameof(ReturnToMyPostNode), typeof(ReturnToMyPostNode) },
+            { nameof(MoveToSoundLocationNode), typeof(MoveToSoundLocationNode) },
+            { nameof(MinorEnemyAttackNode), typeof(MinorEnemyAttackNode) },
 
         };
     }
@@ -53,7 +57,7 @@ public class BehaviorTreeGraphSearchWindowProvider : ScriptableObject, ISearchWi
         entries.Add(new SearchTreeEntry(new GUIContent(nameof(SequenceNode))) { level = 1, userData = typeof(SequenceNode).FullName});
         entries.Add(new SearchTreeEntry(new GUIContent(nameof(DecoratoeNodeCondition))) { level = 1, userData = typeof(DecoratoeNodeCondition).FullName});
         entries.Add(new SearchTreeEntry(new GUIContent(nameof(WaitNode))) { level = 1, userData = typeof(WaitNode).FullName});
-        entries.Add(new SearchTreeEntry(new GUIContent(nameof(MoveToNode))) { level = 1, userData = typeof(MoveToNode).FullName});
+        entries.Add(new SearchTreeEntry(new GUIContent(nameof(MoveToTargetNode))) { level = 1, userData = typeof(MoveToTargetNode).FullName});
         entries.Add(new SearchTreeEntry(new GUIContent(nameof(AttackNode))) { level = 1, userData = typeof(AttackNode).FullName});
         entries.Add(new SearchTreeEntry(new GUIContent(nameof(RotateTowardTargetNode))) { level = 1, userData = typeof(RotateTowardTargetNode).FullName});
         entries.Add(new SearchTreeEntry(new GUIContent(nameof(MyAttackAreaIsTarget))) { level = 1, userData = typeof(MyAttackAreaIsTarget).FullName});
@@ -65,6 +69,9 @@ public class BehaviorTreeGraphSearchWindowProvider : ScriptableObject, ISearchWi
         entries.Add(new SearchTreeEntry(new GUIContent(nameof(LookAt))) { level = 1, userData = typeof(LookAt).FullName});
         entries.Add(new SearchTreeEntry(new GUIContent(nameof(IsVisible))) { level = 1, userData = typeof(IsVisible).FullName});
         entries.Add(new SearchTreeEntry(new GUIContent(nameof(IsAudible))) { level = 1, userData = typeof(IsAudible).FullName});
+        entries.Add(new SearchTreeEntry(new GUIContent(nameof(ReturnToMyPostNode))) { level = 1, userData = typeof(ReturnToMyPostNode).FullName});
+        entries.Add(new SearchTreeEntry(new GUIContent(nameof(MoveToSoundLocationNode))) { level = 1, userData = typeof(MoveToSoundLocationNode).FullName});
+        entries.Add(new SearchTreeEntry(new GUIContent(nameof(MinorEnemyAttackNode))) { level = 1, userData = typeof(MinorEnemyAttackNode).FullName});
         return entries;
     }
 
