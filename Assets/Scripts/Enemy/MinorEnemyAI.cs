@@ -1,4 +1,4 @@
-using System.Collections;
+Ôªøusing System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -15,6 +15,7 @@ public class MinorEnemyAI : MonoBehaviour, IDamage
 
     bool _isDeath = false;
 
+    public bool IsDeath => _isDeath;
     // Start is called before the first frame update
     void Start()
     {
@@ -29,20 +30,23 @@ public class MinorEnemyAI : MonoBehaviour, IDamage
     // Update is called once per frame
     void Update()
     {
-        //éÄÇÒÇ≈Ç¢Ç»Ç©Ç¡ÇΩÇÁ
+        //Ê≠ª„Çì„Åß„ÅÑ„Å™„Åã„Å£„Åü„Çâ
         if (!_isDeath)
         {
             _tree.Evaluate();
         }
     }
 
+
     public void Damage(int damage)
     {
-        //éÄÇÒÇæÇÁ
+        //Ê≠ª„Çì„Å†„Çâ
         if (!_hpController.HPDown(damage))
         {
             _isDeath = true;
             GetComponent<Animator>().SetBool("IsDeath", true);
+            GetComponent<BoxCollider>().enabled = false;
+            GameManager.Instance.EnemyKill();
         }
     }
 }

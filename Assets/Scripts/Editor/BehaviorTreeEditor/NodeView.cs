@@ -1,6 +1,6 @@
-using UnityEditor.Experimental.GraphView;
+ï»¿using UnityEditor.Experimental.GraphView;
 
-/// <summary>GraphView‚ÉNode‚ğo‚·‚½‚ß‚ÌŒ³ƒf[ƒ^</summary>
+/// <summary>GraphViewã«Nodeã‚’å‡ºã™ãŸã‚ã®å…ƒãƒ‡ãƒ¼ã‚¿</summary>
 public class NodeView : Node
 {
     private BehaviorTreeBaseNode node;

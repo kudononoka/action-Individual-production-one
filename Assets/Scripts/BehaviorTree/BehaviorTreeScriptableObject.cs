@@ -1,4 +1,4 @@
-using System;
+ï»¿using System;
 using System.Collections.Generic;
 using System.Security.Cryptography;
 using UnityEngine;
@@ -10,13 +10,13 @@ public class BehaviorTreeScriptableObject : ScriptableObject
     [SerializeField]
     List<BehaviorTreeBaseNode> _nodes = new List<BehaviorTreeBaseNode>();
 
-    /// <summary>SaveŒ³‚Ì•¡”‚Ìƒm[ƒh‚ğŠ‚µ‚Ä‚¢‚éƒf[ƒ^</summary>
+    /// <summary>Saveå…ƒã®è¤‡æ•°ã®ãƒãƒ¼ãƒ‰ã‚’æ‰€æŒã—ã¦ã„ã‚‹ãƒ‡ãƒ¼ã‚¿</summary>
     public List<BehaviorTreeBaseNode> Nodes => _nodes;
 
-    /// <summary>SaveŒ³‚Ìƒ‹[ƒgƒf[ƒ^</summary>
+    /// <summary>Saveå…ƒã®ãƒ«ãƒ¼ãƒˆãƒ‡ãƒ¼ã‚¿</summary>
     public BehaviorTreeBaseNode RootNodeData => _root;
 
-    /// <summary>SaveŒ³‚Ìƒ‹[ƒgƒf[ƒ^‚Ìã‘‚«</summary>
+    /// <summary>Saveå…ƒã®ãƒ«ãƒ¼ãƒˆãƒ‡ãƒ¼ã‚¿ã®ä¸Šæ›¸ã</summary>
     public void RootNodeDataOverwrite(BehaviorTreeBaseNode data) => _root = data;
 
     public Result Evaluate()
@@ -26,6 +26,12 @@ public class BehaviorTreeScriptableObject : ScriptableObject
             return Result.Failure;
         }
         return _root.Evaluate();
+    }
+
+    public void Deepcopy(BehaviorTreeScriptableObject source)
+    {
+        this._root = source.RootNodeData;
+        this._nodes = source.Nodes;
     }
 }
 
@@ -48,29 +54,30 @@ public class NodeData
     [SerializeField]
     private List<ChildData> _childData = new List<ChildData>();
 
-    /// <summary>Node‚ÌID</summary>
+    /// <summary>Nodeã®ID</summary>
     public int ID { get => _id; set => _id = value; }
 
-    /// <summary>BehaviorTreeBaseNode‚ğŒp³‚µ‚½ƒNƒ‰ƒX‚Ì–¼‘O</summary>
+    /// <summary>BehaviorTreeBaseNodeã‚’ç¶™æ‰¿ã—ãŸã‚¯ãƒ©ã‚¹ã®åå‰</summary>
     public string ClassName => _className;
 
-    /// <summary>BehaviorTree—pNode‚ÌType</summary>
+    /// <summary>BehaviorTreeç”¨Nodeã®Type</summary>
     public NodeType NodeType => _nodeType;
 
-    /// <summary>Node‚ÌPosition‚ÆSize</summary>
+    /// <summary>Nodeã®Positionã¨Size</summary>
     public Rect Rect { get => _rect; set => _rect = value; }
 
-    /// <summary>qNode‚ÌID</summary>
+    /// <summary>å­Nodeã®ID</summary>
     public List<ChildData> ChildData => _childData;
 
-    /// <summary>©•ª‚ª‚ÂqNode‚Ì“o˜^</summary>
+    /// <summary>è‡ªåˆ†ãŒæŒã¤å­Nodeã®ç™»éŒ²</summary>
     public void ChildIDAdd(ChildData childid) => _childData.Add(childid);
 
-    /// <summary>©•ª‚ª‚ÂqNode‚Ì‰ğœ</summary>
+    /// <summary>è‡ªåˆ†ãŒæŒã¤å­Nodeã®è§£é™¤</summary>
     public void ChildDataRemoveAt(int index) => _childData.RemoveAt(index);
 
-    /// <summary>©•ª‚ª‚Â‘SqNode‚ğã‘‚«</summary>
+    /// <summary>è‡ªåˆ†ãŒæŒã¤å…¨å­Nodeã‚’ä¸Šæ›¸ã</summary>
     public void ChildIDListOverwrite(List<ChildData> children) => _childData = children;
+
 }
 
 [Serializable]
@@ -86,7 +93,7 @@ public class ChildData
     [SerializeField]
     private NodeType _nodeType;
 
-    /// <summary>BehaviorTree—pNodeType</summary>
+    /// <summary>BehaviorTreeç”¨NodeType</summary>
     public NodeType NodeType => _nodeType;
 
     /// <summary>ID</summary>

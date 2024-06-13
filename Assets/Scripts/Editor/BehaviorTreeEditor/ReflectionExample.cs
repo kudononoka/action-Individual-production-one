@@ -1,4 +1,4 @@
-using System;
+ï»¿using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Reflection;
@@ -12,7 +12,7 @@ public class ReflectionExample
 
     public object CreateInstance(string className)
     {
-        // ƒAƒZƒ“ƒuƒŠ‚©‚çƒNƒ‰ƒX‚ÌŒ^‚ğæ“¾
+        // ã‚¢ã‚»ãƒ³ãƒ–ãƒªã‹ã‚‰ã‚¯ãƒ©ã‚¹ã®å‹ã‚’å–å¾—
         Type type = GetTypeByName(className);
         if (type == null)
         {
@@ -20,7 +20,7 @@ public class ReflectionExample
             return null;
         }
 
-        // ƒNƒ‰ƒX‚ÌƒCƒ“ƒXƒ^ƒ“ƒX‚ğ¶¬
+        // ã‚¯ãƒ©ã‚¹ã®ã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹ã‚’ç”Ÿæˆ
         return Activator.CreateInstance(type);
     }
 
@@ -31,15 +31,15 @@ public class ReflectionExample
             _assemblyArray = AppDomain.CurrentDomain.GetAssemblies();
         }
 
-        // Unity ƒGƒfƒBƒ^‚ÅÀs‚³‚ê‚éƒAƒZƒ“ƒuƒŠ‚Ì‚İ‚ğ‘ÎÛ‚Æ‚·‚é
+        // Unity ã‚¨ãƒ‡ã‚£ã‚¿ã§å®Ÿè¡Œã•ã‚Œã‚‹ã‚¢ã‚»ãƒ³ãƒ–ãƒªã®ã¿ã‚’å¯¾è±¡ã¨ã™ã‚‹
         foreach (Assembly assembly in _assemblyArray)
         {
-            // Unity ƒGƒfƒBƒ^‚ÅÀs‚³‚ê‚éƒAƒZƒ“ƒuƒŠ‚Ì‚İ‚ğ‘ÎÛ‚Æ‚·‚é
+            // Unity ã‚¨ãƒ‡ã‚£ã‚¿ã§å®Ÿè¡Œã•ã‚Œã‚‹ã‚¢ã‚»ãƒ³ãƒ–ãƒªã®ã¿ã‚’å¯¾è±¡ã¨ã™ã‚‹
             if (assembly.FullName.StartsWith("Assembly-CSharp"))
             {
                 foreach (Type type in assembly.GetTypes())
                 {
-                    // ©ìƒNƒ‰ƒX‚Ì–¼‘O‹óŠÔ‚âƒNƒ‰ƒX–¼‚Ìƒpƒ^[ƒ“‚Éˆê’v‚·‚éê‡‚Ì‚İ•Ô‚·
+                    // è‡ªä½œã‚¯ãƒ©ã‚¹ã®åå‰ç©ºé–“ã‚„ã‚¯ãƒ©ã‚¹åã®ãƒ‘ã‚¿ãƒ¼ãƒ³ã«ä¸€è‡´ã™ã‚‹å ´åˆã®ã¿è¿”ã™
                     if (type.Name == className)
                     {
                         return type;

@@ -1,27 +1,27 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-/// <summary>‰¹‚ª•·‚±‚¦‚½êŠ‚ÉŒü‚©‚¤ê—pƒm[ƒh</summary>
+/// <summary>éŸ³ãŒèã“ãˆãŸå ´æ‰€ã«å‘ã‹ã†å°‚ç”¨ãƒãƒ¼ãƒ‰</summary>
 [SerializeField]
 public class MoveToSoundLocationNode : BehaviorTreeBaseNode
 {
-    [Header("ˆÚ“®‘¬“x")]
+    [Header("ç§»å‹•é€Ÿåº¦")]
     [SerializeField]
     float _moveSpeed;
 
-    [Header("ˆÚ“®‚ğ‚â‚ß‚é‚Ì–Ú“I’n‚Æ‚Ì‹——£")]
+    [Header("ç§»å‹•ã‚’ã‚„ã‚ã‚‹æ™‚ã®ç›®çš„åœ°ã¨ã®è·é›¢")]
     [SerializeField]
     float _stopDistance;
 
-    /// <summary>“®‚©‚µ‚½‚¢ƒIƒuƒWƒFƒNƒg</summary>
+    /// <summary>å‹•ã‹ã—ãŸã„ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ</summary>
     NavMeshAgent _agent = null;
 
-    /// <summary>•·‚±‚¦‚½êŠ</summary>
+    /// <summary>èã“ãˆãŸå ´æ‰€</summary>
     Vector3 _soundLocation = Vector3.zero;
 
-    /// <summary>“®‚©‚µ‚½‚¢ƒIƒuƒWƒFƒNƒg‚ÌˆÊ’u</summary>
+    /// <summary>å‹•ã‹ã—ãŸã„ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã®ä½ç½®</summary>
     Transform _my = null;
 
     Animator _anim;
@@ -55,11 +55,11 @@ public class MoveToSoundLocationNode : BehaviorTreeBaseNode
         }
         _agent.speed = _moveSpeed;
 
-        _agent.SetDestination(_soundLocation);@//•·‚±‚¦‚½êŠ‚Ü‚ÅˆÚ“®
+        _agent.SetDestination(_soundLocation);ã€€//èã“ãˆãŸå ´æ‰€ã¾ã§ç§»å‹•
 
-        _anim.SetBool("IsWalk", true);    //ƒAƒjƒ[ƒVƒ‡ƒ“İ’è
+        _anim.SetBool("IsWalk", true);    //ã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³è¨­å®š
 
-        //•·‚±‚¦‚½êŠ‚É’Ç‚¢‚Â‚¢‚½‚ç¬Œ÷‚ğ•Ô‚·
+        //èã“ãˆãŸå ´æ‰€ã«è¿½ã„ã¤ã„ãŸã‚‰æˆåŠŸã‚’è¿”ã™
         if (Vector3.Distance(_soundLocation, _my.position) <= _stopDistance)
         {
             _soundLocation = Vector3.zero;
@@ -68,7 +68,7 @@ public class MoveToSoundLocationNode : BehaviorTreeBaseNode
             return Result.Success;
         }
 
-        //UŒ‚‘ÎÛ‚ª‹ŠE‚É“ü‚Á‚½‚ç¸”s‚ğ•Ô‚µ,‰¹‚ª•·‚±‚¦‚½êŠ‚És‚­‚Ì‚ğ’†’f‚·‚é
+        //æ”»æ’ƒå¯¾è±¡ãŒè¦–ç•Œã«å…¥ã£ãŸã‚‰å¤±æ•—ã‚’è¿”ã—,éŸ³ãŒèã“ãˆãŸå ´æ‰€ã«è¡Œãã®ã‚’ä¸­æ–­ã™ã‚‹
         if (_sightController.isVisible(_target.position))
         {
             _soundLocation = Vector3.zero;

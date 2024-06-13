@@ -1,27 +1,27 @@
-using UnityEngine;
+ï»¿using UnityEngine;
 using UnityEditor;
 using UnityEngine.UIElements;
 using System;
 using System.Collections.Generic;
 
 /// <summary>
-/// ƒrƒwƒCƒrƒAƒcƒŠ[‚ğWindow‚É•\¦‚·‚é‚½‚ß‚ÌEditorWindow
+/// ãƒ“ãƒ˜ã‚¤ãƒ“ã‚¢ãƒ„ãƒªãƒ¼ã‚’Windowã«è¡¨ç¤ºã™ã‚‹ãŸã‚ã®EditorWindow
 /// </summary>
 public class BehaviorTreeEditorWindow : EditorWindow
 {
     private BehaviorTreeGraphView _graphView;
 
-    /// <summary>Asset“à‚É‚ ‚éNode•ÛŠÇ—pƒf[ƒ^</summary>
+    /// <summary>Assetå†…ã«ã‚ã‚‹Nodeä¿ç®¡ç”¨ãƒ‡ãƒ¼ã‚¿</summary>
     private BehaviorTreeScriptableObject _data;
 
-    /// <summary>BehaviorTreeScriptableObject‚Ìpath</summary>
+    /// <summary>BehaviorTreeScriptableObjectã®path</summary>
     private static string aseetpath = "";
 
     private List<BehaviorTreeScriptableObject> objects = new List<BehaviorTreeScriptableObject>(); 
     
     public BehaviorTreeScriptableObject Data => _data;
 
-    /// <summary>Window‚ğŠJ‚­</summary>
+    /// <summary>Windowã‚’é–‹ã</summary>
     public static void Open(BehaviorTreeScriptableObject data)
     {
         aseetpath = AssetDatabase.GetAssetPath(data);
@@ -41,7 +41,7 @@ public class BehaviorTreeEditorWindow : EditorWindow
         }
     }
 
-    /// <summary>GraphView‚Ìİ’è</summary>
+    /// <summary>GraphViewã®è¨­å®š</summary>
     private void ConstructGraphView()
     {
         _graphView = new BehaviorTreeGraphView(this)
@@ -59,16 +59,16 @@ public class BehaviorTreeEditorWindow : EditorWindow
         AssetDatabase.SaveAssets();
     }
 
-    /// <summary>ƒm[ƒhì¬</summary>
-    /// <param name="type">¶¬‚·‚éScriptableObject‚ÌType</param>
-    /// <param name="rect">Node‚ÌêŠ</param>
-    /// <param name="root">ì¬‚·‚éNode‚ªƒ‹[ƒg‚©‚Ç‚¤‚©</param>
+    /// <summary>ãƒãƒ¼ãƒ‰ä½œæˆ</summary>
+    /// <param name="type">ç”Ÿæˆã™ã‚‹ScriptableObjectã®Type</param>
+    /// <param name="rect">Nodeã®å ´æ‰€</param>
+    /// <param name="root">ä½œæˆã™ã‚‹NodeãŒãƒ«ãƒ¼ãƒˆã‹ã©ã†ã‹</param>
     /// <returns></returns>
     public BehaviorTreeBaseNode CreateNode(Type type, Rect rect, bool root)
     {
         BehaviorTreeBaseNode node = ScriptableObject.CreateInstance(type) as BehaviorTreeBaseNode;
 
-        //ScriptableObjectƒf[ƒ^‚ÉNode‚Ìî•ñ‚ğ‘ã“ü
+        //ScriptableObjectãƒ‡ãƒ¼ã‚¿ã«Nodeã®æƒ…å ±ã‚’ä»£å…¥
         if (root)
         {
             _data.RootNodeDataOverwrite(node);
@@ -88,8 +88,8 @@ public class BehaviorTreeEditorWindow : EditorWindow
         return node;
     }
 
-    /// <summary>ƒm[ƒh‚Ìíœ</summary>
-    /// <param name="id">íœ‚·‚éƒm[ƒhID</param>
+    /// <summary>ãƒãƒ¼ãƒ‰ã®å‰Šé™¤</summary>
+    /// <param name="id">å‰Šé™¤ã™ã‚‹ãƒãƒ¼ãƒ‰ID</param>
     public void DeleteNode(int id)
     {
         if (id == -1 || id > _data.Nodes.Count) return;
@@ -105,9 +105,9 @@ public class BehaviorTreeEditorWindow : EditorWindow
         ChildIDChange(id);
     }
 
-    /// <summary>eƒm[ƒhƒf[ƒ^‚Éqƒm[ƒhî•ñ‚ğ•ÛŠÇ</summary>
-    /// <param name="id">eƒm[ƒhID</param>
-    /// <param name="child">qƒm[ƒhID</param>
+    /// <summary>è¦ªãƒãƒ¼ãƒ‰ãƒ‡ãƒ¼ã‚¿ã«å­ãƒãƒ¼ãƒ‰æƒ…å ±ã‚’ä¿ç®¡</summary>
+    /// <param name="id">è¦ªãƒãƒ¼ãƒ‰ID</param>
+    /// <param name="child">å­ãƒãƒ¼ãƒ‰ID</param>
     public void ChildNodeDataAdd(int id, ChildData child)
     {
         if (id == -1)
@@ -116,9 +116,9 @@ public class BehaviorTreeEditorWindow : EditorWindow
             _data.Nodes[id].NodeData.ChildIDAdd(child);
     }
 
-    /// <summary>eƒm[ƒhƒf[ƒ^‚ª‚Á‚Ä‚¢‚éqƒm[ƒhî•ñ‚ğ‰ğœ</summary>
-    /// <param name="id">eƒm[ƒhID</param>
-    /// <param name="child">‰ğœ‚·‚éqƒm[ƒhID</param>
+    /// <summary>è¦ªãƒãƒ¼ãƒ‰ãƒ‡ãƒ¼ã‚¿ãŒæŒã£ã¦ã„ã‚‹å­ãƒãƒ¼ãƒ‰æƒ…å ±ã‚’è§£é™¤</summary>
+    /// <param name="id">è¦ªãƒãƒ¼ãƒ‰ID</param>
+    /// <param name="child">è§£é™¤ã™ã‚‹å­ãƒãƒ¼ãƒ‰ID</param>
     public void ChildNodeDataRemove(int id, int childID)
     {
         if (id == -1)
@@ -162,7 +162,7 @@ public class BehaviorTreeEditorWindow : EditorWindow
         }
     }
 
-    /// <summary>ScriptableObject‚Ìƒf[ƒ^‚ğæ“¾‚µ‚ÄNode‚ÆEdge‚ÌÄ•\¦‚ğs‚¤</summary>
+    /// <summary>ScriptableObjectã®ãƒ‡ãƒ¼ã‚¿ã‚’å–å¾—ã—ã¦Nodeã¨Edgeã®å†è¡¨ç¤ºã‚’è¡Œã†</summary>
     void Load()
     {
         LoadNodeView();
@@ -170,7 +170,7 @@ public class BehaviorTreeEditorWindow : EditorWindow
     }
 
     /// <summary>
-    /// Node‚Ì•\¦
+    /// Nodeã®è¡¨ç¤º
     /// </summary>
     void LoadNodeView()
     {
@@ -185,7 +185,7 @@ public class BehaviorTreeEditorWindow : EditorWindow
         }
     }
 
-    /// <summary>Node“¯m‚ğŒq‚®Edge‚Ì•\¦</summary>
+    /// <summary>NodeåŒå£«ã‚’ç¹‹ãEdgeã®è¡¨ç¤º</summary>
     void LoadConectView()
     {
         if (_data.RootNodeData.NodeData.ChildData.Count > 0)

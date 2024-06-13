@@ -1,8 +1,8 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-/// <summary>‰¹‚Ìƒf[ƒ^ŠÇ—‚ÆÄ¶</summary>
+/// <summary>éŸ³ã®ãƒ‡ãƒ¼ã‚¿ç®¡ç†ã¨å†ç”Ÿ</summary>
 public class AudioManager : MonoBehaviour
 {
     private static AudioManager _instance;
@@ -10,46 +10,46 @@ public class AudioManager : MonoBehaviour
     [Header("AudioSource")]
 
     [SerializeField]
-    [Tooltip("BGM‚ğÄ¶‚·‚é—p‚ÌAudioSource")]
+    [Tooltip("BGMã‚’å†ç”Ÿã™ã‚‹ç”¨ã®AudioSource")]
     AudioSource _bgmAudioSource;
 
     [SerializeField]
-    [Tooltip("SE‚ğÄ¶‚·‚é—p‚ÌAudioSource")]
+    [Tooltip("SEã‚’å†ç”Ÿã™ã‚‹ç”¨ã®AudioSource")]
     AudioSource _seAudioSource;
 
     [Space]
 
-    [Header("Ä¶‚³‚¹‚½‚¢Audio‚Ìİ’è")]
+    [Header("å†ç”Ÿã•ã›ãŸã„Audioã®è¨­å®š")]
 
     [SerializeField]
-    [Tooltip("Ä¶‚³‚¹‚½‚¢SE‚Æ‚»‚ê‚ÉŠÖ‚·‚éProperty")]
+    [Tooltip("å†ç”Ÿã•ã›ãŸã„SEã¨ãã‚Œã«é–¢ã™ã‚‹Property")]
     KeyValuePair<SE, SoundProperty>[] _seProperties;
 
     [SerializeField]
-    [Tooltip("Ä¶‚³‚¹‚½‚¢BGM‚Æ‚»‚ê‚ÉŠÖ‚·‚éProperty")] 
+    [Tooltip("å†ç”Ÿã•ã›ãŸã„BGMã¨ãã‚Œã«é–¢ã™ã‚‹Property")] 
     KeyValuePair<BGM, SoundProperty>[] _bgmProperties;
 
-    /// <summary>Ä¶‚³‚¹‚éSE‚ÌAudio‚Ìƒf[ƒ^</summary>
+    /// <summary>å†ç”Ÿã•ã›ã‚‹SEã®Audioã®ãƒ‡ãƒ¼ã‚¿</summary>
     Dictionary<SE, SoundProperty> _se = new Dictionary<SE, SoundProperty>();
-    /// <summary>Ä¶‚³‚¹‚éBGM‚ÌAudio‚Ìƒf[ƒ^</summary>
+    /// <summary>å†ç”Ÿã•ã›ã‚‹BGMã®Audioã®ãƒ‡ãƒ¼ã‚¿</summary>
     Dictionary<BGM, SoundProperty> _bgm = new Dictionary<BGM, SoundProperty>();
 
-    #region@ƒVƒ“ƒOƒ‹ƒgƒ“
+    #regionã€€ã‚·ãƒ³ã‚°ãƒ«ãƒˆãƒ³
     public static AudioManager Instance
     {
         get
         {
-            //instance‚ªnull‚¾‚Á‚½‚ç
+            //instanceãŒnullã ã£ãŸã‚‰
             if (!_instance)
             {
-                //ƒV[ƒ““à‚ÌGameobject‚ÉƒAƒ^ƒbƒ`‚³‚ê‚Ä‚¢‚éT‚ğæ“¾
+                //ã‚·ãƒ¼ãƒ³å†…ã®Gameobjectã«ã‚¢ã‚¿ãƒƒãƒã•ã‚Œã¦ã„ã‚‹Tã‚’å–å¾—
                 _instance = FindObjectOfType<AudioManager>();
                 _instance.DictinarySet();
-                //ƒAƒ^ƒbƒ`‚³‚ê‚Ä‚¢‚È‚©‚Á‚½‚ç
+                //ã‚¢ã‚¿ãƒƒãƒã•ã‚Œã¦ã„ãªã‹ã£ãŸã‚‰
                 if (!_instance)
                 {
-                    //ƒGƒ‰[‚ğo‚·
-                    Debug.LogError("Scene“à‚É" + typeof(AudioManager).Name + "‚ğƒAƒ^ƒbƒ`‚µ‚Ä‚¢‚éGameObject‚ª‚ ‚è‚Ü‚¹‚ñ");
+                    //ã‚¨ãƒ©ãƒ¼ã‚’å‡ºã™
+                    Debug.LogError("Sceneå†…ã«" + typeof(AudioManager).Name + "ã‚’ã‚¢ã‚¿ãƒƒãƒã—ã¦ã„ã‚‹GameObjectãŒã‚ã‚Šã¾ã›ã‚“");
                 }
             }
             return _instance;
@@ -75,17 +75,27 @@ public class AudioManager : MonoBehaviour
     }
     #endregion
 
-    /// <summary> SE‚ğÄ¶‚·‚éƒƒ\ƒbƒh</summary>
-    /// <param name="se">Ä¶‚µ‚½‚¢SE‚Ìenum</param>
+    /// <summary> SEã‚’å†ç”Ÿã™ã‚‹ãƒ¡ã‚½ãƒƒãƒ‰</summary>
+    /// <param name="se">å†ç”Ÿã—ãŸã„SEã®enum</param>
     public void SEPlay(SE se)
     {
         SoundProperty soundProperty = _se[se];
         _seAudioSource.volume = soundProperty.volum;
-        _seAudioSource.PlayOneShot(soundProperty.audioClip);
+
+        if (_seAudioSource.isPlaying && _seAudioSource.clip == soundProperty.audioClip)
+            return;
+
+        _seAudioSource.clip = soundProperty.audioClip;
+        _seAudioSource.Play();
     }
 
-    /// <summary> BGM‚ğÄ¶‚·‚éƒƒ\ƒbƒh</summary>
-    /// <param name="se">Ä¶‚µ‚½‚¢BGM‚Ìenum</param>
+    public void SEStop()
+    {
+        _seAudioSource.Stop();
+    }
+
+    /// <summary> BGMã‚’å†ç”Ÿã™ã‚‹ãƒ¡ã‚½ãƒƒãƒ‰</summary>
+    /// <param name="se">å†ç”Ÿã—ãŸã„BGMã®enum</param>
     public void BGMPlay(BGM bgm)
     {
         SoundProperty soundProperty = _bgm[bgm];
@@ -113,7 +123,7 @@ public class AudioManager : MonoBehaviour
         }
     }
 
-    /// <summary>Dictinary‚ÉŠi”[‚·‚é‚½‚ß‚Ìƒƒ\ƒbƒh</summary>
+    /// <summary>Dictinaryã«æ ¼ç´ã™ã‚‹ãŸã‚ã®ãƒ¡ã‚½ãƒƒãƒ‰</summary>
     void DictinarySet()
     {
         foreach (var seProperty in _seProperties)

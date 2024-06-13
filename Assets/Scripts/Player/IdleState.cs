@@ -1,4 +1,4 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -19,7 +19,7 @@ public class IdleState : PlayerStateBase
     }
     public override void OnUpdate()
     {
-        //�ړ��؂�ւ�
+        //移動切り替え
         if (_inputAction.InputMove.magnitude > 0)
         {
             _playerStateMachine.OnChangeState((int)PlayerStateMachine.StateType.Walk);

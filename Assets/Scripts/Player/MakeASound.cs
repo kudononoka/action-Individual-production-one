@@ -1,15 +1,15 @@
-using UnityEngine;
+ï»¿using UnityEngine;
 
-/// <summary>–¾¦“I‚É‰¹‚ğ—§‚½‚¹‚é—§‚½‚¹‚Ä‚¢‚È‚¢‚ğ‘€ì‚·‚éƒNƒ‰ƒX</summary>
+/// <summary>æ˜ç¤ºçš„ã«éŸ³ã‚’ç«‹ãŸã›ã‚‹ç«‹ãŸã›ã¦ã„ãªã„ã‚’æ“ä½œã™ã‚‹ã‚¯ãƒ©ã‚¹</summary>
 public class MakeASound : MonoBehaviour
 {
     bool _isSound = false;
 
-    /// <summary>True‚¾‚Á‚½‚ç‰¹‚ğ—§‚½‚¹‚Ä‚¢‚é</summary>
+    /// <summary>Trueã ã£ãŸã‚‰éŸ³ã‚’ç«‹ãŸã›ã¦ã„ã‚‹</summary>
     public bool IsSound => _isSound;
 
-    /// <summary>‰¹‚ğ—§‚½‚¹‚é‚©‚Ç‚¤‚©</summary>
-    /// <param name="isSound">—§‚½‚¹‚é‚©‚Ç‚¤‚©</param>
+    /// <summary>éŸ³ã‚’ç«‹ãŸã›ã‚‹ã‹ã©ã†ã‹</summary>
+    /// <param name="isSound">ç«‹ãŸã›ã‚‹ã‹ã©ã†ã‹</param>
     public void IsSoundChange(bool isSound)
     {
         _isSound = isSound;

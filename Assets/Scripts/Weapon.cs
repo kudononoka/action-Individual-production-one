@@ -1,12 +1,12 @@
-using UnityEngine;
+ï»¿using UnityEngine;
 
-/// <summary>•Ší‚Ì“–‚½‚è”»’è‚ğå‚És‚¤</summary>
+/// <summary>æ­¦å™¨ã®å½“ãŸã‚Šåˆ¤å®šã‚’ä¸»ã«è¡Œã†</summary>
 public class Weapon : MonoBehaviour
 {
-    [Header("•Ší‚ğ‚Á‚Ä‚¢‚éƒLƒƒƒ‰‚ÌTag")]
+    [Header("æ­¦å™¨ã‚’æŒã£ã¦ã„ã‚‹ã‚­ãƒ£ãƒ©ã®Tag")]
     [SerializeField] string _ownerTagName;
 
-    [Header("—^‚¦‚éƒ_ƒ[ƒW")]
+    [Header("ä¸ãˆã‚‹ãƒ€ãƒ¡ãƒ¼ã‚¸")]
     [SerializeField]
     int _damage;
 
@@ -16,7 +16,7 @@ public class Weapon : MonoBehaviour
     [SerializeField]
     ParticleSystem[] _bloodParticle;
 
-    [Header("ŒŒ‚Ìƒp[ƒeƒBƒNƒ‹‚Ì•\¦ŠÔ")]
+    [Header("è¡€ã®ãƒ‘ãƒ¼ãƒ†ã‚£ã‚¯ãƒ«ã®è¡¨ç¤ºæ™‚é–“")]
     [SerializeField]
     float _particlePlayTime;
 
@@ -24,25 +24,25 @@ public class Weapon : MonoBehaviour
 
     bool _bloodParticleActive = false;
 
-    /// <summary>—^‚¦‚éƒ_ƒ[ƒW</summary>
+    /// <summary>ä¸ãˆã‚‹ãƒ€ãƒ¡ãƒ¼ã‚¸</summary>
     public int Damage { get => _damage; set => _damage = value; }
 
     public void Update()
     {
-       if(_bloodParticleActive)@@@@//ŒŒ‚ÌPartical‚ª•\¦‚³‚ê‚Ä‚¢‚½ê‡
+       if(_bloodParticleActive)ã€€ã€€ã€€ã€€//è¡€ã®ParticalãŒè¡¨ç¤ºã•ã‚Œã¦ã„ãŸå ´åˆ
         {
             _particlePlayTimer += Time.deltaTime;
-            if(_particlePlayTimer > _particlePlayTime)@//•\¦‚µ‚Ä‚©‚çˆê’èŠÔŒo‰ß‚µ‚½‚ç
+            if(_particlePlayTimer > _particlePlayTime)ã€€//è¡¨ç¤ºã—ã¦ã‹ã‚‰ä¸€å®šæ™‚é–“çµŒéã—ãŸã‚‰
             {
-                _particlePlayTimer = 0;@@@@@@@@@//ŒŒ”ñ•\¦
+                _particlePlayTimer = 0;ã€€ã€€ã€€ã€€ã€€ã€€ã€€ã€€ã€€//è¡€éè¡¨ç¤º
                 BloodParticalActive(false);
                 _bloodParticleActive = false;
             }
         }
     }
 
-    /// <summary>ŒŒ‚ÌPartical‚Ì”ñ•\¦‚Æ•\¦Ø‚è‘Ö‚¦</summary>
-    /// <param name="isActive">•\¦‚·‚é</param>
+    /// <summary>è¡€ã®Particalã®éè¡¨ç¤ºã¨è¡¨ç¤ºåˆ‡ã‚Šæ›¿ãˆ</summary>
+    /// <param name="isActive">è¡¨ç¤ºã™ã‚‹</param>
     public void BloodParticalActive(bool isActive)
     {
         for(int i = 0; i < _bloodParticle.Length; i++)
@@ -54,8 +54,8 @@ public class Weapon : MonoBehaviour
         }
     }
 
-    /// <summary>ƒ_ƒ[ƒW”»’è‚Æ‚È‚éƒRƒ‰ƒCƒ_[‚Ì”ñ•\¦E•\¦Ø‚è‘Ö‚¦</summary>
-    /// <param name="isEnabled">•\¦‚·‚é</param>
+    /// <summary>ãƒ€ãƒ¡ãƒ¼ã‚¸åˆ¤å®šã¨ãªã‚‹ã‚³ãƒ©ã‚¤ãƒ€ãƒ¼ã®éè¡¨ç¤ºãƒ»è¡¨ç¤ºåˆ‡ã‚Šæ›¿ãˆ</summary>
+    /// <param name="isEnabled">è¡¨ç¤ºã™ã‚‹</param>
     public void DamageColliderEnabledSet(bool isEnabled)
     {
         _boxCollider.enabled = isEnabled;
@@ -63,12 +63,12 @@ public class Weapon : MonoBehaviour
     
     private void OnTriggerEnter(Collider other)
     {
-        if (!other.gameObject.CompareTag(_ownerTagName))       //©•ªˆÈŠO‚Ì“–‚½‚è”»’è‚ğs‚¤
+        if (!other.gameObject.CompareTag(_ownerTagName))       //è‡ªåˆ†ä»¥å¤–ã®å½“ãŸã‚Šåˆ¤å®šã‚’è¡Œã†
         {
             if (other.gameObject.TryGetComponent<IDamage>(out var IDamage))
             {
                 IDamage.Damage(_damage);
-                _bloodParticleActive = true;@@@//ŒŒ•\¦
+                _bloodParticleActive = true;ã€€ã€€ã€€//è¡€è¡¨ç¤º
                 BloodParticalActive(true);
             }
         }

@@ -1,4 +1,4 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using static DirMovement;
@@ -38,15 +38,15 @@ public class GuardState : PlayerStateBase
     }
     public override void OnUpdate()
     {
-        //ˆÚ“®
+        //ç§»å‹•
         var _forward = Quaternion.AngleAxis(_mcTra.eulerAngles.y, Vector3.up);
         var moveDir = _forward * new Vector3(_inputAction.InputMove.x, 0, _inputAction.InputMove.y).normalized;
         _characterController.Move(moveDir * _walkSpeed * Time.deltaTime);
 
-        //ƒƒbƒNƒIƒ“’†
+        //ãƒ­ãƒƒã‚¯ã‚ªãƒ³ä¸­
         if (_inputAction.IsLockon)
         {
-            //“®‚­•ûŒü‚É‚æ‚Á‚ÄAnimation‚ğØ‚è‘Ö‚¦
+            //å‹•ãæ–¹å‘ã«ã‚ˆã£ã¦Animationã‚’åˆ‡ã‚Šæ›¿ãˆ
             DirMovement.MoveDir dir = _dirMovement.DirMovementJudge(_inputAction.InputMove);
             switch (dir)
             {
@@ -70,7 +70,7 @@ public class GuardState : PlayerStateBase
                     break;
             }
 
-            //ƒ^[ƒQƒbƒg‚Ì•û‚ğŒü‚­
+            //ã‚¿ãƒ¼ã‚²ãƒƒãƒˆã®æ–¹ã‚’å‘ã
             var direction = _lockonTarget.transform.position - _playerTra.transform.position;
             direction.y = 0;
             _playerTra.rotation = Quaternion.LookRotation(direction);

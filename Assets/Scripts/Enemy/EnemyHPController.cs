@@ -1,4 +1,4 @@
-using System;
+ï»¿using System;
 using System.Collections;
 using System.Collections.Generic;
 using UniRx;
@@ -9,10 +9,10 @@ using VRM;
 public class EnemyHPController
 {
 
-    /// <summary>HPÅ‘å’l</summary>
+    /// <summary>HPæœ€å¤§å€¤</summary>
     int _hpMax;
     [SerializeField]
-    /// <summary>Œ»İ‚ÌHP</summary>
+    /// <summary>ç¾åœ¨ã®HP</summary>
     int _hpNow;
 
     public int CurrentHPValue => _hpNow;
@@ -25,9 +25,9 @@ public class EnemyHPController
     public IObservable<int> CurrentHpChanged => _currentHp;
     readonly ReactiveProperty<int> _currentHp = new();
 
-    /// <summary>‰Šú‰»</summary>
-    /// <param name="hpMax">HPÅ‘å’l</param>
-    /// <param name="stMax">STÅ‘å’l</param>
+    /// <summary>åˆæœŸåŒ–</summary>
+    /// <param name="hpMax">HPæœ€å¤§å€¤</param>
+    /// <param name="stMax">STæœ€å¤§å€¤</param>
     public void Init(int hpMax)
     {
         _hpMax = hpMax;
@@ -36,9 +36,9 @@ public class EnemyHPController
         _currentHp.Value = _hpMax;
     }
 
-    /// <summary>Œ»İ‚ÌHP’l‚©‚çŒ¸Z</summary>
-    /// <param name="value">ˆø‚­’l</param>
-    /// <returns>‚OˆÈ‰º‚¾‚Á‚½‚çFalse‚ğ•Ô‚·</returns>
+    /// <summary>ç¾åœ¨ã®HPå€¤ã‹ã‚‰æ¸›ç®—</summary>
+    /// <param name="value">å¼•ãå€¤</param>
+    /// <returns>ï¼ä»¥ä¸‹ã ã£ãŸã‚‰Falseã‚’è¿”ã™</returns>
     public bool HPDown(int value)
     {
         _hpNow -= value;

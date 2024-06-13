@@ -1,18 +1,18 @@
-using UnityEngine;
+ï»¿using UnityEngine;
 using UnityEngine.AI;
 
-/// <summary>©•ª‚Ì‚¿ê‚É–ß‚éNode</summary>
+/// <summary>è‡ªåˆ†ã®æŒã¡å ´ã«æˆ»ã‚‹Node</summary>
 public class ReturnToMyPostNode : BehaviorTreeBaseNode
 {
-    [Header("ˆÚ“®‘¬“x")]
+    [Header("ç§»å‹•é€Ÿåº¦")]
     [SerializeField]
     float _moveSpeed;
 
-    /// <summary>“®‚©‚µ‚½‚¢ƒIƒuƒWƒFƒNƒg</summary>
+    /// <summary>å‹•ã‹ã—ãŸã„ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ</summary>
     NavMeshAgent _agent = null;
-    /// <summary>©•ª‚Ì‚¿ê</summary>
+    /// <summary>è‡ªåˆ†ã®æŒã¡å ´</summary>
     Vector3 _point = Vector3.zero;
-    /// <summary>“®‚©‚µ‚½‚¢ƒIƒuƒWƒFƒNƒg‚ÌˆÊ’u</summary>
+    /// <summary>å‹•ã‹ã—ãŸã„ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã®ä½ç½®</summary>
     Transform _my = null;
 
     Animator _anim;
@@ -32,7 +32,7 @@ public class ReturnToMyPostNode : BehaviorTreeBaseNode
 
     public override void Init(GameObject target, GameObject my)
     {
-        //eƒIƒuƒWƒFƒNƒg‚É‚¿ê‚ğİ’è‚µ‚Ä‚ ‚é–‚ª‘O’ñ
+        //è¦ªã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã«æŒã¡å ´ã‚’è¨­å®šã—ã¦ã‚ã‚‹äº‹ãŒå‰æ
         _point = my.transform.parent.position;
         _my = my.GetComponent<Transform>();
         _agent = my.GetComponent<NavMeshAgent>();
@@ -47,11 +47,11 @@ public class ReturnToMyPostNode : BehaviorTreeBaseNode
     {
         _agent.speed = _moveSpeed;
 
-        _agent.SetDestination(_point);@//Target‚Ü‚ÅˆÚ“®
+        _agent.SetDestination(_point);ã€€//Targetã¾ã§ç§»å‹•
 
-        _anim.SetBool("IsWalk", true);    //ƒAƒjƒ[ƒVƒ‡ƒ“İ’è
+        _anim.SetBool("IsWalk", true);    //ã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³è¨­å®š
 
-        //–Ú“I’n‚É‚Â‚¢‚½‚ç¬Œ÷‚ğ•Ô‚·
+        //ç›®çš„åœ°ã«ã¤ã„ãŸã‚‰æˆåŠŸã‚’è¿”ã™
         if (Vector3.Distance(_point, _my.position) <= 1)
         {
             _agent.SetDestination(_my.position);
@@ -59,7 +59,7 @@ public class ReturnToMyPostNode : BehaviorTreeBaseNode
             return Result.Success;
         }
 
-        //‰¹‚ª•·‚±‚¦‚½‚ç–ß‚é‚Ì‚ğ’†’f
+        //éŸ³ãŒèã“ãˆãŸã‚‰æˆ»ã‚‹ã®ã‚’ä¸­æ–­
         if (_audibilityController.IsAudible(_target))
         {
             _agent.SetDestination(_my.position);
@@ -67,7 +67,7 @@ public class ReturnToMyPostNode : BehaviorTreeBaseNode
             return Result.Failure;
         }
 
-        //UŒ‚‘ÎÛ‚ğŒ©‚Â‚¯‚½‚ç–ß‚é‚Ì‚ğ’†’f
+        //æ”»æ’ƒå¯¾è±¡ã‚’è¦‹ã¤ã‘ãŸã‚‰æˆ»ã‚‹ã®ã‚’ä¸­æ–­
         if (_sightController.isVisible(_target.transform.position))
         {
             _agent.SetDestination(_my.position);

@@ -1,10 +1,10 @@
-using Unity.VisualScripting;
+ï»¿using Unity.VisualScripting;
 using UnityEngine;
 
-/// <summary>ƒvƒŒƒCƒ„[‚Ì‘å‚Ü‚©‚Èˆ—‚Æƒf[ƒ^‚ÌŠÇ—‚ğ‚·‚éƒNƒ‰ƒX</summary>
+/// <summary>ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã®å¤§ã¾ã‹ãªå‡¦ç†ã¨ãƒ‡ãƒ¼ã‚¿ã®ç®¡ç†ã‚’ã™ã‚‹ã‚¯ãƒ©ã‚¹</summary>
 public class PlayerController : MonoBehaviour, IDamage
 {
-    [Header("İ’è")]
+    [Header("è¨­å®š")]
 
     [SerializeField]
     PlayerParameter _parameter;

@@ -1,32 +1,32 @@
-using System;
+ï»¿using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
 [Serializable]
-/// <summary>UŒ‚‘ÎÛ‚ÉŒü‚©‚Á‚Ä“®‚­Node</summary>
+/// <summary>æ”»æ’ƒå¯¾è±¡ã«å‘ã‹ã£ã¦å‹•ãNode</summary>
 public class MoveToTargetNode : BehaviorTreeBaseNode
 {
-    [Header("ˆÚ“®‘¬“x")]
+    [Header("ç§»å‹•é€Ÿåº¦")]
     [SerializeField]
     float _moveSpeed;
 
-    [Header("ˆÚ“®‚ğ‚â‚ß‚é‚ÌTarget‚Æ‚Ì‹——£")]
-    [Tooltip("Target‚Æ‹ß‚·‚¬‚É‚È‚ç‚È‚¢‚æ‚¤‚É‚·‚é—p")]
+    [Header("ç§»å‹•ã‚’ã‚„ã‚ã‚‹æ™‚ã®Targetã¨ã®è·é›¢")]
+    [Tooltip("Targetã¨è¿‘ã™ãã«ãªã‚‰ãªã„ã‚ˆã†ã«ã™ã‚‹ç”¨")]
     [SerializeField]
     float _stopDistanceMin;
 
-    [Header("ˆÚ“®‚ğ‚â‚ß‚é‚ÌTarget‚Æ‚Ì‹——£")]
-    [Tooltip("Target‚©‚ç—£‚ê‚·‚¬‚é‚Æ”ös‚ğ‚â‚ß‚é")]
+    [Header("ç§»å‹•ã‚’ã‚„ã‚ã‚‹æ™‚ã®Targetã¨ã®è·é›¢")]
+    [Tooltip("Targetã‹ã‚‰é›¢ã‚Œã™ãã‚‹ã¨å°¾è¡Œã‚’ã‚„ã‚ã‚‹")]
     [SerializeField]
     float _stopDistanceMax;
 
-    /// <summary>“®‚©‚µ‚½‚¢ƒIƒuƒWƒFƒNƒg</summary>
+    /// <summary>å‹•ã‹ã—ãŸã„ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ</summary>
     NavMeshAgent _agent = null;
-    /// <summary>–Ú“I’n</summary>
+    /// <summary>ç›®çš„åœ°</summary>
     Transform _target = null;
-    /// <summary>“®‚©‚µ‚½‚¢ƒIƒuƒWƒFƒNƒg‚ÌˆÊ’u</summary>
+    /// <summary>å‹•ã‹ã—ãŸã„ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã®ä½ç½®</summary>
     Transform _my = null;
 
     Animator _anim; 
@@ -49,11 +49,11 @@ public class MoveToTargetNode : BehaviorTreeBaseNode
     {
         _agent.speed = _moveSpeed;
 
-        _agent.SetDestination(_target.position);@//Target‚Ü‚ÅˆÚ“®
+        _agent.SetDestination(_target.position);ã€€//Targetã¾ã§ç§»å‹•
 
-        _anim.SetBool("IsRun", true);    //ƒAƒjƒ[ƒVƒ‡ƒ“İ’è
+        _anim.SetBool("IsRun", true);    //ã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³è¨­å®š
 
-        //Targe‚É’Ç‚¢‚Â‚¢‚½‚ç¬Œ÷‚ğ•Ô‚·
+        //Targeã«è¿½ã„ã¤ã„ãŸã‚‰æˆåŠŸã‚’è¿”ã™
         if (Vector3.Distance(_target.position, _my.position) <= _stopDistanceMin)  
         {
             _agent.SetDestination(_my.position);
@@ -61,7 +61,7 @@ public class MoveToTargetNode : BehaviorTreeBaseNode
             return Result.Success;
         }
 
-        //Target‚Æ‚Ì‹——£‚ª‚Í‚È‚ê‚Ä‚µ‚Ü‚Á‚½‚ç¸”s‚ğ•Ô‚·
+        //Targetã¨ã®è·é›¢ãŒã¯ãªã‚Œã¦ã—ã¾ã£ãŸã‚‰å¤±æ•—ã‚’è¿”ã™
         else if (Vector3.Distance(_target.position, _my.position) >= _stopDistanceMax) 
         {
             _agent.SetDestination(_my.position);

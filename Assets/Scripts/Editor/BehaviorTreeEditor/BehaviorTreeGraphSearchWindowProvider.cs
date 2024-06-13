@@ -1,4 +1,4 @@
-using System;
+Ôªøusing System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Reflection;
@@ -6,7 +6,7 @@ using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.UIElements;
 
-/// <summary>ÉrÉwÉCÉrÉAÉcÉäÅ[ópÇÃåüçıópWindow</summary>
+/// <summary>„Éì„Éò„Ç§„Éì„Ç¢„ÉÑ„É™„ÉºÁî®„ÅÆÊ§úÁ¥¢Áî®Window</summary>
 public class BehaviorTreeGraphSearchWindowProvider : ScriptableObject, ISearchWindowProvider
 {
     private BehaviorTreeGraphView _graphView;
@@ -15,7 +15,7 @@ public class BehaviorTreeGraphSearchWindowProvider : ScriptableObject, ISearchWi
 
     private SearchClassType _searchClassType = new();
 
-    /// <summary>ÉNÉâÉXñºÇ∆TypeÇòAåg</summary>
+    /// <summary>„ÇØ„É©„ÇπÂêç„Å®Type„ÇíÈÄ£Êê∫</summary>
     private Dictionary<string, Type> typeDictionary;
 
     public void Init(BehaviorTreeGraphView graphView, BehaviorTreeEditorWindow window)
@@ -30,14 +30,7 @@ public class BehaviorTreeGraphSearchWindowProvider : ScriptableObject, ISearchWi
             { nameof(DecoratoeNodeCondition), typeof(DecoratoeNodeCondition) },
             { nameof(WaitNode), typeof(WaitNode) },
             { nameof(MoveToTargetNode), typeof(MoveToTargetNode) },
-            { nameof(AttackNode), typeof(AttackNode) },
-            { nameof(RotateTowardTargetNode), typeof(RotateTowardTargetNode) },
-            { nameof(MyAttackAreaIsTarget), typeof(MyAttackAreaIsTarget) },
-            { nameof(NumberOrLess), typeof(NumberOrLess) },
-            { nameof(TargetIsBehind), typeof(TargetIsBehind) },
             { nameof(RandomNode), typeof(RandomNode) },
-            { nameof(AttackAnimationNode), typeof(AttackAnimationNode) },
-            { nameof(AnimMovingSpeedNode), typeof(AnimMovingSpeedNode) },
             { nameof(LookAt), typeof(LookAt) },
             { nameof(IsVisible), typeof(IsVisible) },
             { nameof(IsAudible), typeof(IsAudible) },
@@ -52,20 +45,13 @@ public class BehaviorTreeGraphSearchWindowProvider : ScriptableObject, ISearchWi
     {
         var entries = new List<SearchTreeEntry>();
         entries.Add(new SearchTreeGroupEntry(new GUIContent("Create Node")));
-        //é©çÏÉNÉâÉXÇÃí«â¡
+        //Ëá™‰Ωú„ÇØ„É©„Çπ„ÅÆËøΩÂä†
         entries.Add(new SearchTreeEntry(new GUIContent(nameof(SelectorNode))) { level = 1, userData = typeof(SelectorNode).FullName});
         entries.Add(new SearchTreeEntry(new GUIContent(nameof(SequenceNode))) { level = 1, userData = typeof(SequenceNode).FullName});
         entries.Add(new SearchTreeEntry(new GUIContent(nameof(DecoratoeNodeCondition))) { level = 1, userData = typeof(DecoratoeNodeCondition).FullName});
         entries.Add(new SearchTreeEntry(new GUIContent(nameof(WaitNode))) { level = 1, userData = typeof(WaitNode).FullName});
         entries.Add(new SearchTreeEntry(new GUIContent(nameof(MoveToTargetNode))) { level = 1, userData = typeof(MoveToTargetNode).FullName});
-        entries.Add(new SearchTreeEntry(new GUIContent(nameof(AttackNode))) { level = 1, userData = typeof(AttackNode).FullName});
-        entries.Add(new SearchTreeEntry(new GUIContent(nameof(RotateTowardTargetNode))) { level = 1, userData = typeof(RotateTowardTargetNode).FullName});
-        entries.Add(new SearchTreeEntry(new GUIContent(nameof(MyAttackAreaIsTarget))) { level = 1, userData = typeof(MyAttackAreaIsTarget).FullName});
-        entries.Add(new SearchTreeEntry(new GUIContent(nameof(NumberOrLess))) { level = 1, userData = typeof(NumberOrLess).FullName});
-        entries.Add(new SearchTreeEntry(new GUIContent(nameof(TargetIsBehind))) { level = 1, userData = typeof(TargetIsBehind).FullName});
         entries.Add(new SearchTreeEntry(new GUIContent(nameof(RandomNode))) { level = 1, userData = typeof(RandomNode).FullName});
-        entries.Add(new SearchTreeEntry(new GUIContent(nameof(AttackAnimationNode))) { level = 1, userData = typeof(AttackAnimationNode).FullName});
-        entries.Add(new SearchTreeEntry(new GUIContent(nameof(AnimMovingSpeedNode))) { level = 1, userData = typeof(AnimMovingSpeedNode).FullName});
         entries.Add(new SearchTreeEntry(new GUIContent(nameof(LookAt))) { level = 1, userData = typeof(LookAt).FullName});
         entries.Add(new SearchTreeEntry(new GUIContent(nameof(IsVisible))) { level = 1, userData = typeof(IsVisible).FullName});
         entries.Add(new SearchTreeEntry(new GUIContent(nameof(IsAudible))) { level = 1, userData = typeof(IsAudible).FullName});
@@ -77,14 +63,14 @@ public class BehaviorTreeGraphSearchWindowProvider : ScriptableObject, ISearchWi
 
     public bool OnSelectEntry(SearchTreeEntry SearchTreeEntry, SearchWindowContext context)
     {
-        //É}ÉEÉXÇÃÉ|ÉWÉVÉáÉìéÊìæ
+        //„Éû„Ç¶„Çπ„ÅÆ„Éù„Ç∏„Ç∑„Éß„É≥ÂèñÂæó
         var worldMousePosition = _window.rootVisualElement.ChangeCoordinatesTo(_window.rootVisualElement.parent, context.screenMousePosition - _window.position.position);
         var localMousePosition = _graphView.contentViewContainer.WorldToLocal(worldMousePosition);
 
-        //classñºéÊìæ
+        //classÂêçÂèñÂæó
         string nodeName = SearchTreeEntry.userData.ToString();
 
-        //typeDictionaryÇégÇÌÇ∏ÉAÉZÉìÉuÉäÇ©ÇÁíTÇ∑ï˚ñ@
+        //typeDictionary„Çí‰Ωø„Çè„Åö„Ç¢„Çª„É≥„Éñ„É™„Åã„ÇâÊé¢„ÅôÊñπÊ≥ï
         //object myObject = _searchClassType.CreateInstance(nodeName);
         //Type nodeType = SearchTreeEntry.userData.GetType();
 
@@ -94,7 +80,7 @@ public class BehaviorTreeGraphSearchWindowProvider : ScriptableObject, ISearchWi
         //    _graphView.CreateNode(myObjectType,new Rect(localMousePosition, new Vector2(100, 150)), false);
         //}
 
-        Type myObjectType = typeDictionary[nodeName]; //É^ÉCÉvéÊìæ
+        Type myObjectType = typeDictionary[nodeName]; //„Çø„Ç§„ÉóÂèñÂæó
 
         if(myObjectType != null)
             _graphView.CreateNode(myObjectType, new Rect(localMousePosition, new Vector2(100, 150)), false);

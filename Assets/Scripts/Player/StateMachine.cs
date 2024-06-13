@@ -1,65 +1,65 @@
-using System.Collections.Generic;
+ï»¿using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
-/// ƒXƒe[ƒgƒ}ƒV[ƒ“
-/// ‚±‚ÌƒNƒ‰ƒX‚ğ‚Âê‡ƒXƒe[ƒg‚Ìó‘Ô‚ğ•\‚·Enum‚ğì¬‚·‚é•K—v‚ª‚ ‚é
+/// ã‚¹ãƒ†ãƒ¼ãƒˆãƒã‚·ãƒ¼ãƒ³
+/// ã“ã®ã‚¯ãƒ©ã‚¹ã‚’æŒã¤å ´åˆã‚¹ãƒ†ãƒ¼ãƒˆã®çŠ¶æ…‹ã‚’è¡¨ã™Enumã‚’ä½œæˆã™ã‚‹å¿…è¦ãŒã‚ã‚‹
 /// </summary>
-/// <typeparam name="StateType">ŠeƒXƒe[ƒg‚Ìó‘Ô(Type‚ÍEnum‚Ì‚İ)</typeparam>
+/// <typeparam name="StateType">å„ã‚¹ãƒ†ãƒ¼ãƒˆã®çŠ¶æ…‹(Typeã¯Enumã®ã¿)</typeparam>
 public abstract class StateMachine
 {
-    /// <summary>ƒXƒe[ƒg‚ÌŠî’êƒNƒ‰ƒXEŠeƒXƒe[ƒg‚Í‚±‚ÌƒNƒ‰ƒX‚ğŒp³‚·‚é</summary>
+    /// <summary>ã‚¹ãƒ†ãƒ¼ãƒˆã®åŸºåº•ã‚¯ãƒ©ã‚¹ãƒ»å„ã‚¹ãƒ†ãƒ¼ãƒˆã¯ã“ã®ã‚¯ãƒ©ã‚¹ã‚’ç¶™æ‰¿ã™ã‚‹</summary>
     public abstract class StateBase
     {
-        /// <summary>ˆê”ÔÅ‰‚É‚P‰ñ‚¾‚¯ŒÄ‚Î‚ê‚é</summary>
+        /// <summary>ä¸€ç•ªæœ€åˆã«ï¼‘å›ã ã‘å‘¼ã°ã‚Œã‚‹</summary>
         public abstract void Init();
-        /// <summary>ƒXƒe[ƒg‚ªØ‚è‘Ö‚íƒŠŒãÅ‰‚É‚P‰ñŒÄ‚Î‚ê‚é</summary>
+        /// <summary>ã‚¹ãƒ†ãƒ¼ãƒˆãŒåˆ‡ã‚Šæ›¿ã‚ãƒªå¾Œæœ€åˆã«ï¼‘å›å‘¼ã°ã‚Œã‚‹</summary>
         public abstract void OnEnter();
-        /// <summary>–ˆƒtƒŒ[ƒ€ŒÄ‚Î‚ê‚é</summary>
+        /// <summary>æ¯ãƒ•ãƒ¬ãƒ¼ãƒ å‘¼ã°ã‚Œã‚‹</summary>
         public abstract void OnUpdate();
-        /// <summary>FixedUpdate‚ÅŒÄ‚Î‚ê‚é</summary>
+        /// <summary>FixedUpdateã§å‘¼ã°ã‚Œã‚‹</summary>
         public abstract void OnFixedUpdate();
-        /// <summary>ƒXƒe[ƒg‚ªØ‚è‘Ö‚íƒŠ‘O‚É‚P‰ñŒÄ‚Î‚ê‚é</summary>
+        /// <summary>ã‚¹ãƒ†ãƒ¼ãƒˆãŒåˆ‡ã‚Šæ›¿ã‚ãƒªå‰ã«ï¼‘å›å‘¼ã°ã‚Œã‚‹</summary>
         public abstract void OnEnd();
     }
-    /// <summary>Œ»İ‚ÌState</summary>
+    /// <summary>ç¾åœ¨ã®State</summary>
     private StateBase _currentState;
 
-    /// <summary>ŠeState‚ğ‚à‚Â</summary>
+    /// <summary>å„Stateã‚’ã‚‚ã¤</summary>
     private readonly Dictionary<int, StateBase> _states = new Dictionary<int, StateBase>();
 
     public Dictionary<int, StateBase> States => _states;
 
-    /// <summary>ƒXƒe[ƒg‚Ì“o˜^</summary>
-    /// <param name="state">“o˜^‚µ‚½‚¢ƒXƒe[ƒg</param>
+    /// <summary>ã‚¹ãƒ†ãƒ¼ãƒˆã®ç™»éŒ²</summary>
+    /// <param name="state">ç™»éŒ²ã—ãŸã„ã‚¹ãƒ†ãƒ¼ãƒˆ</param>
     public void StateAdd(int stateId, StateBase state)
     {
-        //‚·‚Å‚É“o˜^‚µ‚Ä‚¢‚½‚ç‰½‚à‚µ‚È‚¢
+        //ã™ã§ã«ç™»éŒ²ã—ã¦ã„ãŸã‚‰ä½•ã‚‚ã—ãªã„
         if (_states.ContainsKey(stateId))
         {
             Debug.LogError("not set state! : " + stateId);
             return;
         }
-        //“o˜^
+        //ç™»éŒ²
         _states.Add(stateId, state);
     }
 
-    /// <summary>Å‰‚És‚¤ƒXƒe[ƒg‚Ìİ’è</summary>
-    /// <param name="state">ƒXƒe[ƒg‚Ìƒ^ƒCƒv</param>
+    /// <summary>æœ€åˆã«è¡Œã†ã‚¹ãƒ†ãƒ¼ãƒˆã®è¨­å®š</summary>
+    /// <param name="state">ã‚¹ãƒ†ãƒ¼ãƒˆã®ã‚¿ã‚¤ãƒ—</param>
     public void Initialize(int stateId)
     {
-        //“o˜^‚µ‚Ä‚¢‚È‚©‚Á‚½‚çƒGƒ‰[‚ğo‚·
+        //ç™»éŒ²ã—ã¦ã„ãªã‹ã£ãŸã‚‰ã‚¨ãƒ©ãƒ¼ã‚’å‡ºã™
         if (!_states.ContainsKey(stateId))
         {
             Debug.LogError("not set state! : " + stateId);
             return;
         }
-        //Å‰‚És‚í‚ê‚éƒXƒe[ƒg‚Æ‚µ‚Äİ’è
+        //æœ€åˆã«è¡Œã‚ã‚Œã‚‹ã‚¹ãƒ†ãƒ¼ãƒˆã¨ã—ã¦è¨­å®š
         _currentState = _states[stateId];
         CurrentChangeState(stateId);
         _currentState.OnEnter();
     }
-    /// <summary>Œ»İ‚ÌƒXƒe[ƒg‚ğ–ˆƒtƒŒ[ƒ€s‚¤</summary>
+    /// <summary>ç¾åœ¨ã®ã‚¹ãƒ†ãƒ¼ãƒˆã‚’æ¯ãƒ•ãƒ¬ãƒ¼ãƒ è¡Œã†</summary>
     public void OnUpdate()
     {
         _currentState.OnUpdate();
@@ -73,8 +73,8 @@ public abstract class StateMachine
 
     public abstract void CurrentChangeState(int stateId);
 
-    /// <summary>ƒXƒe[ƒg‚ÌØ‚è‘Ö‚¦</summary>
-    /// <param name="state">Ø‚è‘Ö‚¦‚½‚¢ƒXƒe[ƒg‚Ìƒ^ƒCƒv</param>
+    /// <summary>ã‚¹ãƒ†ãƒ¼ãƒˆã®åˆ‡ã‚Šæ›¿ãˆ</summary>
+    /// <param name="state">åˆ‡ã‚Šæ›¿ãˆãŸã„ã‚¹ãƒ†ãƒ¼ãƒˆã®ã‚¿ã‚¤ãƒ—</param>
     public void OnChangeState(int stateId)
     {
         _currentState.OnEnd();
@@ -84,7 +84,7 @@ public abstract class StateMachine
             Debug.LogError("not set state! : " + stateId);
             return;
         }
-        // ƒXƒe[ƒg‚ğØ‚è‘Ö‚¦‚é
+        // ã‚¹ãƒ†ãƒ¼ãƒˆã‚’åˆ‡ã‚Šæ›¿ãˆã‚‹
         _currentState = _states[stateId];
         _currentState.OnEnter();
     }

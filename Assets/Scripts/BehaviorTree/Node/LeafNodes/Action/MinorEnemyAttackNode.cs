@@ -1,12 +1,12 @@
-using UnityEngine;
+ï»¿using UnityEngine;
 
-/// <summary>UŒ‚‚ğs‚¤Node</summary>
+/// <summary>æ”»æ’ƒã‚’è¡Œã†Node</summary>
 [SerializeField]
 public class MinorEnemyAttackNode : BehaviorTreeBaseNode
 {
     float _coolTimer;
 
-    [Header("UŒ‚‚É‚©‚©‚éŠÔ")]
+    [Header("æ”»æ’ƒã«ã‹ã‹ã‚‹æ™‚é–“")]
     [SerializeField]
     float _coolTime;
 
@@ -25,16 +25,16 @@ public class MinorEnemyAttackNode : BehaviorTreeBaseNode
 
     public override Result Evaluate()
     {
-        if (_coolTimer == _coolTime)@//Node‚É“ü‚Á‚½uŠÔ
+        if (_coolTimer == _coolTime)ã€€//Nodeã«å…¥ã£ãŸç¬é–“
         {
-            _anim.SetTrigger("Attack");     //ƒAƒjƒ[ƒVƒ‡ƒ“İ’è
+            _anim.SetTrigger("Attack");     //ã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³è¨­å®š
         }
 
         _coolTimer -= Time.deltaTime;
 
-        if (_coolTimer <= 0) //‘Ò‚¿ŠÔŒo‰ß
+        if (_coolTimer <= 0) //å¾…ã¡æ™‚é–“çµŒé
         {
-            _coolTimer = _coolTime; @@@@@@@//‰Šú‰»
+            _coolTimer = _coolTime; ã€€ã€€ã€€ã€€ã€€ã€€ã€€//åˆæœŸåŒ–
             return Result.Success;
         }
 

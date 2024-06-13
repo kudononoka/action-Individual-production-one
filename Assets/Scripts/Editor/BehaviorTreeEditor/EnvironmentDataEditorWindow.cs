@@ -1,4 +1,4 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using UnityEditor;
 using UnityEditor.Experimental.GraphView;
@@ -49,10 +49,10 @@ public class EnvironmentDataEditorWindow : EditorWindow
     {
         foreach (GameObject go in Resources.FindObjectsOfTypeAll(typeof(GameObject)) as GameObject[])
         {
-            // ƒqƒGƒ‰ƒ‹ƒL[‚É‚ ‚éƒQ[ƒ€ƒIƒuƒWƒFƒNƒg
+            // ãƒ’ã‚¨ãƒ©ãƒ«ã‚­ãƒ¼ã«ã‚ã‚‹ã‚²ãƒ¼ãƒ ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ
             if (!EditorUtility.IsPersistent(go.transform.root.gameObject) && !(go.hideFlags == HideFlags.NotEditable || go.hideFlags == HideFlags.HideAndDontSave))
             {
-                //e‚Ì‚İ
+                //è¦ªã®ã¿
                 if (go.transform.parent == null)
                 {
                     if (go != null)

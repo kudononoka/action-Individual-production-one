@@ -1,26 +1,26 @@
-using UnityEngine;
+ï»¿using UnityEngine;
 
-/// <summary>‘ÎÛ‚ª‰¹‚ğ—§‚Ä‚Ä‚¢‚Ä‚»‚ê‚ª•·‚±‚¦‚Ä‚¢‚é‚©‚Ç‚¤‚©‚ğ”»’è‚·‚é</summary>
+/// <summary>å¯¾è±¡ãŒéŸ³ã‚’ç«‹ã¦ã¦ã„ã¦ãã‚ŒãŒèã“ãˆã¦ã„ã‚‹ã‹ã©ã†ã‹ã‚’åˆ¤å®šã™ã‚‹</summary>
 public class AudibilityController : MonoBehaviour
 {
-    [Header("•·‚±‚¦‚é”ÍˆÍ")]
+    [Header("èã“ãˆã‚‹ç¯„å›²")]
     [SerializeField, Range(0, 50)]
     float _earshot;
 
     bool _isAudible;
 
-    /// <summary>•·‚±‚¦‚½êŠ</summary>
+    /// <summary>èã“ãˆãŸå ´æ‰€</summary>
     Vector3 _soundLocation = Vector3.zero;
 
-    /// <summary>•·‚±‚¦‚½êŠ</summary>
+    /// <summary>èã“ãˆãŸå ´æ‰€</summary>
     public Vector3 SoundLocation => _soundLocation;
 
-    /// <summary>‘ÎÛ‚ª”­‚·‚é‰¹‚É•·‚±‚¦‚Ä‚¢‚é‚©‚Ç‚¤‚©</summary>
-    /// <param name="target">‘ÎÛ‚Æ‚È‚é‚à‚Ì</param>
-    /// <returns>•·‚±‚¦‚½‚çTrue‚ğ•Ô‚·</returns>
+    /// <summary>å¯¾è±¡ãŒç™ºã™ã‚‹éŸ³ã«èã“ãˆã¦ã„ã‚‹ã‹ã©ã†ã‹</summary>
+    /// <param name="target">å¯¾è±¡ã¨ãªã‚‹ã‚‚ã®</param>
+    /// <returns>èã“ãˆãŸã‚‰Trueã‚’è¿”ã™</returns>
     public bool IsAudible(GameObject target)
     {
-        //‘ÎÛ‚ª•·‚±‚¦‚é”ÍˆÍ‚É‚¢‚é@‚©‚Â@MakeASound@‚ğ‚Á‚Ä‚¢‚é‚©
+        //å¯¾è±¡ãŒèã“ãˆã‚‹ç¯„å›²ã«ã„ã‚‹ã€€ã‹ã¤ã€€MakeASoundã€€ã‚’æŒã£ã¦ã„ã‚‹ã‹
         if (Vector3.Distance(target.transform.position, this.transform.position) <= _earshot 
             && target.TryGetComponent<MakeASound>(out var makeASound))
         {

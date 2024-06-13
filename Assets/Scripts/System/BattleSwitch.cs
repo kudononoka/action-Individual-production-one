@@ -11,9 +11,9 @@ public class BattleSwitch : MonoBehaviour
 
     public void BattleStart()
     {
-        GameManager.Instance.BattleStart();　        //バトル状態にする
+        //GameManager.Instance.BattleStart();　        //バトル状態にする
         _anim.SetBool("IsClose", true);             //扉を閉める
-        _uiController.BattleStart();                  //Enemyバーを表示
+        //_uiController.BattleStart();                  //Enemyバーを表示
     }
 
     private void OnTriggerEnter(Collider other)

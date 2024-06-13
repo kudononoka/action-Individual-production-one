@@ -1,12 +1,12 @@
-using UnityEngine;
-/// <summary>ƒm[ƒh‚Ìƒ^ƒCƒv@ƒ^ƒCƒv‚É‚æ‚Á‚ÄWindowã‚É•\¦‚·‚éŒ`‚ª•Ï‚í‚Á‚Ä‚­‚é</summary>
+ï»¿using UnityEngine;
+/// <summary>ãƒãƒ¼ãƒ‰ã®ã‚¿ã‚¤ãƒ—ã€€ã‚¿ã‚¤ãƒ—ã«ã‚ˆã£ã¦Windowä¸Šã«è¡¨ç¤ºã™ã‚‹å½¢ãŒå¤‰ã‚ã£ã¦ãã‚‹</summary>
 public enum NodeType
 {
-    /// <summary>‘S‘Ì‚ÌŠJn“_ƒm[ƒh</summary>
+    /// <summary>å…¨ä½“ã®é–‹å§‹ç‚¹ãƒãƒ¼ãƒ‰</summary>
     RootNode,
-    /// <summary>SequenceESelector</summary>
+    /// <summary>Sequenceãƒ»Selector</summary>
     CompositeNode,
-    /// <summary>ğŒ•t‚«‚ÅÀs‚·‚éƒm[ƒh</summary>
+    /// <summary>æ¡ä»¶ä»˜ãã§å®Ÿè¡Œã™ã‚‹ãƒãƒ¼ãƒ‰</summary>
     DecoratorNode,
     /// <summary>ActionNode</summary>
     ActionNode,
@@ -14,18 +14,18 @@ public enum NodeType
     ConditionNode,
 }
 
-/// <summary>ƒm[ƒh‚Ìisó‹µ</summary>
+/// <summary>ãƒãƒ¼ãƒ‰ã®é€²è¡ŒçŠ¶æ³</summary>
 public enum Result
 {
-    /// <summary>Às’†</summary>
+    /// <summary>å®Ÿè¡Œä¸­</summary>
     Runnimg,
-    /// <summary>¬Œ÷</summary>
+    /// <summary>æˆåŠŸ</summary>
     Success,
-    /// <summary>¸”s</summary>
+    /// <summary>å¤±æ•—</summary>
     Failure,
 }
 
-/// <summary>BehaviorTree‚Åg‚¤ê—pŠî’êƒNƒ‰ƒXNodeENodeƒNƒ‰ƒX‚ğŒp³</summary>
+/// <summary>BehaviorTreeã§ä½¿ã†å°‚ç”¨åŸºåº•ã‚¯ãƒ©ã‚¹Nodeãƒ»Nodeã‚¯ãƒ©ã‚¹ã‚’ç¶™æ‰¿</summary>
 public abstract class BehaviorTreeBaseNode : ScriptableObject
 {
     protected string nodeName;
@@ -34,13 +34,13 @@ public abstract class BehaviorTreeBaseNode : ScriptableObject
     public string NodeName => nodeName;
     public NodeData NodeData => nodeData;
 
-    /// <summary>Node‚Ìˆ—ƒCƒxƒ“ƒg</summary>
-    /// <returns>Node‚ÌŒ‹‰Ê</returns>
+    /// <summary>Nodeã®å‡¦ç†ã‚¤ãƒ™ãƒ³ãƒˆ</summary>
+    /// <returns>Nodeã®çµæœ</returns>
     public abstract Result Evaluate();
 
-    /// <summary>‚»‚ê‚¼‚ê‚ÌNode‚Ì‰Šú‰»ˆ—‚ğs‚¤</summary>
-    /// <param name="target">“G‚Æ‚È‚éTarget</param>
-    /// <param name="my">ÀÛ‚É“®‚©‚·GameObject</param>
+    /// <summary>ãã‚Œãã‚Œã®Nodeã®åˆæœŸåŒ–å‡¦ç†ã‚’è¡Œã†</summary>
+    /// <param name="target">æ•µã¨ãªã‚‹Target</param>
+    /// <param name="my">å®Ÿéš›ã«å‹•ã‹ã™GameObject</param>
     public abstract void Init(GameObject target, GameObject my);
 }
 

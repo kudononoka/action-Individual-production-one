@@ -1,4 +1,4 @@
-using System.Collections.Generic;
+ï»¿using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor.Experimental.GraphView;
 using UnityEngine.UIElements;
@@ -20,16 +20,16 @@ public class BehaviorTreeGraphView : GraphView
         _window = window;
 
         styleSheets.Add(Resources.Load<StyleSheet>("BehaviorTree"));
-        SetupZoom(ContentZoomer.DefaultMinScale, ContentZoomer.DefaultMaxScale); //ƒY[ƒ€‚Ìİ’è
+        SetupZoom(ContentZoomer.DefaultMinScale, ContentZoomer.DefaultMaxScale); //ã‚ºãƒ¼ãƒ ã®è¨­å®š
 
-        this.AddManipulator(new ContentDragger()); //ƒLƒƒƒ“ƒoƒXã‚Ì—v‘f‚ğƒhƒ‰ƒbƒO‚µ‚ÄˆÊ’u‚ğ•ÏX‰Â”\‚É‚·‚é
-        this.AddManipulator(new SelectionDragger()); //‘I‘ğ‚µ‚½Node‚ğƒhƒ‰ƒbƒO‚ÅˆÚ“®‰Â”\‚É‚·‚é
-        this.AddManipulator(new RectangleSelector()); //”ÍˆÍ‘I‘ğ‚ğ‰Â”\‚É‚·‚é
+        this.AddManipulator(new ContentDragger()); //ã‚­ãƒ£ãƒ³ãƒã‚¹ä¸Šã®è¦ç´ ã‚’ãƒ‰ãƒ©ãƒƒã‚°ã—ã¦ä½ç½®ã‚’å¤‰æ›´å¯èƒ½ã«ã™ã‚‹
+        this.AddManipulator(new SelectionDragger()); //é¸æŠã—ãŸNodeã‚’ãƒ‰ãƒ©ãƒƒã‚°ã§ç§»å‹•å¯èƒ½ã«ã™ã‚‹
+        this.AddManipulator(new RectangleSelector()); //ç¯„å›²é¸æŠã‚’å¯èƒ½ã«ã™ã‚‹
 
         var grid = new GridBackground();
         Insert(0, grid);
 
-        //Nodeì¬‚·‚é‚ÌŒŸõWindowİ’è
+        //Nodeä½œæˆã™ã‚‹æ™‚ã®æ¤œç´¢Windowè¨­å®š
         var searchWindowProvider = ScriptableObject.CreateInstance<BehaviorTreeGraphSearchWindowProvider>();
         searchWindowProvider.Init(this, window);
         this.nodeCreationRequest += context =>
@@ -37,25 +37,25 @@ public class BehaviorTreeGraphView : GraphView
             SearchWindow.Open(new SearchWindowContext(context.screenMousePosition), searchWindowProvider);
         };
 
-        if(_window.Data.RootNodeData == null)           //ƒ‹[ƒgì¬
+        if(_window.Data.RootNodeData == null)           //ãƒ«ãƒ¼ãƒˆä½œæˆ
         {
             CreateNode(typeof(RootNode), new Rect(100, 200, 100, 150), true);
         }
 
-        //Graph‚ÌŒ©‚½–Ú‚ª•Ï‚í‚Á‚½‚ÉŒÄ‚ñ‚Å‚à‚ç‚¤ƒƒ\ƒbƒh‚ğ’Ç‰Á
+        //Graphã®è¦‹ãŸç›®ãŒå¤‰ã‚ã£ãŸæ™‚ã«å‘¼ã‚“ã§ã‚‚ã‚‰ã†ãƒ¡ã‚½ãƒƒãƒ‰ã‚’è¿½åŠ 
         this.graphViewChanged += DeleteNode;
         this.graphViewChanged += EdgeCreateDelete;
     }
 
-    /// <summary>Port“¯m‚ğŒq‚®‚Æ‚«‚ÌğŒ‚ª‘‚©‚ê‚Ä‚¢‚é</summary>
+    /// <summary>PortåŒå£«ã‚’ç¹‹ãã¨ãã®æ¡ä»¶ãŒæ›¸ã‹ã‚Œã¦ã„ã‚‹</summary>
     public override List<Port> GetCompatiblePorts(Port startPort, NodeAdapter nodeAdapter)
     {
         var compatiblePorts = new List<Port>();
 
         ports.ForEach(port =>
         {
-            //“¯‚¶Port‚Í‚Â‚È‚ª‚ç‚È‚¢‚æ‚¤‚É‚·‚é
-            //“¯‚¶Node‚ÌPort“¯m‚Í‚Â‚È‚ª‚ç‚È‚¢‚æ‚¤‚É‚·‚é
+            //åŒã˜Portã¯ã¤ãªãŒã‚‰ãªã„ã‚ˆã†ã«ã™ã‚‹
+            //åŒã˜Nodeã®PortåŒå£«ã¯ã¤ãªãŒã‚‰ãªã„ã‚ˆã†ã«ã™ã‚‹
             if (startPort != port && startPort.node != port.node)
                 compatiblePorts.Add(port);
         });
@@ -63,20 +63,20 @@ public class BehaviorTreeGraphView : GraphView
         return compatiblePorts;
     }
 
-    /// <summary>ƒm[ƒh‚Ìì¬‚Æ•\¦</summary>
-    /// <param name="nodeType">ƒm[ƒhƒNƒ‰ƒXType</param>
-    /// <param name="rect">Node‚ÌêŠ</param>
-    /// <param name="isRoot">ƒ‹[ƒgƒm[ƒh‚©‚Ç‚¤‚©</param>
+    /// <summary>ãƒãƒ¼ãƒ‰ã®ä½œæˆã¨è¡¨ç¤º</summary>
+    /// <param name="nodeType">ãƒãƒ¼ãƒ‰ã‚¯ãƒ©ã‚¹Type</param>
+    /// <param name="rect">Nodeã®å ´æ‰€</param>
+    /// <param name="isRoot">ãƒ«ãƒ¼ãƒˆãƒãƒ¼ãƒ‰ã‹ã©ã†ã‹</param>
     public void CreateNode(Type nodeType, Rect rect, bool isRoot)
     {
         var node = _window.CreateNode(nodeType, rect, isRoot);
         CreatNodeView(node);
     }
 
-    /// <summary>ƒm[ƒh‚Ì•\¦</summary>
+    /// <summary>ãƒãƒ¼ãƒ‰ã®è¡¨ç¤º</summary>
     public void CreatNodeView(BehaviorTreeBaseNode node)
     {
-        //Node‚Ìİ’è
+        //Nodeã®è¨­å®š
         NodeSetting setting = new NodeSetting(this);
         NodeView nodeView = new NodeView(node);
         setting.Setting(node, node.NodeData.Rect, nodeView);
@@ -89,12 +89,12 @@ public class BehaviorTreeGraphView : GraphView
             _nodes.Add(nodeView);
         }
 
-        //Node‚ª‘I‘ğ‚³‚ê‚½‚ç
+        //NodeãŒé¸æŠã•ã‚ŒãŸã‚‰
         nodeView.RegisterCallback<MouseDownEvent>(evt =>
         {
             if (evt.clickCount == 1)
             {
-                //ScriptableObject(ƒm[ƒh)‚ÌƒvƒƒpƒeƒB‚ğInspector‚É•\¦
+                //ScriptableObject(ãƒãƒ¼ãƒ‰)ã®ãƒ—ãƒ­ãƒ‘ãƒ†ã‚£ã‚’Inspectorã«è¡¨ç¤º
                 Selection.objects = new UnityEngine.Object[] { nodeView.Node };
             }
         });
@@ -102,7 +102,7 @@ public class BehaviorTreeGraphView : GraphView
         AddElement(nodeView);
     }
 
-    /// <summary>Node‚Ìíœ‚ÉŒÄ‚Î‚ê‚é</summary>
+    /// <summary>Nodeã®å‰Šé™¤æ™‚ã«å‘¼ã°ã‚Œã‚‹</summary>
     private GraphViewChange DeleteNode(GraphViewChange graphViewChange)
     {
         if (graphViewChange.elementsToRemove != null)
@@ -118,10 +118,10 @@ public class BehaviorTreeGraphView : GraphView
         return graphViewChange;
     }
 
-    /// <summary>Edge‚ÌÚ‘±‚ÆØ’f‚ÉŒÄ‚Î‚ê‚é</summary>
+    /// <summary>Edgeã®æ¥ç¶šã¨åˆ‡æ–­æ™‚ã«å‘¼ã°ã‚Œã‚‹</summary>
     private GraphViewChange EdgeCreateDelete(GraphViewChange graphViewChange)
     {
-        //Edge‚ÌÚ‘±
+        //Edgeã®æ¥ç¶šæ™‚
         if (graphViewChange.edgesToCreate != null)
         {
             foreach (Edge edge in graphViewChange.edgesToCreate)
@@ -131,7 +131,7 @@ public class BehaviorTreeGraphView : GraphView
                 var childNodeView = edge.input.node as NodeView;
                 BehaviorTreeBaseNode nodeData = parentNodeView.Node;
 
-                //eƒm[ƒh‚Éqƒm[ƒhî•ñ‚ğ’Ç‰Á
+                //è¦ªãƒãƒ¼ãƒ‰ã«å­ãƒãƒ¼ãƒ‰æƒ…å ±ã‚’è¿½åŠ 
                 if (childNodeView != null && nodeData is IChildNodeSetting iChildNodeSet)
                 {
                     iChildNodeSet.ChildNodeSet(childNodeView.Node);
@@ -141,7 +141,7 @@ public class BehaviorTreeGraphView : GraphView
             }
         }
 
-        //Edge‚ÌØ’f
+        //Edgeã®åˆ‡æ–­æ™‚
         if (graphViewChange.elementsToRemove != null)
         {
             foreach (GraphElement element in graphViewChange.elementsToRemove)
@@ -153,7 +153,7 @@ public class BehaviorTreeGraphView : GraphView
                     var childNodeView = edge.input.node as NodeView;
                     BehaviorTreeBaseNode node = parentNodeView.Node;
 
-                    //eƒm[ƒh‚Ìqƒm[ƒhî•ñ‚ğ‰ğœ
+                    //è¦ªãƒãƒ¼ãƒ‰ã®å­ãƒãƒ¼ãƒ‰æƒ…å ±ã‚’è§£é™¤
                     if (childNodeView != null && node is IChildNodeSetting iChildNodeSet)
                     {
                         iChildNodeSet.ChildNodeRemove(childNodeView.Node);
@@ -166,11 +166,11 @@ public class BehaviorTreeGraphView : GraphView
         return graphViewChange;
     }
 
-    /// <summary>Edge‚ÌÚ‘±</summary>
-    /// <param name="parentID">eƒm[ƒhID</param>
-    /// <param name="childID">qƒm[ƒhID</param>
-    /// <param name="outputNum">eNodePort‚ÌContainer‚ÌNumber</param>
-    /// <param name="inputNum">qNodePort‚ÌContainer‚ÌNumber</param>
+    /// <summary>Edgeã®æ¥ç¶š</summary>
+    /// <param name="parentID">è¦ªãƒãƒ¼ãƒ‰ID</param>
+    /// <param name="childID">å­ãƒãƒ¼ãƒ‰ID</param>
+    /// <param name="outputNum">è¦ªNodePortã®Containerã®Number</param>
+    /// <param name="inputNum">å­NodePortã®Containerã®Number</param>
     public void ConnectNodes(int parentID, int childID, int outputNum = 0, int inputNum = 0)
     {
         Node parentNode = parentID == -1 ? rootNode : _nodes[parentID];
@@ -179,13 +179,13 @@ public class BehaviorTreeGraphView : GraphView
         Port outputPort = parentNode.outputContainer[outputNum] as Port;
         Port inputPort = childNode.inputContainer[inputNum] as Port;
 
-        Edge edge = new Edge                 //Edge‚Ìì¬
+        Edge edge = new Edge                 //Edgeã®ä½œæˆ
         {
             output = outputPort,
             input = inputPort
         };
 
-        outputPort.Connect(edge);@          //Edge‚ÌÚ‘±
+        outputPort.Connect(edge);ã€€          //Edgeã®æ¥ç¶š
         inputPort.Connect(edge);
         this.AddElement(edge);
     }

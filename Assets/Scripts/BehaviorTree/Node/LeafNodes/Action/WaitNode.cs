@@ -1,4 +1,4 @@
-using System;
+ï»¿using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -7,7 +7,7 @@ public class WaitNode : BehaviorTreeBaseNode
 { 
     float _timer;
 
-    [Header("‘Ò‚¿ŠÔ")]
+    [Header("å¾…ã¡æ™‚é–“")]
     [SerializeField] float _waitTime;
 
     public WaitNode()
@@ -23,9 +23,9 @@ public class WaitNode : BehaviorTreeBaseNode
     {
         _timer += Time.deltaTime;
 
-        if(_timer >= _waitTime) //‘Ò‚¿ŠÔŒo‰ß
+        if(_timer >= _waitTime) //å¾…ã¡æ™‚é–“çµŒé
         {
-            _timer = 0; //‰Šú‰»
+            _timer = 0; //åˆæœŸåŒ–
             return Result.Success;
         }
 

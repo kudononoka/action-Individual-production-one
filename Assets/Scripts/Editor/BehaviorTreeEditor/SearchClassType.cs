@@ -1,4 +1,4 @@
-using System;
+ï»¿using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Reflection;
@@ -9,38 +9,38 @@ public class SearchClassType
 {
     private Assembly[] _assemblyArray = null;
 
-    /// <summary>ƒNƒ‰ƒX–¼‚©‚çƒNƒ‰ƒX‚ÌƒCƒ“ƒXƒ^ƒ“ƒX¶¬</summary>
-    /// <param name="className">ƒNƒ‰ƒX–¼</param>
+    /// <summary>ã‚¯ãƒ©ã‚¹åã‹ã‚‰ã‚¯ãƒ©ã‚¹ã®ã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹ç”Ÿæˆ</summary>
+    /// <param name="className">ã‚¯ãƒ©ã‚¹å</param>
     /// <returns></returns>
     public object CreateInstance(string className)
     {
-        Type type = GetTypeByName(className);       // ƒAƒZƒ“ƒuƒŠ‚©‚çƒNƒ‰ƒX‚ÌŒ^‚ğæ“¾
-        if (type == null)                           // –Ú“I‚ÌƒNƒ‰ƒXŒ^‚ª‚İ‚Â‚©‚ç‚È‚©‚Á‚ç‚½‚ç
+        Type type = GetTypeByName(className);       // ã‚¢ã‚»ãƒ³ãƒ–ãƒªã‹ã‚‰ã‚¯ãƒ©ã‚¹ã®å‹ã‚’å–å¾—
+        if (type == null)                           // ç›®çš„ã®ã‚¯ãƒ©ã‚¹å‹ãŒã¿ã¤ã‹ã‚‰ãªã‹ã£ã‚‰ãŸã‚‰
         {
-            Debug.LogError($"Class {className} not found.");@//ƒGƒ‰[•\¦
+            Debug.LogError($"Class {className} not found.");ã€€//ã‚¨ãƒ©ãƒ¼è¡¨ç¤º
             return null;
         }
 
         return Activator.CreateInstance(type);
     }
 
-    /// <summary>ƒAƒZƒ“ƒuƒŠ‚©‚çƒNƒ‰ƒX‚ÌŒ^‚ğæ“¾‚·‚é—p</summary>
-    /// <param name="className">ƒNƒ‰ƒX–¼</param>
-    /// <returns>ƒNƒ‰ƒX‚ÌType‚ğ•Ô‚·/‚È‚©‚Á‚½‚çnull‚ğ•Ô‚·</returns>
+    /// <summary>ã‚¢ã‚»ãƒ³ãƒ–ãƒªã‹ã‚‰ã‚¯ãƒ©ã‚¹ã®å‹ã‚’å–å¾—ã™ã‚‹ç”¨</summary>
+    /// <param name="className">ã‚¯ãƒ©ã‚¹å</param>
+    /// <returns>ã‚¯ãƒ©ã‚¹ã®Typeã‚’è¿”ã™/ãªã‹ã£ãŸã‚‰nullã‚’è¿”ã™</returns>
     private Type GetTypeByName(string className)
     {
         if(_assemblyArray == null)
         {
-            _assemblyArray = AppDomain.CurrentDomain.GetAssemblies();@//UnityƒGƒfƒBƒ^[ã‚ÌƒAƒZƒ“ƒuƒŠ‚ğæ“¾‚·‚é
+            _assemblyArray = AppDomain.CurrentDomain.GetAssemblies();ã€€//Unityã‚¨ãƒ‡ã‚£ã‚¿ãƒ¼ä¸Šã®ã‚¢ã‚»ãƒ³ãƒ–ãƒªã‚’å–å¾—ã™ã‚‹
         }
 
-        foreach (Assembly assembly in _assemblyArray)@
+        foreach (Assembly assembly in _assemblyArray)ã€€
         {
-            if (assembly.FullName.StartsWith("Assembly-CSharp"))@//ƒAƒZƒ“ƒuƒŠ“à‚ÌCSharp‚ğ‘ÎÛ‚É‚·‚é
+            if (assembly.FullName.StartsWith("Assembly-CSharp"))ã€€//ã‚¢ã‚»ãƒ³ãƒ–ãƒªå†…ã®CSharpã‚’å¯¾è±¡ã«ã™ã‚‹
             {
                 foreach (Type type in assembly.GetTypes())
                 {
-                    if (type.Name == className)             // ©ìƒNƒ‰ƒX–¼‚Éˆê’v‚·‚éê‡
+                    if (type.Name == className)             // è‡ªä½œã‚¯ãƒ©ã‚¹åã«ä¸€è‡´ã™ã‚‹å ´åˆ
                     {
                         return type;
                     }

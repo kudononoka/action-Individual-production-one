@@ -1,8 +1,8 @@
-using UnityEditor.Experimental.GraphView;
+ï»¿using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.UIElements;
 
-/// <summary>Node‚Ìİ’èê—pƒNƒ‰ƒX</summary>
+/// <summary>Nodeã®è¨­å®šå°‚ç”¨ã‚¯ãƒ©ã‚¹</summary>
 public class NodeSetting
 {
     BehaviorTreeGraphView _graphView;
@@ -12,16 +12,16 @@ public class NodeSetting
         _graphView = graphView;
     }
 
-    /// <summary>Node‚Ìİ’è</summary>
+    /// <summary>Nodeã®è¨­å®š</summary>
     public void Setting(BehaviorTreeBaseNode nodeData, Rect rect, Node node)
     {
         SettingPortNode(nodeData,node, node.name, rect, nodeData.NodeData.NodeType);
     }
 
-    /// <summary>Node‚ÌPortİ’è</summary>
+    /// <summary>Nodeã®Portè¨­å®š</summary>
     public void SettingPortNode(BehaviorTreeBaseNode nodeData, Node node, string nodeName, Rect rect, NodeType type)
     {
-        //ƒm[ƒh‚Ìí—Ş‚É‚æ‚Á‚ÄPort‚Ì•\¦‚ğ•Ï‚¦‚é
+        //ãƒãƒ¼ãƒ‰ã®ç¨®é¡ã«ã‚ˆã£ã¦Portã®è¡¨ç¤ºã‚’å¤‰ãˆã‚‹
         if (type == NodeType.RootNode)
         {
             PortInstantiateSetting(node, Direction.Output, "output", Port.Capacity.Single);
@@ -43,21 +43,21 @@ public class NodeSetting
             }
         }
 
-        node.RefreshExpandedState();                    //Node‚Ì“WŠJ‚ÆXV
+        node.RefreshExpandedState();                    //Nodeã®å±•é–‹ã¨æ›´æ–°
         node.RefreshPorts();
 
-        node.SetPosition(new Rect(rect));               //Node‚ÌˆÊ’uİ’è
+        node.SetPosition(new Rect(rect));               //Nodeã®ä½ç½®è¨­å®š
 
-        //Node‚ÌˆÊ’u‚ª•Ï‚í‚Á‚½‚ç
+        //Nodeã®ä½ç½®ãŒå¤‰ã‚ã£ãŸã‚‰
         node.RegisterCallback<GeometryChangedEvent>(evt =>
         {
-            //Œ³ƒf[ƒ^‚É•ÛŠÇ
+            //å…ƒãƒ‡ãƒ¼ã‚¿ã«ä¿ç®¡
             nodeData.NodeData.Rect = node.GetPosition();
         });
 
     }
 
-    /// <summary>Port¶¬</summary>
+    /// <summary>Portç”Ÿæˆ</summary>
     private void PortInstantiateSetting(Node node, Direction portDirection, string portName, Port.Capacity capacity)
     {
         var port = node.InstantiatePort(Orientation.Horizontal, portDirection, capacity, typeof(float));

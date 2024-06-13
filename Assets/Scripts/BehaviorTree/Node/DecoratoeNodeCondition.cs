@@ -1,4 +1,4 @@
-using System;
+ï»¿using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -12,11 +12,11 @@ public class DecoratoeNodeCondition : BehaviorTreeBaseNode, IChildNodeSetting
     }
 
     [SerializeField]
-    /// <summary>•¡”‚ÌğŒƒm[ƒh</summary>
+    /// <summary>è¤‡æ•°ã®æ¡ä»¶ãƒãƒ¼ãƒ‰</summary>
     private List<BehaviorTreeBaseNode> _conditionsNodes = new List<BehaviorTreeBaseNode>();
 
     [SerializeField]
-    /// <summary>ğŒ‚ª‘S‚Ä‚»‚ë‚Á‚½‚ç‚¨‚±‚·ƒAƒNƒVƒ‡ƒ“</summary>
+    /// <summary>æ¡ä»¶ãŒå…¨ã¦ãã‚ã£ãŸã‚‰ãŠã“ã™ã‚¢ã‚¯ã‚·ãƒ§ãƒ³</summary>
     BehaviorTreeBaseNode _action = null;
 
     public void ChildNodeSet(BehaviorTreeBaseNode chileNode)
@@ -51,7 +51,7 @@ public class DecoratoeNodeCondition : BehaviorTreeBaseNode, IChildNodeSetting
 
     public override Result Evaluate()
     {
-        for (int i = 0; i < _conditionsNodes.Count; i++)        //ğŒ‚Æ‡‚Á‚Ä‚¢‚é‚©Šm”F
+        for (int i = 0; i < _conditionsNodes.Count; i++)        //æ¡ä»¶ã¨åˆã£ã¦ã„ã‚‹ã‹ç¢ºèª
         {
             Result result = _conditionsNodes[i].Evaluate();
             if (result == Result.Success)
@@ -59,10 +59,10 @@ public class DecoratoeNodeCondition : BehaviorTreeBaseNode, IChildNodeSetting
                 continue;
             }
             
-            return Result.Failure;         //ğŒ‚ªˆê‚Â‚Å‚à‡‚í‚È‚©‚Á‚½‚ç
+            return Result.Failure;         //æ¡ä»¶ãŒä¸€ã¤ã§ã‚‚åˆã‚ãªã‹ã£ãŸã‚‰
         }
 
-        Result resultAction = _action.Evaluate();         //ğŒ‚ª‚·‚×‚Ä‚»‚ë‚Á‚½‚ç
+        Result resultAction = _action.Evaluate();         //æ¡ä»¶ãŒã™ã¹ã¦ãã‚ã£ãŸã‚‰
 
         if(resultAction == Result.Success)
         {

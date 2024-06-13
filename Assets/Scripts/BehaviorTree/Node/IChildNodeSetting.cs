@@ -1,12 +1,12 @@
-/// <summary>Edge��ڑ��E�ؒf���ɌĂ΂��C���^�[�t�F�C�X�@
-/// �e�m�[�h���q�m�[�h�f�[�^��List�ŕۊǂ���ꍇ�Ɏg�p</summary>
+﻿/// <summary>Edgeを接続・切断時に呼ばれるインターフェイス　
+/// 親ノードが子ノードデータをListで保管する場合に使用</summary>
 public interface IChildNodeSetting
 {
-    /// <summary>�o�^</summary>
-    /// <param name="chileNode">�ۊǂ������q�m�[�h</param>
+    /// <summary>登録</summary>
+    /// <param name="chileNode">保管したい子ノード</param>
     void ChildNodeSet(BehaviorTreeBaseNode chileNode);
 
-    /// <summary>����</summary>
-    /// <param name="chileNode">�r���������q�m�[�h</param>
+    /// <summary>解除</summary>
+    /// <param name="chileNode">排除したい子ノード</param>
     void ChildNodeRemove(BehaviorTreeBaseNode chileNode);
 }

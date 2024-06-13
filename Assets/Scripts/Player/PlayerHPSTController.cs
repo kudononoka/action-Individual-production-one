@@ -1,4 +1,4 @@
-using DG.Tweening;
+ï»¿using DG.Tweening;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -8,16 +8,16 @@ using UnityEngine;
 [Serializable]
 public class PlayerHPSTController
 {
-    /// <summary>HPÅ‘å’l</summary>
+    /// <summary>HPæœ€å¤§å€¤</summary>
     int _hpMax;
-    /// <summary>STÅ‘å’l</summary>
+    /// <summary>STæœ€å¤§å€¤</summary>
     float _stMax;
     [SerializeField]
-    /// <summary>Œ»İ‚ÌHP</summary>
+    /// <summary>ç¾åœ¨ã®HP</summary>
     int _hpNow;
-    /// <summary>Œ»İ‚ÌSP</summary>
+    /// <summary>ç¾åœ¨ã®SP</summary>
     float _stNow;
-    /// <summary>ST‚ª‰ñ•œ‚·‚é‘¬“x</summary>
+    /// <summary>STãŒå›å¾©ã™ã‚‹é€Ÿåº¦</summary>
     float _stRecoverySpeed;
 
     public float CurrntStValue => _stNow;
@@ -33,9 +33,9 @@ public class PlayerHPSTController
     public IObservable<float> CurrentStChanged => _currentSt;
     readonly ReactiveProperty<float> _currentSt = new();
 
-    /// <summary>‰Šú‰»</summary>
-    /// <param name="hpMax">HPÅ‘å’l</param>
-    /// <param name="stMax">STÅ‘å’l</param>
+    /// <summary>åˆæœŸåŒ–</summary>
+    /// <param name="hpMax">HPæœ€å¤§å€¤</param>
+    /// <param name="stMax">STæœ€å¤§å€¤</param>
     public void Init(int hpMax, float stMax, float stRecoverySpeed)
     {
         _hpMax = hpMax;
@@ -49,9 +49,9 @@ public class PlayerHPSTController
         _stRecoverySpeed = stRecoverySpeed;
     }
 
-    /// <summary>Œ»İ‚ÌHP’l‚©‚çŒ¸Z</summary>
-    /// <param name="value">ˆø‚­’l</param>
-    /// <returns>‚OˆÈ‰º‚¾‚Á‚½‚çFalse‚ğ•Ô‚·</returns>
+    /// <summary>ç¾åœ¨ã®HPå€¤ã‹ã‚‰æ¸›ç®—</summary>
+    /// <param name="value">å¼•ãå€¤</param>
+    /// <returns>ï¼ä»¥ä¸‹ã ã£ãŸã‚‰Falseã‚’è¿”ã™</returns>
     public bool HPDown(int value)
     {
         _hpNow -= value;
@@ -64,9 +64,9 @@ public class PlayerHPSTController
         return true;
     }
 
-    /// <summary>Œ»İ‚ÌST’l‚©‚çŒ¸Z</summary>
-    /// <param name="value">ˆø‚­’l</param>
-    /// <returns>‚OˆÈ‰º‚¾‚Á‚½‚çFalse‚ğ•Ô‚·</returns>
+    /// <summary>ç¾åœ¨ã®STå€¤ã‹ã‚‰æ¸›ç®—</summary>
+    /// <param name="value">å¼•ãå€¤</param>
+    /// <returns>ï¼ä»¥ä¸‹ã ã£ãŸã‚‰Falseã‚’è¿”ã™</returns>
     public bool STDown(float value)
     {
         _stNow -= value;
@@ -79,7 +79,7 @@ public class PlayerHPSTController
         return true;
     }
 
-    /// <summary>ST‚Ì‰ñ•œ</summary>
+    /// <summary>STã®å›å¾©</summary>
     public void RecoveryST()
     {
         if (_stNow == _stMax) return;

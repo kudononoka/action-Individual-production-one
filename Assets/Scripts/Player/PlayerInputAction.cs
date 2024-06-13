@@ -1,12 +1,12 @@
-using System.Runtime.InteropServices.WindowsRuntime;
+ï»¿using System.Runtime.InteropServices.WindowsRuntime;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-/// <summary>InputSystem‚ğg‚Á‚½“ü—Í’l‚Ìæ“¾‚ÆŠÇ—</summary>
+/// <summary>InputSystemã‚’ä½¿ã£ãŸå…¥åŠ›å€¤ã®å–å¾—ã¨ç®¡ç†</summary>
 public class PlayerInputAction : MonoBehaviour
 {
-    [Header("“ü—Í‚ğó‚¯æ‚Á‚Ä‚¢‚é‚©‚ÌŠm”F")]
+    [Header("å…¥åŠ›ã‚’å—ã‘å–ã£ã¦ã„ã‚‹ã‹ã®ç¢ºèª")]
     [SerializeField] 
     Vector2 _inputMove = Vector2.zero;
 
@@ -23,26 +23,33 @@ public class PlayerInputAction : MonoBehaviour
     bool _isLockon = false;
 
     [SerializeField]
+    bool _isLockonSelect = false;   
+
+    [SerializeField]
     bool _isEvade = false;
 
-    /// <summary>“ü—Í’l(ˆÚ“®)</summary>
+    /// <summary>å…¥åŠ›å€¤(ç§»å‹•)</summary>
     public Vector2 InputMove => _inputMove;
 
-    /// <summary>“ü—Í’l(ãUŒ‚)</summary>
+    /// <summary>å…¥åŠ›å€¤(å¼±æ”»æ’ƒ)</summary>
     public bool IsAttackWeak { get => _isAttackWeak;  set => _isAttackWeak = value; }
 
-    /// <summary>“ü—Í’l(‹­UŒ‚)</summary>
+    /// <summary>å…¥åŠ›å€¤(å¼·æ”»æ’ƒ)</summary>
     public bool IsAttackStrong { get => _isAttackStrong; set => _isAttackStrong = value; }
 
-    /// <summary>“ü—Í’l(ƒK[ƒh)</summary>
+    /// <summary>å…¥åŠ›å€¤(ã‚¬ãƒ¼ãƒ‰)</summary>
     public bool IsGuard => _isGuard;
 
-    /// <summary>“ü—Í(ƒƒbƒNƒIƒ“)</summary>
-    public bool IsLockon => _isLockon;
+    /// <summary>å…¥åŠ›(ãƒ­ãƒƒã‚¯ã‚ªãƒ³)</summary>
+    public bool IsLockon { get => _isLockon; set => _isLockon = value; }
 
+    /// <summary>å…¥åŠ›(å›é¿)</summary>
     public bool IsEvade { get => _isEvade; set => _isEvade = value; }
 
-    /// <summary>ˆÚ“®Action</summary>
+    /// <summary>å…¥åŠ›å€¤(ãƒ­ãƒƒã‚¯ã‚ªãƒ³é¸æŠ)</summary>
+    public bool IsLockonSelect { get => _isLockonSelect; set => _isLockonSelect = value; }
+
+    /// <summary>ç§»å‹•Action</summary>
     public void OnMove(InputAction.CallbackContext context)
     {
         _inputMove = context.ReadValue<Vector2>();
@@ -81,6 +88,14 @@ public class PlayerInputAction : MonoBehaviour
         if(context.performed)
         {
             _isLockon = !_isLockon;
+        }
+    }
+
+    public void OnLockonSelect(InputAction.CallbackContext context)
+    {
+        if (context.performed)
+        {
+            _isLockonSelect = true;
         }
     }
 

@@ -1,35 +1,35 @@
-using System;
+ï»¿using System;
 using UnityEngine;
 
 [Serializable]
 public class EnemyParameter
 {
-    [Header("HPÅ‘å’l")]
+    [Header("HPæœ€å¤§å€¤")]
     [SerializeField] int _hpMax;
 
-    [Header("cU‚èUŒ‚—Í")]
+    [Header("ç¸¦æŒ¯ã‚Šæ”»æ’ƒåŠ›")]
     [SerializeField] int _attackVerticalSwingPower;
 
-    [Header("‰¡U‚èUŒ‚—Í")]
+    [Header("æ¨ªæŒ¯ã‚Šæ”»æ’ƒåŠ›")]
     [SerializeField] int _attackHorizontalSwingPower;
 
-    [Header("“ÁêUŒ‚—Í")]
+    [Header("ç‰¹æ®Šæ”»æ’ƒåŠ›")]
     [SerializeField] int _attackSpecialPower;
 
-    [Header("ƒXƒeƒbƒv‚©‚ç‚ÌUŒ‚")]
+    [Header("ã‚¹ãƒ†ãƒƒãƒ—ã‹ã‚‰ã®æ”»æ’ƒ")]
     [SerializeField] int _attackStepPower;
 
     public int HPMax => _hpMax;
 
-    /// <summary>cU‚èUŒ‚—Í</summary>
+    /// <summary>ç¸¦æŒ¯ã‚Šæ”»æ’ƒåŠ›</summary>
     public int AttackVerticalSwingPower => _attackVerticalSwingPower;
 
-    /// <summary>cU‚èUŒ‚—Í</summary>
+    /// <summary>ç¸¦æŒ¯ã‚Šæ”»æ’ƒåŠ›</summary>
     public int AttackHorizontalSwingPower => _attackHorizontalSwingPower;
 
-    /// <summary>cU‚èUŒ‚—Í</summary>
+    /// <summary>ç¸¦æŒ¯ã‚Šæ”»æ’ƒåŠ›</summary>
     public int AttackSpecialPower => _attackSpecialPower;
 
-    /// <summary>cU‚èUŒ‚—Í</summary>
+    /// <summary>ç¸¦æŒ¯ã‚Šæ”»æ’ƒåŠ›</summary>
     public int AttckStepPower => _attackStepPower;  
 }

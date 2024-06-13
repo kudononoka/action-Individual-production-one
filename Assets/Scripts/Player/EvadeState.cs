@@ -1,4 +1,4 @@
-using System;
+ï»¿using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Dynamic;
@@ -7,11 +7,11 @@ using UnityEngine;
 [Serializable]
 public class EvadeState : PlayerStateBase
 {
-    [Header("‰ñ”ğ‚É‚©‚©‚éŠÔ")]
+    [Header("å›é¿ã«ã‹ã‹ã‚‹æ™‚é–“")]
     [SerializeField]
     float _coolTime;
 
-    [Header("‰ñ”ğƒXƒs[ƒh")]
+    [Header("å›é¿ã‚¹ãƒ”ãƒ¼ãƒ‰")]
     [SerializeField]
     float _moveSpeed;
 
@@ -37,18 +37,23 @@ public class EvadeState : PlayerStateBase
 
     CapsuleCollider _capsuleCollider;
 
+    MakeASound _makeASound;
+
+    CameraController _cameraController;
+
     public override void Init()
     {
         PlayerController playerController = _playerStateMachine.PlayerController;
         _anim = playerController.PlayerAnim;
         _inputAction = playerController.InputAction;
         _playerTra = playerController.PlayerTra;
-        _lockonTarget = playerController.CameraController.LockonTarget;
+        _cameraController = playerController.CameraController;
         _characterController = playerController.CharacterController;
         _mcTra = Camera.main.transform;
         _playerHPSTController = playerController.PlayerHPSTController;
         _playerParameter = playerController.Parameter;
         _capsuleCollider = playerController.CapsuleCollider;
+        _makeASound = playerController.MakeASound;
     }
     public override void OnEnter()
     {
@@ -58,13 +63,13 @@ public class EvadeState : PlayerStateBase
 
         _coolTimer = _coolTime;
 
-        //‰ñ”ğ•ûŒü
+        //å›é¿æ–¹å‘
         var _forward = Quaternion.AngleAxis(_mcTra.eulerAngles.y, Vector3.up);
         var moveDir = _forward * new Vector3(_inputAction.InputMove.x, 0, _inputAction.InputMove.y).normalized;
 
         if (_inputAction.IsLockon)
         {
-            //“®‚­•ûŒü‚É‚æ‚Á‚ÄAnimation‚ğØ‚è‘Ö‚¦
+            //å‹•ãæ–¹å‘ã«ã‚ˆã£ã¦Animationã‚’åˆ‡ã‚Šæ›¿ãˆ
             DirMovement.MoveDir dir = _dirMovement.DirMovementJudge(_inputAction.InputMove);
             switch (dir)
             {
@@ -90,7 +95,9 @@ public class EvadeState : PlayerStateBase
         }
 
         _anim.SetTrigger("Evade");
-        _capsuleCollider.enabled = false; 
+        _capsuleCollider.enabled = false;
+
+        _makeASound.IsSoundChange(true);
     }
 
     public override void OnUpdate()
@@ -102,6 +109,7 @@ public class EvadeState : PlayerStateBase
 
         if(_inputAction.IsLockon)
         {
+            _lockonTarget = _cameraController.LockonTarget;
             var direction = _lockonTarget.transform.position - _playerTra.transform.position;
             direction.y = 0;
             _playerTra.rotation = Quaternion.LookRotation(direction);
@@ -130,5 +138,6 @@ public class EvadeState : PlayerStateBase
     {
         _inputAction.IsEvade = false;
         _capsuleCollider.enabled = true;
+        _makeASound.IsSoundChange(false);
     }
 }

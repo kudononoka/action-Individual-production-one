@@ -1,4 +1,4 @@
-/// <summary>�_���[�W�����Ƃ��ɌĂԂ΂��C���^�[�t�F�C�X</summary>
+﻿/// <summary>ダメージしたときに呼ぶばれるインターフェイス</summary>
 public interface IDamage
 {
     void Damage(int damage);

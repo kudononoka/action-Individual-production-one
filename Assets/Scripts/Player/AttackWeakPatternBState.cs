@@ -1,18 +1,18 @@
-using System;
+ï»¿using System;
 using UnityEngine;
 
 [Serializable]
 public class AttackWeakPatternBState : PlayerStateBase
 {
-    [Header("ãUŒ‚‚É‚©‚©‚éŠÔ")]
+    [Header("å¼±æ”»æ’ƒã«ã‹ã‹ã‚‹æ™‚é–“")]
     [SerializeField]
     float _coolTime;
 
-    [Header("Ÿ‚ÌUŒ‚‚ğ‚·‚é‚©‚ªŠm’è‚³‚ê‚éŠÔ")]
+    [Header("æ¬¡ã®æ”»æ’ƒã‚’ã™ã‚‹ã‹ãŒç¢ºå®šã•ã‚Œã‚‹æ™‚é–“")]
     [SerializeField]
     float _nextAttackJudgeTime;
 
-    [Header("Ÿ‚ÌUŒ‚‚É‚Â‚È‚ª‚é‚Ü‚Å‚ÌŠÔ")]
+    [Header("æ¬¡ã®æ”»æ’ƒã«ã¤ãªãŒã‚‹ã¾ã§ã®æ™‚é–“")]
     [SerializeField]
     float _nextAttackTime;
 
@@ -30,6 +30,7 @@ public class AttackWeakPatternBState : PlayerStateBase
 
     Weapon _weapon;
 
+    MakeASound _makeASound;
     public override void Init()
     {
         PlayerController playerController = _playerStateMachine.PlayerController;
@@ -39,6 +40,7 @@ public class AttackWeakPatternBState : PlayerStateBase
         _playerHPSTController = playerController.PlayerHPSTController;
         _playerParameter = playerController.Parameter;
         _weapon = playerController.PlayerWeapon;
+        _makeASound = playerController.MakeASound;
     }
     public override void OnEnter()
     {
@@ -49,6 +51,7 @@ public class AttackWeakPatternBState : PlayerStateBase
         _anim.SetInteger("AttackType", 0);
         _weapon.DamageColliderEnabledSet(true);
         _weapon.Damage = _playerParameter.AttackWeakPower;
+        _makeASound.IsSoundChange(true);
     }
 
     public override void OnUpdate()
@@ -75,7 +78,7 @@ public class AttackWeakPatternBState : PlayerStateBase
 
         if (_coolTimer <= 0.2)
         {
-            //ˆÚ“®‚©Idle‚É‘JˆÚ
+            //ç§»å‹•ã‹Idleã«é·ç§»
             if (_inputAction.InputMove.magnitude <= 0)
                 _playerStateMachine.OnChangeState((int)PlayerStateMachine.StateType.Idle);
             else
@@ -86,5 +89,6 @@ public class AttackWeakPatternBState : PlayerStateBase
     {
         _inputAction.IsAttackWeak = false;
         _weapon.DamageColliderEnabledSet(false);
+        _makeASound.IsSoundChange(false);
     }
 }

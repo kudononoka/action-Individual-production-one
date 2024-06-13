@@ -1,28 +1,29 @@
-using UnityEngine;
+ï»¿using UnityEngine;
 using System;
 
 [Serializable]
 public struct SoundProperty
 {
     [SerializeField]
-    [Tooltip("Ä¶‚³‚¹‚½‚¢AudioClip")]
+    [Tooltip("å†ç”Ÿã•ã›ãŸã„AudioClip")]
     AudioClip _audioClip;
 
     [SerializeField, Range(0, 1f)]
-    [Tooltip("Ä¶‚Ì‰¹—Ê")] 
+    [Tooltip("å†ç”Ÿæ™‚ã®éŸ³é‡")] 
     float _volum;
 
     public AudioClip audioClip => _audioClip;
     public float volum => _volum;
 }
 
-/// <summary>‚Ç‚Ìó‘Ô‚ÉSE‚ğÄ¶‚·‚é‚©ŠÇ—‚·‚éenum</summary>
+/// <summary>ã©ã®çŠ¶æ…‹æ™‚ã«SEã‚’å†ç”Ÿã™ã‚‹ã‹ç®¡ç†ã™ã‚‹enum</summary>
 public enum SE
 {
-    Shot,
+    /// <summary>è¶³éŸ³</summary>
+    Footsteps,
 }
 
-/// <summary>‚Ç‚Ìó‘Ô‚ÉBGM‚ğÄ¶‚·‚é‚©ŠÇ—‚·‚éenum</summary>
+/// <summary>ã©ã®çŠ¶æ…‹æ™‚ã«BGMã‚’å†ç”Ÿã™ã‚‹ã‹ç®¡ç†ã™ã‚‹enum</summary>
 public enum BGM
 {
     Title,

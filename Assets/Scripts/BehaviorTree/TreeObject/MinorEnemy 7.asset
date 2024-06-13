@@ -1,0 +1,403 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &-8915685457571069084
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 816b2ed4377eef34b854e6d0c4fffdd2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  nodeData:
+    _nodeType: 4
+    _className: IsAudible
+    _id: 4
+    _rect:
+      serializedVersion: 2
+      x: 600.8
+      y: -81.6
+      width: 101.60004
+      height: 76.8
+    _childData: []
+--- !u!114 &-6378799251828231570
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3f9d00444e863fd4aa83cc6a69fda229, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  nodeData:
+    _nodeType: 1
+    _className: SequenceNode
+    _id: 1
+    _rect:
+      serializedVersion: 2
+      x: 440
+      y: 305.6
+      width: 133.59998
+      height: 76.80002
+    _childData:
+    - _id: 3
+      _nodeType: 4
+    - _id: 5
+      _nodeType: 3
+    - _id: 10
+      _nodeType: 4
+    - _id: 11
+      _nodeType: 3
+    - _id: 12
+      _nodeType: 3
+  _childNodes:
+  - {fileID: 4195804478636987473}
+  - {fileID: 8272194686070595216}
+  - {fileID: 1432787338005219844}
+  - {fileID: -1278113952681317599}
+  - {fileID: -572461842072382016}
+--- !u!114 &-3862421498277041654
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4d42e9f186814d249b818a32af3d005f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  nodeData:
+    _nodeType: 3
+    _className: ReturnToMyPostNode
+    _id: 9
+    _rect:
+      serializedVersion: 2
+      x: 600.8
+      y: 179.2
+      width: 145.60004
+      height: 76.79999
+    _childData: []
+  _moveSpeed: 1
+--- !u!114 &-3278005306562725947
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 349c16b37960b314c87d6ff95abb8623, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  nodeData:
+    _nodeType: 0
+    _className: RootNode
+    _id: -1
+    _rect:
+      serializedVersion: 2
+      x: 129.6
+      y: 277.6
+      width: 74.399994
+      height: 76.80002
+    _childData:
+    - _id: 0
+      _nodeType: 1
+  _childNode: {fileID: 3289616761782568278}
+--- !u!114 &-2761515747811508784
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f03a884f775664f41aae007a3269beda, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  nodeData:
+    _nodeType: 3
+    _className: MoveToSoundLocation
+    _id: 7
+    _rect:
+      serializedVersion: 2
+      x: 600.8
+      y: 16.8
+      width: 180
+      height: 76.8
+    _childData: []
+  _moveSpeed: 1
+  _stopDistance: 0.5
+--- !u!114 &-1278113952681317599
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 170230aa05632844a9e0bb1d6b2efd2e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  nodeData:
+    _nodeType: 3
+    _className: MinorEnemyAttackNode
+    _id: 11
+    _rect:
+      serializedVersion: 2
+      x: 600.8
+      y: 508
+      width: 160
+      height: 76.79999
+    _childData: []
+  _coolTime: 1.4
+--- !u!114 &-572461842072382016
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7266640d2301a6b47a7c27463069351e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  nodeData:
+    _nodeType: 3
+    _className: WaitNode
+    _id: 12
+    _rect:
+      serializedVersion: 2
+      x: 600.8
+      y: 584.8
+      width: 71.20001
+      height: 76.80005
+    _childData: []
+  _waitTime: 1.5
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d79de49c93d794b4db85a4c6d7e86867, type: 3}
+  m_Name: MinorEnemy 7
+  m_EditorClassIdentifier: 
+  _root: {fileID: -3278005306562725947}
+  _nodes:
+  - {fileID: 3289616761782568278}
+  - {fileID: -6378799251828231570}
+  - {fileID: 4645257590820905528}
+  - {fileID: 4195804478636987473}
+  - {fileID: -8915685457571069084}
+  - {fileID: 8272194686070595216}
+  - {fileID: 3196177828544942795}
+  - {fileID: -2761515747811508784}
+  - {fileID: 287704063411389168}
+  - {fileID: -3862421498277041654}
+  - {fileID: 1432787338005219844}
+  - {fileID: -1278113952681317599}
+  - {fileID: -572461842072382016}
+--- !u!114 &287704063411389168
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7266640d2301a6b47a7c27463069351e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  nodeData:
+    _nodeType: 3
+    _className: WaitNode
+    _id: 8
+    _rect:
+      serializedVersion: 2
+      x: 600.8
+      y: 102.399994
+      width: 71.20001
+      height: 76.8
+    _childData: []
+  _waitTime: 3
+--- !u!114 &1432787338005219844
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe37ca0a823caaa4b914f10ee47a4654, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  nodeData:
+    _nodeType: 4
+    _className: LookAt
+    _id: 10
+    _rect:
+      serializedVersion: 2
+      x: 600.8
+      y: 431.2
+      width: 85.60004
+      height: 76.79999
+    _childData: []
+--- !u!114 &3196177828544942795
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4d42e9f186814d249b818a32af3d005f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  nodeData:
+    _nodeType: 3
+    _className: ReturnToMyPostNode
+    _id: 6
+    _rect:
+      serializedVersion: 2
+      x: 440
+      y: 600.8
+      width: 145.59998
+      height: 76.80005
+    _childData: []
+  _moveSpeed: 1
+--- !u!114 &3289616761782568278
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: be66f89b3f82c7a4c90696272c8b0e23, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  nodeData:
+    _nodeType: 1
+    _className: SelectorNode
+    _id: 0
+    _rect:
+      serializedVersion: 2
+      x: 263.2
+      y: 277.6
+      width: 133.59998
+      height: 76.80002
+    _childData:
+    - _id: 1
+      _nodeType: 1
+    - _id: 2
+      _nodeType: 1
+    - _id: 6
+      _nodeType: 3
+  _childNodes:
+  - {fileID: 4645257590820905528}
+  - {fileID: -6378799251828231570}
+  - {fileID: 3196177828544942795}
+--- !u!114 &4195804478636987473
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 72b925b194a8c7a448a31f5f2b5d5141, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  nodeData:
+    _nodeType: 4
+    _className: MyAttackAreaIsTarget
+    _id: 3
+    _rect:
+      serializedVersion: 2
+      x: 599.2
+      y: 277.6
+      width: 96
+      height: 76.80002
+    _childData: []
+--- !u!114 &4645257590820905528
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3f9d00444e863fd4aa83cc6a69fda229, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  nodeData:
+    _nodeType: 1
+    _className: SequenceNode
+    _id: 2
+    _rect:
+      serializedVersion: 2
+      x: 440
+      y: 102.399994
+      width: 133.59998
+      height: 76.8
+    _childData:
+    - _id: 4
+      _nodeType: 4
+    - _id: 7
+      _nodeType: 3
+    - _id: 8
+      _nodeType: 3
+    - _id: 9
+      _nodeType: 3
+  _childNodes:
+  - {fileID: -8915685457571069084}
+  - {fileID: -2761515747811508784}
+  - {fileID: 287704063411389168}
+  - {fileID: -3862421498277041654}
+--- !u!114 &8272194686070595216
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 75ec32de92b0b114db2d433c0dee40f6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  nodeData:
+    _nodeType: 3
+    _className: MoveToTargetNode
+    _id: 5
+    _rect:
+      serializedVersion: 2
+      x: 600.8
+      y: 354.40002
+      width: 131.20001
+      height: 76.79999
+    _childData: []
+  _moveSpeed: 3
+  _stopDistanceMin: 1.8
+  _stopDistanceMax: 10

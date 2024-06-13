@@ -1,4 +1,5 @@
-using System;
+ï»¿using System;
+using UniRx;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -6,21 +7,28 @@ public class GameManager : MonoBehaviour
 {
     private static GameManager _instance;
 
-    #region@ƒVƒ“ƒOƒ‹ƒgƒ“
+    int _enemyCount = 0;
+    public IObservable<int> EnemyCount => _enemyMaxCount;
+    readonly ReactiveProperty<int> _enemyMaxCount = new();
+
+    public IObservable<int> CurrentKillCount => _currentEnemyKillCount;
+    readonly ReactiveProperty<int> _currentEnemyKillCount = new();
+
+    #regionã€€ã‚·ãƒ³ã‚°ãƒ«ãƒˆãƒ³
     public static GameManager Instance
     {
         get
         {
-            //instance‚ªnull‚¾‚Á‚½‚ç
+            //instanceãŒnullã ã£ãŸã‚‰
             if (!_instance)
             {
-                //ƒV[ƒ““à‚ÌGameobject‚ÉƒAƒ^ƒbƒ`‚³‚ê‚Ä‚¢‚éT‚ğæ“¾
+                //ã‚·ãƒ¼ãƒ³å†…ã®Gameobjectã«ã‚¢ã‚¿ãƒƒãƒã•ã‚Œã¦ã„ã‚‹Tã‚’å–å¾—
                 _instance = FindObjectOfType<GameManager>();
-                //ƒAƒ^ƒbƒ`‚³‚ê‚Ä‚¢‚È‚©‚Á‚½‚ç
+                //ã‚¢ã‚¿ãƒƒãƒã•ã‚Œã¦ã„ãªã‹ã£ãŸã‚‰
                 if (!_instance)
                 {
-                    //ƒGƒ‰[‚ğo‚·
-                    Debug.LogError("Scene“à‚É" + typeof(GameManager).Name + "‚ğƒAƒ^ƒbƒ`‚µ‚Ä‚¢‚éGameObject‚ª‚ ‚è‚Ü‚¹‚ñ");
+                    //ã‚¨ãƒ©ãƒ¼ã‚’å‡ºã™
+                    Debug.LogError("Sceneå†…ã«" + typeof(GameManager).Name + "ã‚’ã‚¢ã‚¿ãƒƒãƒã—ã¦ã„ã‚‹GameObjectãŒã‚ã‚Šã¾ã›ã‚“");
                 }
             }
             return _instance;
@@ -37,6 +45,8 @@ public class GameManager : MonoBehaviour
         }
         else if (Instance == this)
         {
+            _instance._currentScene = this._currentScene;
+            _instance.Setting(_currentScene);
             DontDestroyOnLoad(this.gameObject);
         }
         else
@@ -48,10 +58,10 @@ public class GameManager : MonoBehaviour
     }
     #endregion
 
-    [Header("Œ»İ‚ÌƒV[ƒ“")]
+    [Header("ç¾åœ¨ã®ã‚·ãƒ¼ãƒ³")]
     [SerializeField] SceneState _currentScene = SceneState.Title;
 
-    [Header("ƒV[ƒ“‚ÌState‚Æ‚»‚ê‚É˜A“®‚·‚éƒV[ƒ“–¼")]
+    [Header("ã‚·ãƒ¼ãƒ³ã®Stateã¨ãã‚Œã«é€£å‹•ã™ã‚‹ã‚·ãƒ¼ãƒ³å")]
     [SerializeField]
     SceneData[] _sceneData =
     {
@@ -60,11 +70,6 @@ public class GameManager : MonoBehaviour
         new SceneData(SceneState.GameOver),
         new SceneData(SceneState.GameClear),
     };
-
-    /// <summary>ƒoƒgƒ‹’†‚©‚Ç‚¤‚©</summary>
-    bool _isBattle = false;
-
-    public bool IsBattle => _isBattle;
 
     private void Setting(SceneState currentScene)
     {
@@ -75,19 +80,20 @@ public class GameManager : MonoBehaviour
                 break;
             case SceneState.GameOver:
                 AudioManager.Instance.BGMPlay(BGM.GameOver);
-                _isBattle = false;
                 break;
             case SceneState.GameClear:
                 AudioManager.Instance.BGMPlay(BGM.GameClear);
-                _isBattle = false;
                 break;
             case SceneState.InGame:
-                AudioManager.Instance.BGMStop();    //ƒV[ƒ“‚É“ü‚Á‚Ä‚µ‚Î‚ç‚­‚µ‚Ä‚©‚ç—¬‚·‚½‚ß
+                _enemyCount = 9;
+                _enemyMaxCount.Value = _enemyCount;
+                _currentEnemyKillCount.Value = 0;
+                AudioManager.Instance.BGMPlay(BGM.Game);  
                 break;
         }
     }
 
-    /// <summary>ƒV[ƒ“‘JˆÚ</summary>
+    /// <summary>ã‚·ãƒ¼ãƒ³é·ç§»</summary>
     /// <param name="sceneState"></param>
     public void ChangeScene(SceneState sceneState)
     {
@@ -96,27 +102,31 @@ public class GameManager : MonoBehaviour
         SceneManager.LoadScene(nextSceneName);
     }
 
-    public void BattleStart()
+    public void EnemyKill()
     {
-        AudioManager.Instance.BGMPlay(BGM.Game);
-        _isBattle = true;
+        _enemyCount--;
+        _currentEnemyKillCount.Value++;
+        if(_enemyCount == 0 )
+        {
+            ChangeScene(SceneState.GameClear);
+        }
     }
 }
 
-/// <summary>ƒV[ƒ“‚Ìó‘ÔŠÇ—</summary>
+/// <summary>ã‚·ãƒ¼ãƒ³ã®çŠ¶æ…‹ç®¡ç†</summary>
 public enum SceneState
 {
-    /// <summary>ƒ^ƒCƒgƒ‹</summary>
+    /// <summary>ã‚¿ã‚¤ãƒˆãƒ«</summary>
     Title,
-    /// <summary>ƒQ[ƒ€(ƒoƒgƒ‹)</summary>
+    /// <summary>ã‚²ãƒ¼ãƒ (ãƒãƒˆãƒ«)</summary>
     InGame,
-    /// <summary>ƒQ[ƒ€ƒI[ƒo[</summary>
+    /// <summary>ã‚²ãƒ¼ãƒ ã‚ªãƒ¼ãƒãƒ¼</summary>
     GameOver,
-    /// <summary>ƒQ[ƒ€ƒNƒŠƒA</summary>
+    /// <summary>ã‚²ãƒ¼ãƒ ã‚¯ãƒªã‚¢</summary>
     GameClear,
 }
 
-/// <summary>SceneState‚Æ‚»‚ê‚É˜A“®‚·‚éƒV[ƒ“–¼‚ÌŠÇ—</summary>
+/// <summary>SceneStateã¨ãã‚Œã«é€£å‹•ã™ã‚‹ã‚·ãƒ¼ãƒ³åã®ç®¡ç†</summary>
 [Serializable]
 public class SceneData
 {

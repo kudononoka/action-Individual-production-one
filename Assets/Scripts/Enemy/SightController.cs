@@ -1,23 +1,23 @@
-using UnityEngine;
+ï»¿using UnityEngine;
 
-/// <summary>‘Šè‚ªŒ©‚¦‚Ä‚¢‚é‚©‚Ç‚¤‚©‚Ì”»’è‚ğ‚¨‚±‚È‚¤ƒNƒ‰ƒX</summary>
+/// <summary>ç›¸æ‰‹ãŒè¦‹ãˆã¦ã„ã‚‹ã‹ã©ã†ã‹ã®åˆ¤å®šã‚’ãŠã“ãªã†ã‚¯ãƒ©ã‚¹</summary>
 public class SightController : MonoBehaviour
 {
-    [Header("İ’è")]
+    [Header("è¨­å®š")]
 
-    [Tooltip("‹–ìŠp(“x”–@)")]
+    [Tooltip("è¦–é‡è§’(åº¦æ•°æ³•)")]
     [SerializeField, Range(0, 180)] 
     float _sightAngle;
 
-    [Tooltip("•¨‚ªŒ©‚¦‚éÅ‘å‚Ì‹——£")]
+    [Tooltip("ç‰©ãŒè¦‹ãˆã‚‹æœ€å¤§ã®è·é›¢")]
     [SerializeField] 
     float _maxDistance = 5f;
 
-    [Tooltip("©•ª©g‚Ì“ª")]
+    [Tooltip("è‡ªåˆ†è‡ªèº«ã®é ­")]
     [SerializeField]
     Transform _selfHead;
 
-    [Tooltip("‘Šè‚ÌˆÊ’u")]
+    [Tooltip("ç›¸æ‰‹ã®ä½ç½®")]
     [SerializeField]
     Transform _targetTra;
 
@@ -28,7 +28,7 @@ public class SightController : MonoBehaviour
 
     public bool isVisible(Vector3 targetPos)
     {
-        var targetVec = targetPos - _selfHead.position;   //ƒ^[ƒQƒbƒg‚Ö‚ÌƒxƒNƒgƒ‹
+        var targetVec = targetPos - _selfHead.position;   //ã‚¿ãƒ¼ã‚²ãƒƒãƒˆã¸ã®ãƒ™ã‚¯ãƒˆãƒ«
         var targetDistance = targetVec.magnitude;
 
         var cosHalf = Mathf.Cos(_sightAngle / 2 * Mathf.Deg2Rad);
@@ -40,8 +40,8 @@ public class SightController : MonoBehaviour
 
     private void OnDrawGizmos()
     {
-        Vector3 rightBorder = Quaternion.Euler(0, _sightAngle / 2, 0) * _selfHead.forward;//‰E’[
-        Vector3 leftBorder = Quaternion.Euler(0, -1 * _sightAngle / 2, 0) * _selfHead.forward;// ¶’[
+        Vector3 rightBorder = Quaternion.Euler(0, _sightAngle / 2, 0) * _selfHead.forward;//å³ç«¯
+        Vector3 leftBorder = Quaternion.Euler(0, -1 * _sightAngle / 2, 0) * _selfHead.forward;// å·¦ç«¯
         Gizmos.color = Color.blue;
         Gizmos.DrawRay(_selfHead.position, rightBorder * _maxDistance);
         Gizmos.DrawRay(_selfHead.position, leftBorder * _maxDistance);

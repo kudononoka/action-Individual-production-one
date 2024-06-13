@@ -1,81 +1,81 @@
-using UnityEngine;
+ï»¿using UnityEngine;
 using UniRx;
 using System;
 
-/// <summary>ƒvƒŒƒCƒ„[‚Ìƒpƒ‰ƒ[ƒ^[</summary>
+/// <summary>ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã®ãƒ‘ãƒ©ãƒ¡ãƒ¼ã‚¿ãƒ¼</summary>
 [System.Serializable]
 public class PlayerParameter
 {
-    [Header("HPÅ‘å’l")]
+    [Header("HPæœ€å¤§å€¤")]
     [SerializeField] int _hpMax;
 
-    [Header("STÅ‘å’l")]
+    [Header("STæœ€å¤§å€¤")]
     [SerializeField] float _stMax;
 
-    [Header("ST‰ñ•œ‘¬“x")]
+    [Header("STå›å¾©é€Ÿåº¦")]
     [SerializeField] float _stRecoverySpeed;
 
-    [Header("•às‘¬“x")]
+    [Header("æ­©è¡Œé€Ÿåº¦")]
     [SerializeField] float _walkSpeed;
 
-    [Header("ƒK[ƒh‚Ì•às‘¬“x")]
+    [Header("ã‚¬ãƒ¼ãƒ‰æ™‚ã®æ­©è¡Œé€Ÿåº¦")]
     [SerializeField] float _guardWalkSpeed;
 
-    [Header("ãUŒ‚—Í")]
+    [Header("å¼±æ”»æ’ƒåŠ›")]
     [SerializeField] int _attackWeakPower;
 
-    [Header("‹­UŒ‚—Í")]
+    [Header("å¼·æ”»æ’ƒåŠ›")]
     [SerializeField] int _attackStrongPower;
 
-    [Header("•ûŒü“]Š·‘¬“x")]
+    [Header("æ–¹å‘è»¢æ›é€Ÿåº¦")]
     [SerializeField] float _rotateSpeed;
 
-    [Header("ãUŒ‚STÁ”ï’l")]
+    [Header("å¼±æ”»æ’ƒSTæ¶ˆè²»å€¤")]
     [SerializeField] float _attackWeakSTCost;
 
-    [Header("‹­UŒ‚STÁ”ï’l")]
+    [Header("å¼·æ”»æ’ƒSTæ¶ˆè²»å€¤")]
     [SerializeField] float _attackStrongSTCost;
 
-    [Header("‰ñ”ğSTÁ”ï’l")]
+    [Header("å›é¿STæ¶ˆè²»å€¤")]
     [SerializeField] float _evadeSTCost;
 
-    [Header("ƒK[ƒh“G‚ÌUŒ‚‚ªHit‚µ‚½‚ÌSTÁ”ï’l")]
+    [Header("ã‚¬ãƒ¼ãƒ‰æ™‚æ•µã®æ”»æ’ƒãŒHitã—ãŸæ™‚ã®STæ¶ˆè²»å€¤")]
     [SerializeField] float _guardHitSTCost;
 
-    /// <summary>•às‘¬“x</summary>
+    /// <summary>æ­©è¡Œé€Ÿåº¦</summary>
     public float WalkSpeed => _walkSpeed;
 
-    /// <summary>•ûŒü“]Š·‘¬“x</summary>
+    /// <summary>æ–¹å‘è»¢æ›é€Ÿåº¦</summary>
     public float RotateSpeed => _rotateSpeed;
 
-    /// <summary>ƒK[ƒh•às‘¬“x</summary>
+    /// <summary>ã‚¬ãƒ¼ãƒ‰æ™‚æ­©è¡Œé€Ÿåº¦</summary>
     public float GuardWalkSpeed => _guardWalkSpeed;
 
-    /// <summary>HPÅ‘å’l</summary>
+    /// <summary>HPæœ€å¤§å€¤</summary>
     public int HPMax => _hpMax;
 
-    /// <summary>STÅ‘å’l</summary>
+    /// <summary>STæœ€å¤§å€¤</summary>
     public float STMax => _stMax;
 
-    /// <summary>ãUŒ‚—Í</summary>
+    /// <summary>å¼±æ”»æ’ƒåŠ›</summary>
     public int AttackWeakPower => _attackWeakPower;
 
-    /// <summary>‹­UŒ‚—Í</summary>
+    /// <summary>å¼·æ”»æ’ƒåŠ›</summary>
     public int AttackStrongPower => _attackStrongPower;
 
-    /// <summary>ãUŒ‚‚É‚©‚©‚éST’l</summary>
+    /// <summary>å¼±æ”»æ’ƒã«ã‹ã‹ã‚‹STå€¤</summary>
     public float AttackWeakSTCost => _attackWeakSTCost;
 
-    /// <summary>‹­UŒ‚‚É‚©‚©‚éST’l</summary>
+    /// <summary>å¼·æ”»æ’ƒã«ã‹ã‹ã‚‹STå€¤</summary>
     public float AttackStrongSTCost => _attackStrongSTCost;
 
-    /// <summary>‰ñ”ğ‚É‚©‚©‚éST’l</summary>
+    /// <summary>å›é¿ã«ã‹ã‹ã‚‹STå€¤</summary>
     public float EvadeSTCost => _evadeSTCost;
 
-    /// <summary>ƒJ[ƒh“G‚ÌUŒ‚‚ª“–‚½‚Á‚½‚É‚©‚©‚éST’l</summary>
+    /// <summary>ã‚«ãƒ¼ãƒ‰æ™‚æ•µã®æ”»æ’ƒãŒå½“ãŸã£ãŸæ™‚ã«ã‹ã‹ã‚‹STå€¤</summary>
     public float GuardHitSTCost => _guardHitSTCost;
 
-    /// <summary>ST‚Ì‰ñ•œƒXƒs[ƒh</summary>
+    /// <summary>STã®å›å¾©ã‚¹ãƒ”ãƒ¼ãƒ‰</summary>
     public float StRecoverySpeed => _stRecoverySpeed;
 
 }

@@ -304,7 +304,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _bgmAudioSource: {fileID: 5696214566790054819}
   _seAudioSource: {fileID: 6675463241244201688}
-  _seProperties: []
+  _seProperties:
+  - _key: 0
+    _value:
+      _audioClip: {fileID: 8300000, guid: 05a51dde4b4ba8248972cfd3358014b2, type: 3}
+      _volum: 1
   _bgmProperties:
   - _key: 0
     _value:
@@ -313,7 +317,7 @@ MonoBehaviour:
   - _key: 1
     _value:
       _audioClip: {fileID: 8300000, guid: 75a424d25a78bd948824dd5adc135864, type: 3}
-      _volum: 0.3
+      _volum: 0.205
   - _key: 2
     _value:
       _audioClip: {fileID: 8300000, guid: 77ed64192f37a6b44ab2d3110b988ed9, type: 3}

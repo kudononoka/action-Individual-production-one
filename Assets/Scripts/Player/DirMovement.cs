@@ -1,27 +1,27 @@
-using System.Collections;
+ο»Ώusing System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-/// <summary>“®‚Ά‚Δ‚Ά‚ι•ϋό‚ªl•ϋό‚Μ‚Η‚κ‚Ι’l‚·‚ι‚Μ‚©”»’θ‚·‚ι‚½‚ί‚ΜƒNƒ‰ƒX</summary>
+/// <summary>ε‹•γ„γ¦γ„γ‚‹ζ–Ήε‘γε››ζ–Ήε‘γ®γ©γ‚γ«ε€¤γ™γ‚‹γ®γ‹ε¤ε®γ™γ‚‹γγ‚γ®γ‚―γƒ©γ‚Ή</summary>
 public class DirMovement
 {
     public enum MoveDir
     {
-        /// <summary>‘O</summary>
+        /// <summary>ε‰</summary>
         Forward,
-        /// <summary>γ‚λ</summary>
+        /// <summary>εΎγ‚</summary>
         Backward,
-        /// <summary>¶</summary>
+        /// <summary>ε·¦</summary>
         Left,
-        /// <summary>‰E</summary>
+        /// <summary>ε³</summary>
         Right,
-        /// <summary>‚»‚ΰ‚»‚ΰ“®‚Ά‚Δ‚Ά‚Θ‚Ά</summary>
+        /// <summary>γγ‚‚γγ‚‚ε‹•γ„γ¦γ„γªγ„</summary>
         NotMove,
     }
 
-    /// <summary>l•ϋό‚Μ‚Η‚κ‚Ι’l‚·‚ι‚Μ‚©”»’θ‚·‚ι</summary>
-    /// <param name="moveDir">“®‚Ά‚Δ‚Ά‚ι•ϋό‚ΜƒxƒNƒgƒ‹</param>
-    /// <returns>‘Oγ‰E¶‚Η‚κ‚©‚π•Τ‚·</returns>
+    /// <summary>ε››ζ–Ήε‘γ®γ©γ‚γ«ε€¤γ™γ‚‹γ®γ‹ε¤ε®γ™γ‚‹</summary>
+    /// <param name="moveDir">ε‹•γ„γ¦γ„γ‚‹ζ–Ήε‘γ®γƒ™γ‚―γƒγƒ«</param>
+    /// <returns>ε‰εΎε³ε·¦γ©γ‚γ‹γ‚’θΏ”γ™</returns>
     public MoveDir DirMovementJudge(Vector2 moveDir)
     {
         Vector3 vec = moveDir.normalized;

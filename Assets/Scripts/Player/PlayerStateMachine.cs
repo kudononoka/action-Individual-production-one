@@ -1,7 +1,7 @@
-using UnityEngine;
+ï»¿using UnityEngine;
 
 [System.Serializable]
-/// <summary>ƒvƒŒƒCƒ„[ê—pƒXƒe[ƒgƒ}ƒV[ƒ“</summary>
+/// <summary>ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼å°‚ç”¨ã‚¹ãƒ†ãƒ¼ãƒˆãƒã‚·ãƒ¼ãƒ³</summary>
 public class PlayerStateMachine : StateMachine
 {
     StateType _currentStateType;
@@ -30,31 +30,31 @@ public class PlayerStateMachine : StateMachine
 
     public StateType CurrentState => _currentStateType;
 
-    /// <summary>ƒvƒŒƒCƒ„[‚Ìs“®ó‘Ô</summary>
+    /// <summary>ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã®è¡Œå‹•çŠ¶æ…‹</summary>
     public enum StateType
     {
-        /// <summary>ƒAƒCƒhƒ‹</summary>
+        /// <summary>ã‚¢ã‚¤ãƒ‰ãƒ«</summary>
         Idle,
-        /// <summary>•às</summary>
+        /// <summary>æ­©è¡Œ</summary>
         Walk,
-        /// <summary>ƒK[ƒh</summary>
+        /// <summary>ã‚¬ãƒ¼ãƒ‰</summary>
         Guard,
-        /// <summary>‰ñ”ğ</summary>
+        /// <summary>å›é¿</summary>
         Evade,
-        /// <summary>ãUŒ‚(ƒRƒ“ƒ{1‰ñ–ÚEƒRƒ“ƒ{3‰ñ–Ú)</summary>
+        /// <summary>å¼±æ”»æ’ƒ(ã‚³ãƒ³ãƒœ1å›ç›®ãƒ»ã‚³ãƒ³ãƒœ3å›ç›®)</summary>
         AttackWeakPatternA,
-        /// <summary>ãUŒ‚(ƒRƒ“ƒ{2‰ñ–Ú)</summary>
+        /// <summary>å¼±æ”»æ’ƒ(ã‚³ãƒ³ãƒœ2å›ç›®)</summary>
         AttackWeakPatternB,
-        /// <summary>‹­UŒ‚(ƒRƒ“ƒ{1‰ñ–Ú)</summary>
+        /// <summary>å¼·æ”»æ’ƒ(ã‚³ãƒ³ãƒœ1å›ç›®)</summary>
         AttackStrongPatternA,
-        /// <summary>‹­UŒ‚(ƒRƒ“ƒ{2‰ñ–Ú)</summary>
+        /// <summary>å¼·æ”»æ’ƒ(ã‚³ãƒ³ãƒœ2å›ç›®)</summary>
         AttackStrongPatternB,
     }
 
     PlayerController _playeController;
     public PlayerController PlayerController => _playeController;
 
-    /// <summary>ŠeƒXƒe[ƒg‚Ìİ’è</summary>
+    /// <summary>å„ã‚¹ãƒ†ãƒ¼ãƒˆã®è¨­å®š</summary>
     public void StateSet()
     {
         _idleState.Set(this);
@@ -66,7 +66,7 @@ public class PlayerStateMachine : StateMachine
         _attackStrongPatternAState.Set(this);
         _attackStrongPatternBState.Set(this);
     }
-    /// <summary>ƒXƒe[ƒg‚Ì“o˜^‚Æ‰Šú‰»</summary>
+    /// <summary>ã‚¹ãƒ†ãƒ¼ãƒˆã®ç™»éŒ²ã¨åˆæœŸåŒ–</summary>
     public void Init(PlayerController playerController)
     {
         _playeController = playerController;
@@ -95,12 +95,12 @@ public class PlayerStateMachine : StateMachine
         _currentStateType = (StateType)stateId;
     }
 }
-/// <summary>ƒvƒŒƒCƒ„[ê—pƒXƒe[ƒg‚ÌŠî’êƒNƒ‰ƒX</summary>
+/// <summary>ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼å°‚ç”¨ã‚¹ãƒ†ãƒ¼ãƒˆã®åŸºåº•ã‚¯ãƒ©ã‚¹</summary>
 public abstract class PlayerStateBase : StateMachine.StateBase
 {
     protected PlayerStateMachine _playerStateMachine = null;
 
-    /// <summary>StateMacine‚ğƒZƒbƒg‚·‚éŠÖ”</summary>
+    /// <summary>StateMacineã‚’ã‚»ãƒƒãƒˆã™ã‚‹é–¢æ•°</summary>
     /// <param name="stateMachine"></param>
     public void Set(PlayerStateMachine stateMachine)
     {

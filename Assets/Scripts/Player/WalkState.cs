@@ -1,40 +1,40 @@
-using DG.Tweening;
+ï»¿using DG.Tweening;
 using System;
 using UnityEngine;
 
 [Serializable]
 public class WalkState : PlayerStateBase
 {
-    [Header("“ü—Í‚É‚æ‚Á‚Ä‰¹‚ğ—§‚½‚¹‚é")]
-    [Tooltip("“ü—Í’l(ˆÚ“®)‚ªŒˆ‚ß‚ç‚ê‚½’l‚ğ’´‚¦‚é‚Æ‰¹‚ğ—§‚½‚¹‚é‚æ‚¤‚É‚·‚é")]
+    [Header("å…¥åŠ›ã«ã‚ˆã£ã¦éŸ³ã‚’ç«‹ãŸã›ã‚‹")]
+    [Tooltip("å…¥åŠ›å€¤(ç§»å‹•)ãŒæ±ºã‚ã‚‰ã‚ŒãŸå€¤ã‚’è¶…ãˆã‚‹ã¨éŸ³ã‚’ç«‹ãŸã›ã‚‹ã‚ˆã†ã«ã™ã‚‹")]
     [SerializeField, Range(0, 1)]
     float _isSoundMoving;
 
-    /// <summary>•às‘¬“x</summary>
+    /// <summary>æ­©è¡Œé€Ÿåº¦</summary>
     float _walkSpeed;
 
-    /// <summary>‚ä‚Á‚­‚è•à‚¢‚Ä‚¢‚é‚©‚Ç‚¤‚©</summary>
+    /// <summary>ã‚†ã£ãã‚Šæ­©ã„ã¦ã„ã‚‹ã‹ã©ã†ã‹</summary>
     bool _isWalkSlow = false;
 
     /// <summary>MainCamera</summary>
     Transform _mcTra;
 
-    /// <summary>•ûŒü“]Š·‚Ì‰ñ“]‘¬“x</summary>
+    /// <summary>æ–¹å‘è»¢æ›æ™‚ã®å›è»¢é€Ÿåº¦</summary>
     float _rotateSpeed;
 
-    /// <summary>Ÿ‚ÉŒü‚­‚×‚«•ûŒü‚ÌŠi”[—p</summary>
+    /// <summary>æ¬¡ã«å‘ãã¹ãæ–¹å‘ã®æ ¼ç´ç”¨</summary>
     Quaternion targetRotation;
 
-    /// <summary>ƒƒbƒNƒIƒ“‚·‚éTarget</summary>
+    /// <summary>ãƒ­ãƒƒã‚¯ã‚ªãƒ³ã™ã‚‹Target</summary>
     Transform _lockonTarget;
 
-    /// <summary>ƒƒbƒNƒIƒ“‚Ç‚Ì•ûŒü(‘OŒã¶‰E)‚É“®‚¢‚Ä‚¢‚é‚©</summary>
+    /// <summary>ãƒ­ãƒƒã‚¯ã‚ªãƒ³æ™‚ã©ã®æ–¹å‘(å‰å¾Œå·¦å³)ã«å‹•ã„ã¦ã„ã‚‹ã‹</summary>
     DirMovement _dirMovement = new();
 
-    /// <summary>ƒƒbƒNƒIƒ“‚ÌAnimator‚ÌLayer‚ÌWeightØ‚è‘Ö‚¦</summary>
+    /// <summary>ãƒ­ãƒƒã‚¯ã‚ªãƒ³æ™‚ã®Animatorã®Layerã®Weightåˆ‡ã‚Šæ›¿ãˆ</summary>
     float _layerWeightValue = 0f;
 
-    /// <summary>‘OƒtƒŒ[ƒ€‚ÌƒƒbƒNƒIƒ“ó‘Ô</summary>
+    /// <summary>å‰ãƒ•ãƒ¬ãƒ¼ãƒ ã®ãƒ­ãƒƒã‚¯ã‚ªãƒ³çŠ¶æ…‹</summary>
     bool _pastIsLockon = false;
 
     PlayerHPSTController _playerHPSTController;
@@ -51,6 +51,8 @@ public class WalkState : PlayerStateBase
 
     PlayerInputAction _inputAction;
 
+    CameraController _cameraController;
+
     public override void Init()
     {
         PlayerController playerController = _playerStateMachine.PlayerController;
@@ -60,7 +62,7 @@ public class WalkState : PlayerStateBase
         _inputAction = playerController.InputAction;
         _anim = playerController.PlayerAnim;
         _playerTra = playerController.PlayerTra;
-        _lockonTarget = playerController.CameraController.LockonTarget;
+        _cameraController = playerController.CameraController;
         _playerHPSTController = playerController.PlayerHPSTController;
         _playerParameter = playerController.Parameter;
         _makeASound = playerController.MakeASound;
@@ -78,27 +80,29 @@ public class WalkState : PlayerStateBase
 
     public override void OnUpdate()
     {
-        //ˆÚ“®
+        //ç§»å‹•
         var _forward = Quaternion.AngleAxis(_mcTra.eulerAngles.y, Vector3.up);
         var moveDir = _forward * new Vector3(_inputAction.InputMove.x, 0, _inputAction.InputMove.y).normalized;
         float walkSpeed = _isWalkSlow ? _walkSpeed / 3 : _walkSpeed;
         _characterController.Move(moveDir * walkSpeed * Time.deltaTime);
 
-        //‚ä‚Á‚­‚è•à‚¢‚Ä‚¢‚é‚Æ‚«
+        //ã‚†ã£ãã‚Šæ­©ã„ã¦ã„ã‚‹ã¨ã
         if (_inputAction.InputMove.magnitude >= _isSoundMoving)
         {
             _isWalkSlow = false;
             _anim.SetBool("IsWalkSlow",false);
-            _makeASound.IsSoundChange(true);         //‰¹‚ğ—§‚Ä‚é
+            _makeASound.IsSoundChange(true);         //éŸ³ã‚’ç«‹ã¦ã‚‹
+            AudioManager.Instance.SEPlay(SE.Footsteps);
         }
         else
         {
             _isWalkSlow = true;
             _anim.SetBool("IsWalkSlow", true);
-            _makeASound.IsSoundChange(false);       //‰¹‚ğ—§‚Ä‚È‚¢
+            _makeASound.IsSoundChange(false);       //éŸ³ã‚’ç«‹ã¦ãªã„
+            AudioManager.Instance.SEStop();
         }
 
-        //ƒƒbƒNƒIƒ“Ø‚è‘Ö‚¦“ü—Í‚³‚ê‚½‚¾‚¯ˆ—‚ğs‚¤
+        //ãƒ­ãƒƒã‚¯ã‚ªãƒ³åˆ‡ã‚Šæ›¿ãˆå…¥åŠ›ã•ã‚ŒãŸæ™‚ã ã‘å‡¦ç†ã‚’è¡Œã†
         if (_inputAction.IsLockon != _pastIsLockon)     
         {
             _pastIsLockon = _inputAction.IsLockon;
@@ -108,10 +112,10 @@ public class WalkState : PlayerStateBase
             }
         }
 
-        //ƒƒbƒNƒIƒ“’†
+        //ãƒ­ãƒƒã‚¯ã‚ªãƒ³ä¸­
         if (_inputAction.IsLockon)
         {
-            //“®‚­•ûŒü‚É‚æ‚Á‚ÄAnimation‚ğØ‚è‘Ö‚¦
+            //å‹•ãæ–¹å‘ã«ã‚ˆã£ã¦Animationã‚’åˆ‡ã‚Šæ›¿ãˆ
             DirMovement.MoveDir dir = _dirMovement.DirMovementJudge(_inputAction.InputMove);
             switch(dir)
             {
@@ -134,8 +138,8 @@ public class WalkState : PlayerStateBase
                 default:
                     break;
             }
-
-            //ƒ^[ƒQƒbƒg‚Ì•û‚ğŒü‚­
+            _lockonTarget = _cameraController.LockonTarget;
+            //ã‚¿ãƒ¼ã‚²ãƒƒãƒˆã®æ–¹ã‚’å‘ã
             var direction = _lockonTarget.transform.position - _playerTra.transform.position;
             direction.y = 0;
             _playerTra.rotation = Quaternion.LookRotation(direction);
@@ -149,13 +153,13 @@ public class WalkState : PlayerStateBase
             {
                 targetRotation = Quaternion.LookRotation(moveDir, Vector3.up);
             }
-            //ˆÚ“®‚·‚é•ûŒü‚ÉŒü‚­
+            //ç§»å‹•ã™ã‚‹æ–¹å‘ã«å‘ã
             _playerTra.rotation = Quaternion.RotateTowards(_playerTra.rotation, targetRotation, _rotateSpeed * Time.deltaTime);
         }
 
         _anim.SetFloat("move", moveDir.magnitude);
 
-        //‘JˆÚæ
+        //é·ç§»å…ˆ
         if (_inputAction.IsAttackWeak && _playerHPSTController.CurrntStValue >= _playerParameter.AttackWeakSTCost)
             _playerStateMachine.OnChangeState((int)PlayerStateMachine.StateType.AttackWeakPatternA);
 
@@ -168,7 +172,7 @@ public class WalkState : PlayerStateBase
         if(_inputAction.IsEvade && _playerHPSTController.CurrntStValue >= _playerParameter.EvadeSTCost)
             _playerStateMachine.OnChangeState((int)PlayerStateMachine.StateType.Evade);
 
-        if (moveDir.magnitude <= 0)     //“Ë‚Á—§‚Á‚Ä‚éó‘Ô
+        if (moveDir.magnitude <= 0)     //çªã£ç«‹ã£ã¦ã‚‹çŠ¶æ…‹
         {
             _anim.SetLayerWeight(2, 0);
             _playerStateMachine.OnChangeState((int)PlayerStateMachine.StateType.Idle);
@@ -180,6 +184,7 @@ public class WalkState : PlayerStateBase
         _anim.SetBool("IsWalkSlow", false);
         _isWalkSlow = false;
         _anim.SetLayerWeight(2, 0);
+        AudioManager.Instance.SEStop();
     }
 
     public void SetLayerWeightChanging()

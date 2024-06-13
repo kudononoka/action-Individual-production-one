@@ -1,4 +1,4 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -11,7 +11,7 @@ public class IsVisible : BehaviorTreeBaseNode
     public IsVisible()
     {
         nodeName = "is visible";
-        nodeData = new NodeData(NodeType.ConditionNode, typeof(MyAttackAreaIsTarget).FullName);
+        nodeData = new NodeData(NodeType.ConditionNode, typeof(IsVisible).FullName);
     }
 
     public override void Init(GameObject target, GameObject my)
