@@ -92,7 +92,7 @@ public class WalkState : PlayerStateBase
             _isWalkSlow = false;
             _anim.SetBool("IsWalkSlow",false);
             _makeASound.IsSoundChange(true);         //音を立てる
-            AudioManager.Instance.SEPlay(SE.Footsteps);
+            AudioManager.Instance.SEPlay(SE.PlayerFootsteps);
         }
         else
         {

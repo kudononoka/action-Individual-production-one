@@ -2,7 +2,7 @@
 using System;
 
 [Serializable]
-public struct SoundProperty
+public class SoundProperty
 {
     [SerializeField]
     [Tooltip("再生させたいAudioClip")]
@@ -12,15 +12,23 @@ public struct SoundProperty
     [Tooltip("再生時の音量")] 
     float _volum;
 
-    public AudioClip audioClip => _audioClip;
-    public float volum => _volum;
+    [SerializeField, Range(0, 1f)]
+    float _pitch = 1; 
+
+    public AudioClip AudioClip => _audioClip;
+    public float Volum => _volum;
+    public float Pitch => _pitch;
 }
 
 /// <summary>どの状態時にSEを再生するか管理するenum</summary>
 public enum SE
 {
-    /// <summary>足音</summary>
-    Footsteps,
+    /// <summary>Player足音</summary>
+    PlayerFootsteps,
+    /// <summary>Playerが武器を振る音(弱攻撃)</summary>
+    PlayerAttackWeakSwish,
+    /// <summary>Playerが武器を振る音(強攻撃)</summary>
+    PlayerAttackStrongSwish,
 }
 
 /// <summary>どの状態時にBGMを再生するか管理するenum</summary>

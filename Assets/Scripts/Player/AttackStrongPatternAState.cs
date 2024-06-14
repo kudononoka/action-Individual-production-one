@@ -16,6 +16,13 @@ public class AttackStrongPatternAState : PlayerStateBase
     [SerializeField]
     float _nextAttackTime;
 
+    [Header("素振り音を鳴らすタイミング")]
+    [SerializeField]
+    float _soundTime;
+
+    /// <summary>素振り音を鳴らしたかどうか</summary>
+    bool _isSound = false;
+
     float _coolTimer;
 
     Animator _anim;
@@ -31,6 +38,7 @@ public class AttackStrongPatternAState : PlayerStateBase
     Weapon _weapon;
 
     MakeASound _makeASound;
+
     public override void Init()
     {
         PlayerController　playerController = _playerStateMachine.PlayerController;
@@ -52,6 +60,7 @@ public class AttackStrongPatternAState : PlayerStateBase
         _weapon.DamageColliderEnabledSet(true);
         _weapon.Damage = _playerParameter.AttackStrongPower;
         _makeASound.IsSoundChange(true);
+        _isSound = false;
     }
 
     public override void OnUpdate()
@@ -70,6 +79,12 @@ public class AttackStrongPatternAState : PlayerStateBase
         else
         {
             _inputAction.IsAttackStrong = false;
+        }
+
+        if(!_isSound && _coolTimer <= _soundTime)
+        {
+            AudioManager.Instance.SEPlayOneShot(SE.PlayerAttackStrongSwish);
+            _isSound = true;
         }
 
         if (_coolTimer <= 0.95)

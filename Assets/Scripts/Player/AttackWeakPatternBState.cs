@@ -52,6 +52,7 @@ public class AttackWeakPatternBState : PlayerStateBase
         _weapon.DamageColliderEnabledSet(true);
         _weapon.Damage = _playerParameter.AttackWeakPower;
         _makeASound.IsSoundChange(true);
+        AudioManager.Instance.SEPlayOneShot(SE.PlayerAttackWeakSwish);
     }
 
     public override void OnUpdate()

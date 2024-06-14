@@ -17,6 +17,10 @@ public class AudioManager : MonoBehaviour
     [Tooltip("SEを再生する用のAudioSource")]
     AudioSource _seAudioSource;
 
+    [SerializeField]
+    [Tooltip("SEを再生する用のAudioSource(重複用)")]
+    AudioSource _sePlayOneShotAudioSource;
+
     [Space]
 
     [Header("再生させたいAudioの設定")]
@@ -80,13 +84,22 @@ public class AudioManager : MonoBehaviour
     public void SEPlay(SE se)
     {
         SoundProperty soundProperty = _se[se];
-        _seAudioSource.volume = soundProperty.volum;
 
-        if (_seAudioSource.isPlaying && _seAudioSource.clip == soundProperty.audioClip)
+        if (_seAudioSource.isPlaying && _seAudioSource.clip == soundProperty.AudioClip)
             return;
 
-        _seAudioSource.clip = soundProperty.audioClip;
+        _seAudioSource.volume = soundProperty.Volum;
+        _seAudioSource.pitch = soundProperty.Pitch;
+        _seAudioSource.clip = soundProperty.AudioClip;
         _seAudioSource.Play();
+    }
+
+    public void SEPlayOneShot(SE se)
+    {
+        SoundProperty soundProperty = _se[se];
+        _sePlayOneShotAudioSource.volume = soundProperty.Volum;
+        _sePlayOneShotAudioSource.pitch = soundProperty.Pitch;
+        _sePlayOneShotAudioSource.PlayOneShot(soundProperty.AudioClip);
     }
 
     public void SEStop()
@@ -100,7 +113,7 @@ public class AudioManager : MonoBehaviour
     {
         SoundProperty soundProperty = _bgm[bgm];
 
-        if (_bgmAudioSource.clip == soundProperty.audioClip)
+        if (_bgmAudioSource.clip == soundProperty.AudioClip)
         {
             return;
         }
@@ -110,8 +123,8 @@ public class AudioManager : MonoBehaviour
             _bgmAudioSource.Stop();
         }
 
-        _bgmAudioSource.clip = soundProperty.audioClip;
-        _bgmAudioSource.volume = soundProperty.volum;
+        _bgmAudioSource.clip = soundProperty.AudioClip;
+        _bgmAudioSource.volume = soundProperty.Volum;
         _bgmAudioSource.Play();
     }
 
