@@ -1,0 +1,15 @@
+using System;
+using UnityEngine;
+
+[Serializable]
+public class AttackEffectPlay
+{
+    [Tooltip("çUåÇéûÇÃEffect")]
+    [SerializeField]
+    ParticleSystem _slashEffect;
+
+    public void SlashEffectPlay()
+    {
+        _slashEffect.Play();
+    }
+}

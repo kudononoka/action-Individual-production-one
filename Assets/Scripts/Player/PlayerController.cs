@@ -33,6 +33,9 @@ public class PlayerController : MonoBehaviour, IDamage
     [SerializeField]
     PlayerHPSTController _playerHPSTController = new();
 
+    [SerializeField]
+    AttackEffectPlay _attackEffectPlay = new();
+
     CharacterController _characterController;
 
     PlayerInputAction _inputAction;
@@ -86,5 +89,10 @@ public class PlayerController : MonoBehaviour, IDamage
         {
             GameManager.Instance.ChangeScene(SceneState.GameOver);
         }
+    }
+
+    public void AttackEffectPlay()
+    {
+        _attackEffectPlay.SlashEffectPlay();
     }
 }

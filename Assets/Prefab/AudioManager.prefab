@@ -438,7 +438,7 @@ MonoBehaviour:
   - _key: 0
     _value:
       _audioClip: {fileID: 8300000, guid: 05a51dde4b4ba8248972cfd3358014b2, type: 3}
-      _volum: 1
+      _volum: 0.5
       _pitch: 1
   - _key: 1
     _value:
