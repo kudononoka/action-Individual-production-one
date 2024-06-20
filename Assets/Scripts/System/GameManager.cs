@@ -46,7 +46,7 @@ public class GameManager : MonoBehaviour
         else if (Instance == this)
         {
             _instance._currentScene = this._currentScene;
-            _instance.Setting(_currentScene);
+            _instance.Setting(_instance._currentScene);
             DontDestroyOnLoad(this.gameObject);
         }
         else
@@ -85,9 +85,9 @@ public class GameManager : MonoBehaviour
                 AudioManager.Instance.BGMPlay(BGM.GameClear);
                 break;
             case SceneState.InGame:
-                _enemyCount = 9;
-                _enemyMaxCount.Value = _enemyCount;
-                _currentEnemyKillCount.Value = 0;
+                _instance._enemyCount = 9;
+                _instance._enemyMaxCount.Value = _enemyCount;
+                _instance._currentEnemyKillCount.Value = 0;
                 AudioManager.Instance.BGMPlay(BGM.Game);  
                 break;
         }

@@ -795,6 +795,17 @@
                 },
                 {
                     "name": "",
+                    "id": "077efd91-c9f5-4a8a-8d32-9769296a194a",
+                    "path": "<Gamepad>/buttonEast",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Gamepad",
+                    "action": "Click",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
                     "id": "67d18420-8142-4c75-a6b6-cc9144008045",
                     "path": "<Mouse>/scroll",
                     "interactions": "",

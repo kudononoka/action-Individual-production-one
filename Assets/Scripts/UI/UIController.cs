@@ -1,7 +1,6 @@
 using DG.Tweening;
 using UnityEngine;
 using UnityEngine.UI;
-using static UnityEngine.Rendering.DebugUI;
 
 public class UIController : MonoBehaviour
 {
@@ -82,6 +81,7 @@ public class UIController : MonoBehaviour
     public void SetCurrentEnemyKillCount(int count)
     {
         _enemyKillCount = count;
+        if(_enemyCountText != null)
         _enemyCountText.text = $"{_enemyKillCount} / {_enemyMaxCount}";
     }
 
