@@ -331,6 +331,17 @@
                     "action": "LockonSelect",
                     "isComposite": false,
                     "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "8489c2c5-bd73-4a69-a68e-94b83111fada",
+                    "path": "<Keyboard>/e",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard&Mouse",
+                    "action": "LockonSelect",
+                    "isComposite": false,
+                    "isPartOfComposite": false
                 }
             ]
         },
