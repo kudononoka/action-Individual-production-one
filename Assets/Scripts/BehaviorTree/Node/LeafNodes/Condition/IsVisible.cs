@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>対象が見えているかどうか</summary>
 public class IsVisible : BehaviorTreeBaseNode
 {
     Transform _target;

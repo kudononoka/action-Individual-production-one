@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>音が聞き取ったかどうか判定</summary>
 public class IsAudible : BehaviorTreeBaseNode
 {
     GameObject _target;

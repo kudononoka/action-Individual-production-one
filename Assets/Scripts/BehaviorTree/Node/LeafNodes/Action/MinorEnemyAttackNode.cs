@@ -4,6 +4,7 @@
 [SerializeField]
 public class MinorEnemyAttackNode : BehaviorTreeBaseNode
 {
+    /// <summary>攻撃終了までにかかる時間</summary>
     float _coolTimer;
 
     [Header("攻撃にかかる時間")]

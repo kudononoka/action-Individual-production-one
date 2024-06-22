@@ -19,7 +19,7 @@ public class IdleState : PlayerStateBase
     }
     public override void OnUpdate()
     {
-        //移動切り替え
+        //遷移
         if (_inputAction.InputMove.magnitude > 0)
         {
             _playerStateMachine.OnChangeState((int)PlayerStateMachine.StateType.Walk);

@@ -28,14 +28,15 @@ public class ReflectionExample
     {
         if(_assemblyArray == null)
         {
+            //現在読み込まれているAssemblyを取得
             _assemblyArray = AppDomain.CurrentDomain.GetAssemblies();
         }
 
-        // Unity エディタで実行されるアセンブリのみを対象とする
         foreach (Assembly assembly in _assemblyArray)
         {
             // Unity エディタで実行されるアセンブリのみを対象とする
-            if (assembly.FullName.StartsWith("Assembly-CSharp"))
+            //ソリューションのAssembly-CSharp欄から探している
+            if (assembly.FullName.StartsWith("Assembly-CSharp"))　
             {
                 foreach (Type type in assembly.GetTypes())
                 {

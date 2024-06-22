@@ -15,7 +15,9 @@ public class UIPresenter : MonoBehaviour
 
     void Start()
     {
+        //GameManager
         GameManager gameManager = GameManager.Instance;
+        //“G”
         gameManager.EnemyCount.Subscribe(value => _uiController.SetUpEnemyCount(value));
         gameManager.CurrentKillCount.Skip(1).Subscribe(value => _uiController.SetCurrentEnemyKillCount(value));
 

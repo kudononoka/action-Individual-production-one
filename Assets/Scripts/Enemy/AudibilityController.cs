@@ -7,8 +7,6 @@ public class AudibilityController : MonoBehaviour
     [SerializeField, Range(0, 50)]
     float _earshot;
 
-    bool _isAudible;
-
     /// <summary>聞こえた場所</summary>
     Vector3 _soundLocation = Vector3.zero;
 
@@ -34,6 +32,7 @@ public class AudibilityController : MonoBehaviour
         return false;
     }
 
+    /// <summary>聴覚範囲の可視化</summary>
     private void OnDrawGizmos()
     {
         Gizmos.DrawWireSphere(this.transform.position, _earshot);

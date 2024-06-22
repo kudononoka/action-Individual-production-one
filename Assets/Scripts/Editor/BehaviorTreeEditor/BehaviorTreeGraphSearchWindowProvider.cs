@@ -45,7 +45,7 @@ public class BehaviorTreeGraphSearchWindowProvider : ScriptableObject, ISearchWi
     {
         var entries = new List<SearchTreeEntry>();
         entries.Add(new SearchTreeGroupEntry(new GUIContent("Create Node")));
-        //自作クラスの追加
+        //自作ノードクラスの追加
         entries.Add(new SearchTreeEntry(new GUIContent(nameof(SelectorNode))) { level = 1, userData = typeof(SelectorNode).FullName});
         entries.Add(new SearchTreeEntry(new GUIContent(nameof(SequenceNode))) { level = 1, userData = typeof(SequenceNode).FullName});
         entries.Add(new SearchTreeEntry(new GUIContent(nameof(DecoratoeNodeCondition))) { level = 1, userData = typeof(DecoratoeNodeCondition).FullName});

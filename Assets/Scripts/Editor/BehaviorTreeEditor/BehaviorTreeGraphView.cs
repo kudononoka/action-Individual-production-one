@@ -70,7 +70,10 @@ public class BehaviorTreeGraphView : GraphView
     public void CreateNode(Type nodeType, Rect rect, bool isRoot)
     {
         var node = _window.CreateNode(nodeType, rect, isRoot);
-        CreatNodeView(node);
+        if (!isRoot)
+        {
+            CreatNodeView(node);
+        }
     }
 
     /// <summary>ノードの表示</summary>

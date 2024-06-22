@@ -90,6 +90,8 @@ public class PlayerStateMachine : StateMachine
         Initialize((int)StateType.Idle);
     }
 
+    /// <summary> Stateの変更</summary>
+    /// <param name="stateId"></param>
     public override void CurrentChangeState(int stateId)
     {
         _currentStateType = (StateType)stateId;

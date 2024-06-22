@@ -34,8 +34,12 @@ public enum SE
 /// <summary>どの状態時にBGMを再生するか管理するenum</summary>
 public enum BGM
 {
+    /// <summary>タイトル</summary>
     Title,
+    /// <summary>インゲーム</summary>
     Game,
+    /// <summary>ゲームオーバー</summary>
     GameOver,
+    /// <summary>ゲームクリア</summary>
     GameClear
 }

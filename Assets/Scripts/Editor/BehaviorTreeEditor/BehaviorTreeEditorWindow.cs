@@ -4,9 +4,7 @@ using UnityEngine.UIElements;
 using System;
 using System.Collections.Generic;
 
-/// <summary>
-/// ビヘイビアツリーをWindowに表示するためのEditorWindow
-/// </summary>
+/// <summary>ビヘイビアツリーをWindowに表示するためのEditorWindow</summary>
 public class BehaviorTreeEditorWindow : EditorWindow
 {
     private BehaviorTreeGraphView _graphView;
@@ -138,25 +136,33 @@ public class BehaviorTreeEditorWindow : EditorWindow
         }
     }
 
+    /// <summary>Nodeが削除された場合子ノードのIDの値を変える</summary>
+    /// <param name="index">削除されたNodeのID</param>
     public void ChildIDChange(int index)
     {
+        //ルートノードの子ノードが削除したNodeだった場合
         if (_data.RootNodeData.NodeData.ChildData.Count > 0 
             &&_data.RootNodeData.NodeData.ChildData[0].ID == index)
         {
             ChildNodeDataRemove(-1, index);
         }
 
+        //ルートノード以外
         for (int i = 0; i < _data.Nodes.Count; i++)
         {
-            for (int j = 0; j < _data.Nodes[i].NodeData.ChildData.Count; j++)
+            NodeData data = _data.Nodes[i].NodeData;
+
+            //子ノードを持たないタイプは除外
+            if (data.NodeType == NodeType.ActionNode     
+                && data.NodeType == NodeType.ConditionNode)
+                continue;
+
+            for (int j = 0; j < data.ChildData.Count; j++)
             {
-                //if (_data.Nodes[i].NodeData.ChildData[j].ID == index)
-                //{
-                //    _data.Nodes[i].NodeData.ChildDataRemoveAt(j);
-                //}
-                if (_data.Nodes[i].NodeData.ChildData[j].ID > index)
+                //削除されたIDより値が大きかったら１引く
+                if (data.ChildData[j].ID > index)
                 {
-                    _data.Nodes[i].NodeData.ChildData[j].ID -= 1;
+                    data.ChildData[j].ID -= 1;
                 }
             }
         }
@@ -169,9 +175,7 @@ public class BehaviorTreeEditorWindow : EditorWindow
         LoadConectView();
     }
 
-    /// <summary>
-    /// Nodeの表示
-    /// </summary>
+    /// <summary>Nodeの表示</summary>
     void LoadNodeView()
     {
         if (_data.RootNodeData != null)

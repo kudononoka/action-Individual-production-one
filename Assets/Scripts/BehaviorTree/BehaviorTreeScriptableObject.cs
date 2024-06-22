@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Security.Cryptography;
 using UnityEngine;
 [CreateAssetMenu]
 public class BehaviorTreeScriptableObject : ScriptableObject
@@ -43,14 +42,19 @@ public class NodeData
         _nodeType = nodeType;
         _className = className;
     }
+
     [SerializeField]
     private NodeType _nodeType;
+
     [SerializeField]
     private string _className;
+
     [SerializeField]
     private int _id;
+
     [SerializeField]
     private Rect _rect;
+
     [SerializeField]
     private List<ChildData> _childData = new List<ChildData>();
 
@@ -88,8 +92,10 @@ public class ChildData
         _id = id;
         _nodeType = nodeType;
     }
+
     [SerializeField]
     private int _id;
+
     [SerializeField]
     private NodeType _nodeType;
 

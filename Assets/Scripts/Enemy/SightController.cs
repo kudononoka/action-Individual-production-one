@@ -21,23 +21,23 @@ public class SightController : MonoBehaviour
     [SerializeField]
     Transform _targetTra;
 
-    public void Init(Transform _taget)
-    {
-       _targetTra = _taget;
-    }
-
+    /// <summary>対象物が見えているかどうか判定を行う</summary>
+    /// <param name="targetPos">対象の位置</param>
+    /// <returns>見えていたらTrueを返す</returns>
     public bool isVisible(Vector3 targetPos)
     {
         var targetVec = targetPos - _selfHead.position;   //ターゲットへのベクトル
-        var targetDistance = targetVec.magnitude;
+        var targetDistance = targetVec.magnitude;　　　　 //ターゲットまでの距離
 
-        var cosHalf = Mathf.Cos(_sightAngle / 2 * Mathf.Deg2Rad);
+        var cosHalf = Mathf.Cos(_sightAngle / 2 * Mathf.Deg2Rad);　//半分の角度を求める
 
-        var innerProduct = Vector3.Dot(_selfHead.forward, targetVec.normalized);
+        //ベクトルを単位ベクトルにことで、内積の大きさだけで判別できる
+        var innerProduct = Vector3.Dot(_selfHead.forward, targetVec.normalized);　
 
         return innerProduct > cosHalf && targetDistance < _maxDistance;
     }
 
+    /// <summary>視界の可視化</summary>
     private void OnDrawGizmos()
     {
         Vector3 rightBorder = Quaternion.Euler(0, _sightAngle / 2, 0) * _selfHead.forward;//右端

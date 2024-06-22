@@ -1,7 +1,6 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
+/// <summary>ターゲットの方を向く</summary>
 public class LookAt : BehaviorTreeBaseNode
 {
     Transform _target;
@@ -20,7 +19,7 @@ public class LookAt : BehaviorTreeBaseNode
 
     public override Result Evaluate()
     {
-        _my.LookAt(_target, Vector3.up);
+        _my.LookAt(_target, Vector3.up);　
         return Result.Success;
     }
 }

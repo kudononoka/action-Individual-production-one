@@ -1,6 +1,7 @@
 using System;
 using UnityEngine;
 
+//UŒ‚Effect‚Ì•\¦
 [Serializable]
 public class AttackEffectPlay
 {

@@ -68,7 +68,7 @@ public class Weapon : MonoBehaviour
             if (other.gameObject.TryGetComponent<IDamage>(out var IDamage))
             {
                 IDamage.Damage(_damage);
-                _bloodParticleActive = true;　　　//血表示
+                _bloodParticleActive = true;　　　//血Effect表示
                 BloodParticalActive(true);
             }
         }

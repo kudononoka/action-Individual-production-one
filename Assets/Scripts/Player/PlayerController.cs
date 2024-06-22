@@ -78,9 +78,10 @@ public class PlayerController : MonoBehaviour, IDamage
         _stateMachine.OnUpdate();
         _cameraController.OnUpdate();
 
+        //歩いている、立っている状態だったら
         if(_stateMachine.CurrentState == PlayerStateMachine.StateType.Idle
             || _stateMachine.CurrentState == PlayerStateMachine.StateType.Walk)
-            _playerHPSTController.RecoveryST();
+            _playerHPSTController.RecoveryST();　　　//ST回復
     }
 
     public void Damage(int damage)
