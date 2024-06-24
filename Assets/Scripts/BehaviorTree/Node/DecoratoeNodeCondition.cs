@@ -21,7 +21,7 @@ public class DecoratoeNodeCondition : BehaviorTreeBaseNode, IChildNodeSetting
 
     public void ChildNodeSet(BehaviorTreeBaseNode chileNode)
     {
-        switch (chileNode.NodeData.NodeType)
+        switch (chileNode.NodeData.NodeParameter.NodeType)
         {
             case NodeType.ConditionNode:
                 _conditionsNodes.Add(chileNode);
@@ -34,7 +34,7 @@ public class DecoratoeNodeCondition : BehaviorTreeBaseNode, IChildNodeSetting
 
     public void ChildNodeRemove(BehaviorTreeBaseNode chileNode)
     {
-        switch (chileNode.NodeData.NodeType)
+        switch (chileNode.NodeData.NodeParameter.NodeType)
         {
             case NodeType.ConditionNode:
                 _conditionsNodes.Remove(chileNode);

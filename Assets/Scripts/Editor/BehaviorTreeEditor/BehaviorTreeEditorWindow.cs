@@ -70,12 +70,12 @@ public class BehaviorTreeEditorWindow : EditorWindow
         if (root)
         {
             _data.RootNodeDataOverwrite(node);
-            node.NodeData.ID = -1;
+            node.NodeData.NodeParameter.ID = -1;
         }
         else
         {
             _data.Nodes.Add(node);
-            node.NodeData.ID = _data.Nodes.Count - 1;
+            node.NodeData.NodeParameter.ID = _data.Nodes.Count - 1;
         }
         node.NodeData.Rect = rect;
         
@@ -98,15 +98,14 @@ public class BehaviorTreeEditorWindow : EditorWindow
         _data.Nodes.RemoveAt(id);
         for (int i = id; i < _data.Nodes.Count; i++)
         {
-            _data.Nodes[i].NodeData.ID -= 1;
+            _data.Nodes[i].NodeData.NodeParameter.ID -= 1;
         }
-        ChildIDChange(id);
     }
 
     /// <summary>親ノードデータに子ノード情報を保管</summary>
     /// <param name="id">親ノードID</param>
     /// <param name="child">子ノードID</param>
-    public void ChildNodeDataAdd(int id, ChildData child)
+    public void ChildNodeDataAdd(int id, NodeParameter child)
     {
         if (id == -1)
             _data.RootNodeData.NodeData.ChildIDAdd(child);
@@ -131,38 +130,6 @@ public class BehaviorTreeEditorWindow : EditorWindow
                 {
                     _data.Nodes[id].NodeData.ChildDataRemoveAt(i);
                     break;
-                }
-            }
-        }
-    }
-
-    /// <summary>Nodeが削除された場合子ノードのIDの値を変える</summary>
-    /// <param name="index">削除されたNodeのID</param>
-    public void ChildIDChange(int index)
-    {
-        //ルートノードの子ノードが削除したNodeだった場合
-        if (_data.RootNodeData.NodeData.ChildData.Count > 0 
-            &&_data.RootNodeData.NodeData.ChildData[0].ID == index)
-        {
-            ChildNodeDataRemove(-1, index);
-        }
-
-        //ルートノード以外
-        for (int i = 0; i < _data.Nodes.Count; i++)
-        {
-            NodeData data = _data.Nodes[i].NodeData;
-
-            //子ノードを持たないタイプは除外
-            if (data.NodeType == NodeType.ActionNode     
-                && data.NodeType == NodeType.ConditionNode)
-                continue;
-
-            for (int j = 0; j < data.ChildData.Count; j++)
-            {
-                //削除されたIDより値が大きかったら１引く
-                if (data.ChildData[j].ID > index)
-                {
-                    data.ChildData[j].ID -= 1;
                 }
             }
         }
@@ -193,28 +160,28 @@ public class BehaviorTreeEditorWindow : EditorWindow
     void LoadConectView()
     {
         if (_data.RootNodeData.NodeData.ChildData.Count > 0)
-            _graphView.ConnectNodes(_data.RootNodeData.NodeData.ID, _data.RootNodeData.NodeData.ChildData[0].ID);
+            _graphView.ConnectNodes(_data.RootNodeData.NodeData.NodeParameter.ID, _data.RootNodeData.NodeData.ChildData[0].ID);
 
         for (int i = 0; i < _data.Nodes.Count; i++)
         {
             if (_data.Nodes[i].NodeData.ChildData.Count > 0)
             {
                 NodeData node = _data.Nodes[i].NodeData;
-                if (node.NodeType == NodeType.DecoratorNode)
+                if (node.NodeParameter.NodeType == NodeType.DecoratorNode)
                 {
                     for (int j = 0; j < node.ChildData.Count; j++)
                     {
                         if (node.ChildData[j].NodeType == NodeType.ConditionNode)
-                            _graphView.ConnectNodes(node.ID, node.ChildData[j].ID, 1, 0);
+                            _graphView.ConnectNodes(node.NodeParameter.ID, node.ChildData[j].ID, 1, 0);
                         else
-                            _graphView.ConnectNodes(node.ID, node.ChildData[j].ID, 0, 0);
+                            _graphView.ConnectNodes(node.NodeParameter.ID, node.ChildData[j].ID, 0, 0);
                     }
                 }
                 else
                 {
                     for (int j = 0; j < node.ChildData.Count; j++)
                     {
-                        _graphView.ConnectNodes(node.ID, node.ChildData[j].ID);
+                        _graphView.ConnectNodes(node.NodeParameter.ID, node.ChildData[j].ID);
                     }
                 }
             }

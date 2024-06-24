@@ -83,7 +83,7 @@ public class BehaviorTreeGraphView : GraphView
         NodeSetting setting = new NodeSetting(this);
         NodeView nodeView = new NodeView(node);
         setting.Setting(node, node.NodeData.Rect, nodeView);
-        if (nodeView.Node.NodeData.NodeType == NodeType.RootNode)
+        if (nodeView.Node.NodeData.NodeParameter.NodeType == NodeType.RootNode)
         {
             rootNode = nodeView;
         }
@@ -114,7 +114,7 @@ public class BehaviorTreeGraphView : GraphView
             {
                 if (element is NodeView node)
                 {
-                    _window.DeleteNode(node.Node.NodeData.ID);
+                    _window.DeleteNode(node.Node.NodeData.NodeParameter.ID);
                 }
             }
         }
@@ -138,8 +138,7 @@ public class BehaviorTreeGraphView : GraphView
                 if (childNodeView != null && nodeData is IChildNodeSetting iChildNodeSet)
                 {
                     iChildNodeSet.ChildNodeSet(childNodeView.Node);
-                    _window.ChildNodeDataAdd(parentNodeView.Node.NodeData.ID, 
-                        new ChildData(childNodeView.Node.NodeData.ID, childNodeView.Node.NodeData.NodeType));
+                    _window.ChildNodeDataAdd(parentNodeView.Node.NodeData.NodeParameter.ID, childNodeView.Node.NodeData.NodeParameter);
                 }
             }
         }
@@ -160,7 +159,7 @@ public class BehaviorTreeGraphView : GraphView
                     if (childNodeView != null && node is IChildNodeSetting iChildNodeSet)
                     {
                         iChildNodeSet.ChildNodeRemove(childNodeView.Node);
-                        _window.ChildNodeDataRemove(parentNodeView.Node.NodeData.ID, childNodeView.Node.NodeData.ID);
+                        _window.ChildNodeDataRemove(parentNodeView.Node.NodeData.NodeParameter.ID, childNodeView.Node.NodeData.NodeParameter.ID);
                     }
                 }
             }

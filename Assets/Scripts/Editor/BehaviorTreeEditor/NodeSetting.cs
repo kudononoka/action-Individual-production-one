@@ -15,7 +15,7 @@ public class NodeSetting
     /// <summary>Nodeの設定</summary>
     public void Setting(BehaviorTreeBaseNode nodeData, Rect rect, Node node)
     {
-        SettingPortNode(nodeData,node, node.name, rect, nodeData.NodeData.NodeType);
+        SettingPortNode(nodeData,node, node.name, rect, nodeData.NodeData.NodeParameter.NodeType);
     }
 
     /// <summary>NodeのPort設定</summary>
