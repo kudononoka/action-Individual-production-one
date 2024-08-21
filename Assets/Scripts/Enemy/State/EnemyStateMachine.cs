@@ -1,6 +1,7 @@
+using System;
 using UnityEngine;
 
-[System.Serializable]
+[Serializable]
 /// <summary>エネミー専用ステートマシーン</summary>
 public class EnemyStateMachine : StateMachine
 {
@@ -27,6 +28,7 @@ public class EnemyStateMachine : StateMachine
 
     BattleState _battleState = new();
 
+    [SerializeField]
     SearchState _searchState = new();
 
     /// <summary>各ステートの設定</summary>

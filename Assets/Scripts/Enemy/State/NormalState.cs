@@ -12,8 +12,10 @@ public class NormalState : EnemyStateBase
     }
 
     public override void OnEnter()
-    { 
-        _enemyAI.AnimatorControlle.OnChangeState((int)EnemyAnimatorControlle.StateType.Walk);
+    {
+        _enemyStateMachine.OnChangeState((int)EnemyStateMachine.StateType.Search);
+
+        //_enemyAI.AnimatorControlle.OnChangeState((int)EnemyAnimatorControlle.StateType.Idle);
     }
 
     public override void OnUpdate()
