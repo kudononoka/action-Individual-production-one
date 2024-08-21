@@ -278,9 +278,9 @@ MonoBehaviour:
     _rect:
       serializedVersion: 2
       x: 460
-      y: 664.8
+      y: 699.2
       width: 145.59998
-      height: 76.80005
+      height: 76.79999
     _childData: []
   _moveSpeed: 1
 --- !u!114 &3289616761782568278

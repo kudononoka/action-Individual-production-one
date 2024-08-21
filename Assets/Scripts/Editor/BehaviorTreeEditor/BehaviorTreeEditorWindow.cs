@@ -79,7 +79,6 @@ public class BehaviorTreeEditorWindow : EditorWindow
         }
         node.NodeData.Rect = rect;
         
-
         AssetDatabase.AddObjectToAsset(node, _data);
         AssetDatabase.SaveAssets();
 

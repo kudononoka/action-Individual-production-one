@@ -32627,6 +32627,10 @@ PrefabInstance:
       propertyPath: _cameraController._defaultCamera
       value: 
       objectReference: {fileID: 1112895516}
+    - target: {fileID: 5047898103536986820, guid: 0b3e0fe83779f9f47b911eb234e75525, type: 3}
+      propertyPath: _cameraController._lockonCursorTra
+      value: 
+      objectReference: {fileID: 1070574743}
     - target: {fileID: 5699199329009744972, guid: 0b3e0fe83779f9f47b911eb234e75525, type: 3}
       propertyPath: m_Name
       value: player-action
