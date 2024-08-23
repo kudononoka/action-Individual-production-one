@@ -7,10 +7,13 @@ public class AttackEffectPlay
 {
     [Tooltip("çUåÇéûÇÃEffect")]
     [SerializeField]
-    ParticleSystem _slashEffect;
+    ParticleSystem[] _slashEffect;
 
     public void SlashEffectPlay()
     {
-        _slashEffect.Play();
+        foreach (ParticleSystem p in _slashEffect)
+        {
+            p.Play();
+        }
     }
 }

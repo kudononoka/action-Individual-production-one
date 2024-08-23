@@ -7,13 +7,18 @@ using UnityEngine;
 [Serializable]
 public class EvadeState : PlayerStateBase
 {
-    [Header("回避にかかる時間")]
-    [SerializeField]
-    float _coolTime;
 
     [Header("回避スピード")]
     [SerializeField]
     float _moveSpeed;
+
+    [Header("回避距離")]
+    [SerializeField]
+    float _evadeDistance;
+
+    [Header("回避エフェクト")]
+    [SerializeField]
+    ParticleSystem _particle;
 
     float _coolTimer;
 
@@ -41,6 +46,10 @@ public class EvadeState : PlayerStateBase
 
     CameraController _cameraController;
 
+    Vector3 _moveDir;
+
+    Vector3 _pos;
+
     public override void Init()
     {
         PlayerController playerController = _playerStateMachine.PlayerController;
@@ -61,11 +70,12 @@ public class EvadeState : PlayerStateBase
 
         _inputAction.IsEvade = false;
 
-        _coolTimer = _coolTime;
+        _pos = _playerTra.position;
 
         //回避方向
-        var _forward = Quaternion.AngleAxis(_mcTra.eulerAngles.y, Vector3.up);
-        var moveDir = _forward * new Vector3(_inputAction.InputMove.x, 0, _inputAction.InputMove.y).normalized;
+        //var _forward = Quaternion.AngleAxis(_mcTra.eulerAngles.y, Vector3.up);
+        //_moveDir = _forward * new Vector3(_inputAction.InputMove.x, 0, _inputAction.InputMove.y).normalized;
+        _moveDir = _playerTra.forward;
 
         if (_inputAction.IsLockon)
         {
@@ -98,14 +108,15 @@ public class EvadeState : PlayerStateBase
         _capsuleCollider.enabled = false;
 
         _makeASound.IsSoundChange(true);
+        _particle.Play();
     }
 
     public override void OnUpdate()
     {
         _coolTimer -= Time.deltaTime;
-        var _forward = Quaternion.AngleAxis(_mcTra.eulerAngles.y, Vector3.up);
-        var moveDir = _forward * new Vector3(_inputAction.InputMove.x, 0, _inputAction.InputMove.y).normalized;
-        _characterController.Move(moveDir * _moveSpeed * Time.deltaTime);
+        //var _forward = Quaternion.AngleAxis(_mcTra.eulerAngles.y, Vector3.up);
+        //var moveDir = _forward * new Vector3(_inputAction.InputMove.x, 0, _inputAction.InputMove.y).normalized;
+        _characterController.Move(_moveDir * _moveSpeed * Time.deltaTime);
 
         if(_inputAction.IsLockon)
         {
@@ -116,10 +127,10 @@ public class EvadeState : PlayerStateBase
         }
         else
         {
-            _playerTra.rotation = Quaternion.LookRotation(moveDir, Vector3.up);
+            _playerTra.rotation = Quaternion.LookRotation(_moveDir, Vector3.up);
         }
 
-        if (_coolTimer <= 0)
+        if (Vector3.Distance(_pos, _playerTra.position) >= _evadeDistance)
         {
             if (_inputAction.IsAttackWeak && _playerHPSTController.CurrntStValue >= _playerParameter.AttackWeakSTCost)
                 _playerStateMachine.OnChangeState((int)PlayerStateMachine.StateType.AttackWeakPatternA);
