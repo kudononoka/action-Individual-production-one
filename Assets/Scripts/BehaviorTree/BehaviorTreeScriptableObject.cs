@@ -33,6 +33,11 @@ public class BehaviorTreeScriptableObject : ScriptableObject
         this._root = source.RootNodeData;
         this._nodes = source.Nodes;
     }
+
+    public BehaviorTreeScriptableObject Instance()
+    {
+        return Instantiate(this);
+    }
 }
 
 [Serializable]

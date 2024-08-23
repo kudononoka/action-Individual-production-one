@@ -33,7 +33,6 @@ public class TravelRouteSystem : MonoBehaviour
     {
         //移動経路をVector３配列に入れなおす
         Vector3 startPos = _target.TransformPoint(_destinationPoints[0]._point);
-        Debug.Log(startPos);
         _target.position = startPos;
         Vector3[] point;
         point = new Vector3[_destinationPoints.Length - 1];

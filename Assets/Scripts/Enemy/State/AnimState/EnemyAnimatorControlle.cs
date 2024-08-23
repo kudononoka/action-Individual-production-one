@@ -16,17 +16,30 @@ public class EnemyAnimatorControlle : AnimatorStateMachine
         Walk,
         /// <summary>UŒ‚</summary>
         Attack,
+        /// <summary>Œ©‚í‚½‚·</summary>
+        LookAround,
+        /// <summary>í“¬</summary>
+        Battle,
     }
 
     EnemyAnimationWalkState _walkState = new();
 
     EnemyAnimationIdleState _idleState = new();
 
+    EnemyAnimationLookAroundState _lookAroundState = new();
+
+    EnemyAnimationAttackState _attackState = new();
+
+    EnemyAnimationBattleState _battleState = new();
+
     /// <summary>ƒXƒe[ƒg‚Ì“o˜^‚Æ‰Šú‰»</summary>
     public void Init()
     {
         StateAdd((int)StateType.Idle, _idleState);
         StateAdd((int)StateType.Walk, _walkState);
+        StateAdd((int)StateType.Attack, _attackState);
+        StateAdd((int)StateType.LookAround, _lookAroundState);
+        StateAdd((int)StateType.Battle, _battleState);
 
         foreach (var state in States)
         {

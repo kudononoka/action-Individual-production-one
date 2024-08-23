@@ -26,6 +26,7 @@ public class EnemyStateMachine : StateMachine
 
     NormalState _normalState = new();
 
+    [SerializeField]
     BattleState _battleState = new();
 
     [SerializeField]

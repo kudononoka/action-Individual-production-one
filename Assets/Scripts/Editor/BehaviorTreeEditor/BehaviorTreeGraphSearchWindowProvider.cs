@@ -37,6 +37,7 @@ public class BehaviorTreeGraphSearchWindowProvider : ScriptableObject, ISearchWi
             { nameof(ReturnToMyPostNode), typeof(ReturnToMyPostNode) },
             { nameof(MoveToSoundLocationNode), typeof(MoveToSoundLocationNode) },
             { nameof(MinorEnemyAttackNode), typeof(MinorEnemyAttackNode) },
+            { nameof(AttackNode), typeof(AttackNode) },
 
         };
     }
@@ -58,6 +59,7 @@ public class BehaviorTreeGraphSearchWindowProvider : ScriptableObject, ISearchWi
         entries.Add(new SearchTreeEntry(new GUIContent(nameof(ReturnToMyPostNode))) { level = 1, userData = typeof(ReturnToMyPostNode).FullName});
         entries.Add(new SearchTreeEntry(new GUIContent(nameof(MoveToSoundLocationNode))) { level = 1, userData = typeof(MoveToSoundLocationNode).FullName});
         entries.Add(new SearchTreeEntry(new GUIContent(nameof(MinorEnemyAttackNode))) { level = 1, userData = typeof(MinorEnemyAttackNode).FullName});
+        entries.Add(new SearchTreeEntry(new GUIContent(nameof(AttackNode))) { level = 1, userData = typeof(AttackNode).FullName});
         return entries;
     }
 

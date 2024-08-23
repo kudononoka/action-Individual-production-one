@@ -17,15 +17,11 @@ public class SightController : MonoBehaviour
     [SerializeField]
     Transform _selfHead;
 
-    [Tooltip("相手の位置")]
-    [SerializeField]
-    Transform _targetTra;
-
     /// <summary>対象物が見えているかどうか判定を行う</summary>
     /// <param name="targetPos">対象の位置</param>
     /// <returns>見えていたらTrueを返す</returns>
-    public bool isVisible(Vector3 targetPos)
-    {
+    public bool isVisible(Vector3 targetPos = default)
+    { 
         var targetVec = targetPos - _selfHead.position;   //ターゲットへのベクトル
         var targetDistance = targetVec.magnitude;　　　　 //ターゲットまでの距離
 

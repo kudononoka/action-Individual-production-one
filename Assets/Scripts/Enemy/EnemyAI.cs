@@ -6,14 +6,18 @@ public class EnemyAI : MonoBehaviour
 {
     EnemyAnimatorControlle _animatorControlle = new();
 
-    public EnemyAnimatorControlle AnimatorControlle => _animatorControlle;
-
     [SerializeField]
     EnemyStateMachine _enemyStateMachine = new();
 
     MoveDestinationPoint _moveDestinationPoint;
 
+    SightController _sightController;
+
     public MoveDestinationPoint MoveDestinationPoint => _moveDestinationPoint;
+
+    public EnemyAnimatorControlle AnimatorControlle => _animatorControlle;
+
+    public SightController SightController => _sightController;
 
     // Start is called before the first frame update
     void Start()
@@ -22,6 +26,8 @@ public class EnemyAI : MonoBehaviour
 
         _animatorControlle.SetAnimator(GetComponent<Animator>());
         _animatorControlle.Init();
+
+        _sightController = GetComponent<SightController>();
 
         _enemyStateMachine.Init(this);
 

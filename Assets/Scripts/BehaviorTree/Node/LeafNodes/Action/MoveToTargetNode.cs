@@ -29,7 +29,7 @@ public class MoveToTargetNode : BehaviorTreeBaseNode
     /// <summary>動かしたいオブジェクトの位置</summary>
     Transform _my = null;
 
-    Animator _anim; 
+    Animator _anim;
     public MoveToTargetNode()
     {
         nodeName = "move to target";
@@ -51,13 +51,13 @@ public class MoveToTargetNode : BehaviorTreeBaseNode
 
         _agent.SetDestination(_target.position);　//Targetまで移動
 
-        _anim.SetBool("IsRun", true);    //アニメーション設定
+        _anim.SetBool("IsWalk", true);
 
         //Targeに追いついたら成功を返す
         if (Vector3.Distance(_target.position, _my.position) <= _stopDistanceMin)  
         {
             _agent.SetDestination(_my.position);
-            _anim.SetBool("IsRun", false);
+            _anim.SetBool("IsWalk", false);
             return Result.Success;
         }
 
@@ -65,7 +65,7 @@ public class MoveToTargetNode : BehaviorTreeBaseNode
         else if (Vector3.Distance(_target.position, _my.position) >= _stopDistanceMax) 
         {
             _agent.SetDestination(_my.position);
-            _anim.SetBool("IsRun", false);
+            _anim.SetBool("IsWalk", false);
             return Result.Failure;
         }
 
