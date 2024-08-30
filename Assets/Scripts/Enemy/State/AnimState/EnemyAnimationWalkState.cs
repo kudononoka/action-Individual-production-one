@@ -77,3 +77,15 @@ public class EnemyAnimationBattleState : AnimatorStateMachine.StateBase
     public override void OnEnd() {}
 }
 
+public class EnemyAnimationGetHitState : AnimatorStateMachine.StateBase
+{
+    public override void Init() { }
+
+    public override void OnEnter()
+    {
+        Animator.SetTrigger("GetHit");
+    }
+
+    public override void OnEnd() { }
+}
+
