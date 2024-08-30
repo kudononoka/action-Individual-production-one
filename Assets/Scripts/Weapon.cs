@@ -16,6 +16,9 @@ public class Weapon : MonoBehaviour
     [SerializeField]
     ParticleSystem[] _bloodParticle;
 
+    [SerializeField]
+    HitDirection _hitDirection;
+
     [Header("血のパーティクルの表示時間")]
     [SerializeField]
     float _particlePlayTime;
@@ -24,13 +27,15 @@ public class Weapon : MonoBehaviour
 
     bool _bloodParticleActive = false;
 
+    bool _isHitJudge = false;
+
     /// <summary>与えるダメージ</summary>
     public int Damage { get => _damage; set => _damage = value; }
 
     public void Update()
     {
        if(_bloodParticleActive)　　　　//血のParticalが表示されていた場合
-        {
+       {
             _particlePlayTimer += Time.deltaTime;
             if(_particlePlayTimer > _particlePlayTime)　//表示してから一定時間経過したら
             {
@@ -38,7 +43,8 @@ public class Weapon : MonoBehaviour
                 BloodParticalActive(false);
                 _bloodParticleActive = false;
             }
-        }
+       }
+
     }
 
     /// <summary>血のParticalの非表示と表示切り替え</summary>
@@ -70,6 +76,7 @@ public class Weapon : MonoBehaviour
                 IDamage.Damage(_damage);
                 _bloodParticleActive = true;　　　//血Effect表示
                 BloodParticalActive(true);
+                _hitDirection.HitAction(other.gameObject);
             }
         }
     }
