@@ -60,4 +60,9 @@ public class EnemyAnimatorControlle : AnimatorStateMachine
     {
         _currentStateType = (StateType)stateId;
     }
+
+    public void SetAnimSpeed(float speed)
+    {
+        Animator.speed = speed;
+    }
 }
