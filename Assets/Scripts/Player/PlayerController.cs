@@ -2,7 +2,7 @@
 using UnityEngine;
 
 /// <summary>プレイヤーの大まかな処理とデータの管理をするクラス</summary>
-public class PlayerController : MonoBehaviour, IDamage
+public class PlayerController : MonoBehaviour, IDamage, ISlow
 {
     [Header("設定")]
 
@@ -71,6 +71,16 @@ public class PlayerController : MonoBehaviour, IDamage
         _cameraController.Init(_inputAction);
         _playerHPSTController.Init(_parameter.HPMax, _parameter.STMax, _parameter.StRecoverySpeed);
         _playerWeapon.DamageColliderEnabledSet(false);
+
+        TimeManager timeManager = FindObjectOfType<TimeManager>();
+        timeManager.SlowSystem.Add(this);
+    }
+
+    private void OnDestroy()
+    {
+        TimeManager timeManager = FindObjectOfType<TimeManager>();
+        if(timeManager != null) 
+            timeManager.SlowSystem.Remove(this);
     }
 
     void Update()
@@ -95,5 +105,22 @@ public class PlayerController : MonoBehaviour, IDamage
     public void AttackEffectPlay()
     {
         _attackEffectPlay.SlashEffectPlay();
+    }
+
+    public void AttackCollider(int enableFlag)
+    {
+        bool isEnable = enableFlag != 0 ? true : false;
+        _playerWeapon.DamageColliderEnabledSet(isEnable);
+    }
+
+    public void OnSlow(float slowSpeedRate)
+    {
+        Debug.Log("s");
+        _playerModelAnim.speed = slowSpeedRate;
+    }
+
+    public void OffSlow()
+    {
+        _playerModelAnim.speed = 1;
     }
 }
