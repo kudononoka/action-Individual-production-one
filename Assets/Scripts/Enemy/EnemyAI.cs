@@ -9,6 +9,9 @@ public class EnemyAI : MonoBehaviour, IDamage, ISlow
     [SerializeField]
     EnemyStateMachine _enemyStateMachine = new();
 
+    [SerializeField]
+    EnemyHPController _enemyHPController = new();
+
     MoveDestinationPoint _moveDestinationPoint;
 
     SightController _sightController;
@@ -32,7 +35,18 @@ public class EnemyAI : MonoBehaviour, IDamage, ISlow
 
         _enemyStateMachine.Init(this);
 
-        
+        _enemyHPController.Init();
+
+        TimeManager timeManager = FindObjectOfType<TimeManager>();
+        timeManager.SlowSystem.Add(this);
+    }
+
+
+    private void OnDestroy()
+    {
+        TimeManager timeManager = FindObjectOfType<TimeManager>();
+        if (timeManager != null)
+            timeManager.SlowSystem.Remove(this);
     }
 
     // Update is called once per frame
@@ -46,6 +60,14 @@ public class EnemyAI : MonoBehaviour, IDamage, ISlow
     {
         //ヒットアニメーション再生
         _animatorControlle.OnChangeState((int)EnemyAnimatorControlle.StateType.GetHit);
+
+        bool isAlive = _enemyHPController.HPDown(damage);
+        //死んでいたら
+        if (!isAlive)
+        {
+            //死んだアニメーション再生
+            _animatorControlle.OnChangeState((int)EnemyAnimatorControlle.StateType.Die);
+        }
     }
 
     public void OnSlow(float slowSpeedRate)

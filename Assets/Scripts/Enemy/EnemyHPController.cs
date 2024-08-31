@@ -8,9 +8,10 @@ using VRM;
 [Serializable]
 public class EnemyHPController
 {
-
+    [SerializeField]
     /// <summary>HP最大値</summary>
     int _hpMax;
+
     [SerializeField]
     /// <summary>現在のHP</summary>
     int _hpNow;
@@ -28,9 +29,8 @@ public class EnemyHPController
     /// <summary>初期化</summary>
     /// <param name="hpMax">HP最大値</param>
     /// <param name="stMax">ST最大値</param>
-    public void Init(int hpMax)
-    {
-        _hpMax = hpMax;
+    public void Init()
+    { 
         _hpNow = _hpMax;
         _maxHp.Value = _hpMax;
         _currentHp.Value = _hpMax;

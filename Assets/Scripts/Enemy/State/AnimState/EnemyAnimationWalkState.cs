@@ -89,3 +89,15 @@ public class EnemyAnimationGetHitState : AnimatorStateMachine.StateBase
     public override void OnEnd() { }
 }
 
+public class EnemyAnimationDieState : AnimatorStateMachine.StateBase
+{
+    public override void Init() { }
+
+    public override void OnEnter()
+    {
+        Animator.SetBool("IsDie", true);
+    }
+
+    public override void OnEnd() { }
+}
+
