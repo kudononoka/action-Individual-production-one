@@ -49,7 +49,6 @@ public class AttackWeakPatternAState : PlayerStateBase
         _coolTimer = _coolTime;
         _anim.SetTrigger("Attack");
         _anim.SetInteger("AttackType", 0);
-        _weapon.DamageColliderEnabledSet(true);
         _weapon.Damage = _playerParameter.AttackWeakPower;
         _makeASound.IsSoundChange(true);
         AudioManager.Instance.SEPlayOneShot(SE.PlayerAttackWeakSwish);
@@ -89,7 +88,6 @@ public class AttackWeakPatternAState : PlayerStateBase
     public override void OnEnd()
     {
         _inputAction.IsAttackWeak = false;
-        _weapon.DamageColliderEnabledSet(false);
         _makeASound.IsSoundChange(false);
     }
 }

@@ -57,7 +57,6 @@ public class AttackStrongPatternAState : PlayerStateBase
         _coolTimer = _coolTime;
         _anim.SetTrigger("Attack");
         _anim.SetInteger("AttackType", 1);
-        _weapon.DamageColliderEnabledSet(true);
         _weapon.Damage = _playerParameter.AttackStrongPower;
         _makeASound.IsSoundChange(true);
         _isSound = false;
@@ -99,7 +98,6 @@ public class AttackStrongPatternAState : PlayerStateBase
     public override void OnEnd()
     {
         _inputAction.IsAttackStrong = false;
-        _weapon.DamageColliderEnabledSet(false);
         _makeASound.IsSoundChange(false);
     }
 }
