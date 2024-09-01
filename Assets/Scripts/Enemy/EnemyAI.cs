@@ -16,16 +16,22 @@ public class EnemyAI : MonoBehaviour, IDamage, ISlow
 
     SightController _sightController;
 
+    bool _isAlive = true;
+
     public MoveDestinationPoint MoveDestinationPoint => _moveDestinationPoint;
 
     public EnemyAnimatorControlle AnimatorControlle => _animatorControlle;
 
     public SightController SightController => _sightController;
 
+    public bool IsAlive => _isAlive;    
+
 
     // Start is called before the first frame update
     void Start()
     {
+        _isAlive = true;
+
         _moveDestinationPoint = GetComponent<MoveDestinationPoint>();
 
         _animatorControlle.SetAnimator(GetComponent<Animator>());
@@ -61,9 +67,9 @@ public class EnemyAI : MonoBehaviour, IDamage, ISlow
         //ヒットアニメーション再生
         _animatorControlle.OnChangeState((int)EnemyAnimatorControlle.StateType.GetHit);
 
-        bool isAlive = _enemyHPController.HPDown(damage);
+        _isAlive = _enemyHPController.HPDown(damage);
         //死んでいたら
-        if (!isAlive)
+        if (!_isAlive)
         {
             //死んだアニメーション再生
             _animatorControlle.OnChangeState((int)EnemyAnimatorControlle.StateType.Die);

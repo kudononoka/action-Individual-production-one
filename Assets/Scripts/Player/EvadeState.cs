@@ -77,32 +77,7 @@ public class EvadeState : PlayerStateBase
         //_moveDir = _forward * new Vector3(_inputAction.InputMove.x, 0, _inputAction.InputMove.y).normalized;
         _moveDir = _playerTra.forward;
 
-        if (_inputAction.IsLockon)
-        {
-            //動く方向によってAnimationを切り替え
-            DirMovement.MoveDir dir = _dirMovement.DirMovementJudge(_inputAction.InputMove);
-            switch (dir)
-            {
-                case DirMovement.MoveDir.Forward:
-                    _anim.SetInteger("EvadeType", 0);
-                    break;
-                case DirMovement.MoveDir.Backward:
-                    _anim.SetInteger("EvadeType", 1);
-                    break;
-                case DirMovement.MoveDir.Left:
-                    _anim.SetInteger("EvadeType", 2);
-                    break;
-                case DirMovement.MoveDir.Right:
-                    _anim.SetInteger("EvadeType", 3);
-                    break;
-                default:
-                    break;
-            }
-        }
-        else
-        {
-            _anim.SetInteger("EvadeType", 0);
-        }
+        _anim.SetInteger("EvadeType", 0);
 
         _anim.SetTrigger("Evade");
         _capsuleCollider.enabled = false;

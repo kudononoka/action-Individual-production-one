@@ -102,60 +102,16 @@ public class WalkState : PlayerStateBase
             AudioManager.Instance.SEStop();
         }
 
-        //ロックオン切り替え入力された時だけ処理を行う
-        if (_inputAction.IsLockon != _pastIsLockon)     
-        {
-            _pastIsLockon = _inputAction.IsLockon;
-            if(_inputAction.IsLockon)
-            {
-                SetLayerWeightChanging();
-            }
-        }
 
-        //ロックオン中
-        if (_inputAction.IsLockon)
+        _anim.SetBool("IsMoveForward", true);
+        _anim.SetLayerWeight(2, 0);
+        if (moveDir.magnitude > 0)
         {
-            //動く方向によってAnimationを切り替え
-            DirMovement.MoveDir dir = _dirMovement.DirMovementJudge(_inputAction.InputMove);
-            switch(dir)
-            {
-                case DirMovement.MoveDir.Forward:
-                    _anim.SetBool("IsMoveForward", true);
-                    _anim.SetLayerWeight(2, 0);
-                    break;
-                case DirMovement.MoveDir.Backward:
-                    _anim.SetBool("IsMoveForward", false);
-                    _anim.SetLayerWeight(2, 0);
-                    break;
-                case DirMovement.MoveDir.Left:
-                    _anim.SetFloat("AnimationSpeed", 1);
-                    _anim.SetLayerWeight(2, _layerWeightValue);
-                    break;
-                case DirMovement.MoveDir.Right:
-                    _anim.SetFloat("AnimationSpeed", -1);
-                    _anim.SetLayerWeight(2, _layerWeightValue);
-                    break;
-                default:
-                    break;
-            }
-            _lockonTarget = _cameraController.LockonTarget;
-            //ターゲットの方を向く
-            var direction = _lockonTarget.transform.position - _playerTra.transform.position;
-            direction.y = 0;
-            _playerTra.rotation = Quaternion.LookRotation(direction);
-
+            targetRotation = Quaternion.LookRotation(moveDir, Vector3.up);
         }
-        else
-        {
-            _anim.SetBool("IsMoveForward", true);
-            _anim.SetLayerWeight(2, 0);
-            if (moveDir.magnitude > 0)
-            {
-                targetRotation = Quaternion.LookRotation(moveDir, Vector3.up);
-            }
-            //移動する方向に向く
-            _playerTra.rotation = Quaternion.RotateTowards(_playerTra.rotation, targetRotation, _rotateSpeed * Time.deltaTime);
-        }
+        //移動する方向に向く
+        _playerTra.rotation = Quaternion.RotateTowards(_playerTra.rotation, targetRotation, _rotateSpeed * Time.deltaTime);
+        
 
         _anim.SetFloat("move", moveDir.magnitude);
 

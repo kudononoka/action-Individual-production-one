@@ -36,6 +36,10 @@ public class TutorialSystem : MonoBehaviour
 
     bool _isTutorial = false;
 
+    bool _isNextTutorialChange = false;
+
+    float _timer;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -50,6 +54,8 @@ public class TutorialSystem : MonoBehaviour
             task.Init(playerInputAction);
         }
 
+        _isTutorial = true;
+        
         NextTutorialTask();
     }
 
@@ -58,9 +64,20 @@ public class TutorialSystem : MonoBehaviour
     {
         if (_isTutorial && _currentTask.CheckTask())
         {
-            if (!NextTutorialTask())
+            _isNextTutorialChange = true;
+        }
+
+        if(_isNextTutorialChange)
+        {
+            _timer += Time.deltaTime;
+            if(_timer >= _nextTutorialTaskTime)
             {
-                _isTutorial = false;
+                if (!NextTutorialTask())
+                {
+                    _isTutorial = false;
+                }
+                _timer = 0f;
+                _isNextTutorialChange = false;
             }
         }
     }

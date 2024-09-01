@@ -17,13 +17,9 @@ public class CameraController
     [SerializeField]
     CinemachineVirtualCamera _lockonCamera;
 
-    [Header("Rayをとばす時の始点")]
+    [Header("ロックオン中カメラの中心点となる場所")]
     [SerializeField]
-    Transform _originTra;
-
-    [Header("ロックオンの対象となる範囲")]
-    [SerializeField]
-    float _lockonRange = 20;
+    Transform _lockonCameraCenter;
 
     [Header("ロックオン時に表示するImage")]
     [SerializeField]
@@ -37,18 +33,19 @@ public class CameraController
     [SerializeField]
     Transform _lockonCursorTra;
 
-    [Header("ロックオンの対象となるLayer")]
     [SerializeField]
-    LayerMask _lockonLayers = 0;
+    LockonRange _lockonRange;
+
+    Transform _originTra;
 
     /// <summary>ロックオン中かどうか</summary>
     bool _isLockon = false;
 
     bool _pastIsLockon = false;
 
-    MinorEnemyAI[] _lockonTargets = null;
+    EnemyAI[] _lockonTargets = null;
 
-    MinorEnemyAI _lockonTargetEnemy = null;
+    EnemyAI _lockonTargetEnemy = null;
 
     Camera _mainCamera;
 
@@ -65,6 +62,7 @@ public class CameraController
         _inputAction = inputAction;
         _lockonCursorImage = _lockonCursor.GetComponent<Image>();
         _lockonCursorImage.enabled = false;
+        _originTra = inputAction.transform;
         CameraChange(false);
     }
 
@@ -86,10 +84,10 @@ public class CameraController
 
         if (_isLockon)//ロックオン中
         {
-            if(_lockonTargetEnemy.IsDeath)
+            if(!_lockonTargetEnemy.IsAlive)
             {
                 GetLockonTarget();
-                if (_lockonTargets == null)
+                if (_lockonTargets == null || _lockonTargets.Length == 0)
                 {
                     _isLockon = false;
                     _inputAction.IsLockon = false;
@@ -101,12 +99,16 @@ public class CameraController
                     _lockonTarget = _lockonTargets[_currentLockonTargetID].transform;
                     _lockonTargetEnemy = _lockonTargets[_currentLockonTargetID];
                     _lockonCursorTra = _lockonTarget.transform;
-                    _lockonCamera.LookAt = _lockonTarget;
                 }
             }
-            Vector3 pos = _lockonCursorTra.position;
-            pos.y += 1.7f;
-            _lockonCursor.transform.position = _mainCamera.WorldToScreenPoint(pos);
+
+            var vec = _lockonTarget.position - _originTra.position;
+            Vector3 cameraConterPos = (vec * 0.5f) + _originTra.position;
+            _lockonCameraCenter.position = cameraConterPos;
+
+            Vector3 cursorPos = _lockonCursorTra.position;
+            cursorPos.y += 1.7f;
+            _lockonCursor.transform.position = _mainCamera.WorldToScreenPoint(cursorPos);
         }
     }
 
@@ -132,8 +134,7 @@ public class CameraController
                 _currentLockonTargetID = 0;
                 _lockonTarget = _lockonTargets[_currentLockonTargetID].transform;
                 _lockonTargetEnemy = _lockonTargets[_currentLockonTargetID];
-               _lockonCursorTra = _lockonTarget.transform;
-                _lockonCamera.LookAt = _lockonTarget;
+                _lockonCursorTra = _lockonTarget.transform;
             }
         }
 
@@ -158,14 +159,9 @@ public class CameraController
     {
         _lockonTargets = null;
 
-        RaycastHit[] hits = Physics.SphereCastAll(_originTra.position, _lockonRange, Vector3.up, 0, _lockonLayers);
+        var enemies = _lockonRange.EnemiesInRange;
 
-        if (hits?.Length == 0) return;
-
-        var enemies =  hits.Select(h => h.transform.gameObject.GetComponent<MinorEnemyAI>());
-
-
-        _lockonTargets = enemies.Where(enemy => enemy.IsDeath == false)
+        _lockonTargets = enemies.Where(enemy => enemy.IsAlive == true)
                                 .OrderBy(go => Vector3.Distance(go.gameObject.transform.position, _originTra.position))
                                 .ToArray();
     }
@@ -179,7 +175,6 @@ public class CameraController
         }
         _lockonTarget = _lockonTargets[_currentLockonTargetID].transform;
         _lockonTargetEnemy = _lockonTargets[_currentLockonTargetID];
-        _lockonCamera.LookAt = _lockonTarget;
     }
 
 }
