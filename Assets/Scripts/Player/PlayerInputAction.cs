@@ -10,6 +10,9 @@ public class PlayerInputAction : MonoBehaviour
     [SerializeField] 
     Vector2 _inputMove = Vector2.zero;
 
+    [SerializeField]
+    Vector2 _inputCameraMove = Vector2.zero;
+
     [SerializeField] 
     bool _isAttackWeak = false;
 
@@ -30,6 +33,9 @@ public class PlayerInputAction : MonoBehaviour
 
     /// <summary>入力値(移動)</summary>
     public Vector2 InputMove => _inputMove;
+
+    /// <summary>入力値(カメラ移動)</summary>
+    public Vector2 CameraMove => _inputCameraMove;
 
     /// <summary>入力値(弱攻撃)</summary>
     public bool IsAttackWeak { get => _isAttackWeak;  set => _isAttackWeak = value; }
@@ -53,6 +59,12 @@ public class PlayerInputAction : MonoBehaviour
     public void OnMove(InputAction.CallbackContext context)
     {
         _inputMove = context.ReadValue<Vector2>();
+    }
+
+    /// <summary>移動Action</summary>
+    public void OnCameraMove(InputAction.CallbackContext context)
+    {
+        _inputCameraMove = context.ReadValue<Vector2>();
     }
 
     public void OnAttackWeak(InputAction.CallbackContext context)

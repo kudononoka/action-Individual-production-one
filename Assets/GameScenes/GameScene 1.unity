@@ -6695,7 +6695,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _timeManager: {fileID: 783210385}
-  _slowTime: 0.3
+  _slowTime: 0.213
   _hitEffect: {fileID: 444305919}
   _length: 0.214
 --- !u!114 &783210385
