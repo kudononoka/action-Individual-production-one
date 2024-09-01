@@ -71,12 +71,12 @@ public class Weapon : MonoBehaviour
     {
         if (!other.gameObject.CompareTag(_ownerTagName))       //自分以外の当たり判定を行う
         {
+            _hitDirection.HitAction(other.gameObject);
             if (other.gameObject.TryGetComponent<IDamage>(out var IDamage))
             {
                 IDamage.Damage(_damage);
                 _bloodParticleActive = true;　　　//血Effect表示
                 BloodParticalActive(true);
-                _hitDirection.HitAction(other.gameObject);
             }
         }
     }

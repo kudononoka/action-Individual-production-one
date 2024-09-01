@@ -11,6 +11,9 @@ public class HitDirection : MonoBehaviour
     [SerializeField, Range(0, 1)] float _slowTime;
 
     [Header("ヒットエフェクト")]
+    [SerializeField] ParticleSystem _hitSlashEffect;
+
+    [Header("ヒットエフェクト")]
     [SerializeField] ParticleSystem _hitEffect;
 
     [SerializeField, Range(0, 1)] float _length;
@@ -34,13 +37,15 @@ public class HitDirection : MonoBehaviour
         //ヒットエフェクトの位置設定
         var vec = _mcTra.position - hitObject.transform.position;
         Vector3 pos = (vec * _length) + hitObject.transform.position;
+        _hitSlashEffect.transform.position = pos;
         _hitEffect.transform.position = pos;
 
         //ヒットエフェクトの角度設定
         float angle = UnityEngine.Random.Range(30, 45);
-        _hitEffect.startRotation = angle;
+        _hitSlashEffect.startRotation = angle;
 
         //ヒットエフェクト再生
+        _hitSlashEffect.Play();
         _hitEffect.Play();
     }
 
@@ -58,7 +63,5 @@ public class HitDirection : MonoBehaviour
                 _timeManager.SlowSystem.OnOffSlow(false);
             }
         }
-
-
     }
 }
