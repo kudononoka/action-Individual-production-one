@@ -29,6 +29,14 @@ public enum SE
     PlayerAttackWeakSwish,
     /// <summary>Playerが武器を振る音(強攻撃)</summary>
     PlayerAttackStrongSwish,
+    /// <summary>Player攻撃が当たった音</summary>
+    PlayerAttackHit,
+    /// <summary>Enemyの攻撃音</summary>
+    EnemyAttack,
+    /// <summary>Enemyの攻撃が当たった音</summary>
+    EnemyAttackHit,
+    /// <summary>Enemyの攻撃サイン音</summary>
+    EnemyAttackSign,
 }
 
 /// <summary>どの状態時にBGMを再生するか管理するenum</summary>

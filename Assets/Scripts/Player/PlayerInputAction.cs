@@ -26,7 +26,10 @@ public class PlayerInputAction : MonoBehaviour
     bool _isLockon = false;
 
     [SerializeField]
-    bool _isLockonSelect = false;   
+    bool _isLockonSelectGamepad = false;
+
+    [SerializeField]
+    Vector2 _isLockonSelectMouse = Vector2.zero;
 
     [SerializeField]
     bool _isEvade = false;
@@ -53,7 +56,11 @@ public class PlayerInputAction : MonoBehaviour
     public bool IsEvade { get => _isEvade; set => _isEvade = value; }
 
     /// <summary>入力値(ロックオン選択)</summary>
-    public bool IsLockonSelect { get => _isLockonSelect; set => _isLockonSelect = value; }
+    public bool IsLockonSelectGamepad { get => _isLockonSelectGamepad; set => _isLockonSelectGamepad = value; }
+
+
+    /// <summary>入力値(ロックオン選択)</summary>
+    public Vector2 IsLockonSelectMouse => _isLockonSelectMouse;
 
     /// <summary>移動Action</summary>
     public void OnMove(InputAction.CallbackContext context)
@@ -103,11 +110,16 @@ public class PlayerInputAction : MonoBehaviour
         }
     }
 
-    public void OnLockonSelect(InputAction.CallbackContext context)
+    public void OnLockonSelectMouse(InputAction.CallbackContext context)
+    {
+        _isLockonSelectMouse = context.ReadValue<Vector2>();
+    }
+
+    public void OnLockonSelectGamepod(InputAction.CallbackContext context)
     {
         if (context.performed)
         {
-            _isLockonSelect = true;
+            _isLockonSelectGamepad = true;
         }
     }
 

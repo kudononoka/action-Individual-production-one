@@ -14,6 +14,8 @@ public class TutorialSystem : MonoBehaviour
         new TutorialStrongAttackTask(),
         new TutorialAttackComboTask(),
         new TutorialAvoidanceTask(),
+        new TutorialLockonTask(),
+        new TutorialLockonSelectTask(),
     };
 
     /// <summary>現在行っているチュートリアル</summary>
@@ -31,6 +33,9 @@ public class TutorialSystem : MonoBehaviour
 
     [SerializeField]
     Animator _tutorialCanvasAnim;
+
+    [SerializeField]
+    EnemyAI[] _enemyAI;
 
     int _taskNum = -1;
 
@@ -75,6 +80,7 @@ public class TutorialSystem : MonoBehaviour
                 if (!NextTutorialTask())
                 {
                     _isTutorial = false;
+                    GameManager.Instance.ChangeScene(SceneState.InGame);
                 }
                 _timer = 0f;
                 _isNextTutorialChange = false;
@@ -100,6 +106,13 @@ public class TutorialSystem : MonoBehaviour
 
         _tutorialCanvasAnim.SetTrigger("Active");
 
+        foreach (var enemy in _enemyAI)
+        {
+            if (!enemy.IsAlive)
+            {
+                enemy.Resuscitation();
+            }
+        }
 
         return true;
     }

@@ -7,7 +7,14 @@ public class GameManager : MonoBehaviour
 {
     private static GameManager _instance;
 
+    [Header("何秒間でフェードイン・アウトさせるか")]
+    [SerializeField]
+    float _fadeTime;
+
     int _enemyCount = 0;
+
+    Fade _fade;
+
     public IObservable<int> EnemyCount => _enemyMaxCount;
     readonly ReactiveProperty<int> _enemyMaxCount = new();
 
@@ -66,6 +73,7 @@ public class GameManager : MonoBehaviour
     SceneData[] _sceneData =
     {
         new SceneData(SceneState.Title),
+        new SceneData(SceneState.Tutorial),
         new SceneData(SceneState.InGame),
         new SceneData(SceneState.GameOver),
         new SceneData(SceneState.GameClear),
@@ -73,7 +81,10 @@ public class GameManager : MonoBehaviour
 
     private void Setting(SceneState currentScene)
     {
-        switch(currentScene)
+        _fade = FindObjectOfType<Fade>();
+        _fade.FadeOut(_fadeTime);
+
+        switch (currentScene)
         {
             case SceneState.Title:
                 AudioManager.Instance.BGMPlay(BGM.Title);
@@ -85,10 +96,13 @@ public class GameManager : MonoBehaviour
                 AudioManager.Instance.BGMPlay(BGM.GameClear);
                 break;
             case SceneState.InGame:
-                _instance._enemyCount = 9;
+                _instance._enemyCount = 7;
                 _instance._enemyMaxCount.Value = _enemyCount;
                 _instance._currentEnemyKillCount.Value = 0;
-                AudioManager.Instance.BGMPlay(BGM.Game);  
+                AudioManager.Instance.BGMPlay(BGM.Game);
+                break;
+            case SceneState.Tutorial:
+                AudioManager.Instance.BGMPlay(BGM.Game);
                 break;
         }
     }
@@ -99,7 +113,13 @@ public class GameManager : MonoBehaviour
     {
         _currentScene = sceneState;
         var nextSceneName = _sceneData[(int)sceneState].SceneName;
-        SceneManager.LoadScene(nextSceneName);
+
+        _fade = FindObjectOfType<Fade>();
+
+        _fade.FadeIn(_fadeTime, () =>
+        {
+            SceneManager.LoadScene(nextSceneName);
+        });
     }
 
     public void EnemyKill()
@@ -118,6 +138,8 @@ public enum SceneState
 {
     /// <summary>タイトル</summary>
     Title,
+    /// <summary>チュートリアル</summary>
+    Tutorial,
     /// <summary>ゲーム(バトル)</summary>
     InGame,
     /// <summary>ゲームオーバー</summary>

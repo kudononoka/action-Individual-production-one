@@ -45,26 +45,39 @@ public class AttackWeakPatternAState : PlayerStateBase
     public override void OnEnter()
     {
         _playerHPSTController.STDown(_playerParameter.AttackWeakSTCost);
-        _inputAction.IsAttackWeak = false;
+
+        //初期化
         _coolTimer = _coolTime;
+
+        //アニメーション設定
         _anim.SetTrigger("Attack");
         _anim.SetInteger("AttackType", 0);
+
+        //ダメージ設定
         _weapon.Damage = _playerParameter.AttackWeakPower;
         _makeASound.IsSoundChange(true);
+
+        //素振り音
         AudioManager.Instance.SEPlayOneShot(SE.PlayerAttackWeakSwish);
+        _inputAction.IsAttackWeak = false;
     }
 
     public override void OnUpdate()
     {
         _coolTimer -= Time.deltaTime;
+
+        ///次の攻撃をする時かどうか
         if(_coolTimer < _nextAttackJudgeTime)
         {
+            //次の攻撃に遷移できるタイミング
             if (_coolTimer < _nextAttackTime)
             {
+            　　//弱攻撃の遷移
                 if (_inputAction.IsAttackWeak && _playerHPSTController.CurrntStValue >= _playerParameter.AttackWeakSTCost)
                 {
                     _playerStateMachine.OnChangeState((int)PlayerStateMachine.StateType.AttackWeakPatternB);
                 }
+                //強攻撃に遷移
                 else if(_inputAction.IsAttackStrong && _playerHPSTController.CurrntStValue >= _playerParameter.AttackStrongSTCost)
                 {
                     _playerStateMachine.OnChangeState((int)PlayerStateMachine.StateType.AttackStrongPatternA);

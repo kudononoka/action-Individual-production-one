@@ -5,7 +5,7 @@ using UnityEngine;
 public class MinorEnemyAI : MonoBehaviour, IDamage
 {
     [SerializeField]
-    BehaviorTreeScriptableObject _tree;
+    BehaviorTreeScriptableObject _origin;
 
     [SerializeField]
     GameObject _target = null;
@@ -15,10 +15,14 @@ public class MinorEnemyAI : MonoBehaviour, IDamage
 
     bool _isDeath = false;
 
+    BehaviorTreeScriptableObject _tree;
+
     public bool IsDeath => _isDeath;
     // Start is called before the first frame update
     void Start()
     {
+        _tree = Instantiate(_origin);
+
         _tree.RootNodeData.Init(_target, this.gameObject);
 
         for (int i = 0; i < _tree.Nodes.Count; i++)

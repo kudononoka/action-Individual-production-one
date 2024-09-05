@@ -68,7 +68,7 @@ public class EvadeState : PlayerStateBase
     {
         _playerHPSTController.STDown(_playerParameter.EvadeSTCost);
 
-        _inputAction.IsEvade = false;
+        
 
         _pos = _playerTra.position;
 
@@ -84,6 +84,8 @@ public class EvadeState : PlayerStateBase
 
         _makeASound.IsSoundChange(true);
         _particle.Play();
+
+        _inputAction.IsEvade = false;
     }
 
     public override void OnUpdate()
@@ -93,17 +95,9 @@ public class EvadeState : PlayerStateBase
         //var moveDir = _forward * new Vector3(_inputAction.InputMove.x, 0, _inputAction.InputMove.y).normalized;
         _characterController.Move(_moveDir * _moveSpeed * Time.deltaTime);
 
-        if(_inputAction.IsLockon)
-        {
-            _lockonTarget = _cameraController.LockonTarget;
-            var direction = _lockonTarget.transform.position - _playerTra.transform.position;
-            direction.y = 0;
-            _playerTra.rotation = Quaternion.LookRotation(direction);
-        }
-        else
-        {
-            _playerTra.rotation = Quaternion.LookRotation(_moveDir, Vector3.up);
-        }
+
+        _playerTra.rotation = Quaternion.LookRotation(_moveDir, Vector3.up);
+        
 
         if (Vector3.Distance(_pos, _playerTra.position) >= _evadeDistance)
         {

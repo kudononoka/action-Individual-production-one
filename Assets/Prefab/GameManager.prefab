@@ -44,13 +44,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe1eff1e8baf77b4da2d74a206cfc490, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _fadeTime: 1
   _currentScene: 1
   _sceneData:
   - _sceneState: 0
     _sceneName: Title
   - _sceneState: 1
-    _sceneName: InGame
+    _sceneName: Tutorial
   - _sceneState: 2
-    _sceneName: GameOver
+    _sceneName: GameScene
   - _sceneState: 3
+    _sceneName: GameOver
+  - _sceneState: 4
     _sceneName: GameClear

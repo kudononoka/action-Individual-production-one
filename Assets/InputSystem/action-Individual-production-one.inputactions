@@ -70,8 +70,17 @@
                 },
                 {
                     "name": "LockonSelect",
-                    "type": "Button",
+                    "type": "Value",
                     "id": "bd44cff8-f929-4a6b-a3a4-204c4cca1d50",
+                    "expectedControlType": "Delta",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                },
+                {
+                    "name": "LockonSelectGamepad",
+                    "type": "Button",
+                    "id": "7ea815d8-80f0-43f2-9f5b-bbc5a8e8346b",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",
@@ -291,7 +300,7 @@
                 {
                     "name": "",
                     "id": "109c0ce8-4b4b-43ce-ac7d-5150e6d4fa9d",
-                    "path": "<Keyboard>/q",
+                    "path": "<Mouse>/middleButton",
                     "interactions": "",
                     "processors": "",
                     "groups": "Keyboard&Mouse",
@@ -323,23 +332,23 @@
                 },
                 {
                     "name": "",
-                    "id": "7f15ac79-6f9c-45c0-bd5a-d77d61e53695",
-                    "path": "<Gamepad>/dpad/up",
+                    "id": "8489c2c5-bd73-4a69-a68e-94b83111fada",
+                    "path": "<Mouse>/scroll",
                     "interactions": "",
                     "processors": "",
-                    "groups": "Gamepad",
+                    "groups": "Keyboard&Mouse",
                     "action": "LockonSelect",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
                 {
                     "name": "",
-                    "id": "8489c2c5-bd73-4a69-a68e-94b83111fada",
-                    "path": "<Keyboard>/e",
+                    "id": "7e534347-09ee-468d-89f9-3de697a763fc",
+                    "path": "<Gamepad>/dpad/up",
                     "interactions": "",
                     "processors": "",
-                    "groups": "Keyboard&Mouse",
-                    "action": "LockonSelect",
+                    "groups": "Gamepad",
+                    "action": "LockonSelectGamepad",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

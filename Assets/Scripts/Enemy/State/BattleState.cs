@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 [Serializable]
 public class BattleState : EnemyStateBase
@@ -20,6 +21,10 @@ public class BattleState : EnemyStateBase
     GameObject _my = null;
 
     EnemyAnimatorControlle _animatorControlle;
+
+    [SerializeField]
+    NavMeshAgent _agent;
+
     public override void Init()
     {
         _enemyAI = _enemyStateMachine.EnemyAI;
@@ -43,9 +48,15 @@ public class BattleState : EnemyStateBase
     public override void OnUpdate()
     {
         _tree.Evaluate();
+
+        if(!_enemyAI.IsAlive)
+        {
+            _enemyStateMachine.OnChangeState((int)EnemyStateMachine.StateType.Normal);
+        }
     }
     public override void OnEnd()
     {
-        _animatorControlle.OnChangeState((int)EnemyAnimatorControlle.StateType.Idle);
+        _agent.SetDestination(_my.transform.position);
+        _animatorControlle.OnChangeState((int)EnemyAnimatorControlle.StateType.Die);
     }
 }

@@ -98,6 +98,9 @@ public class EnemyAnimationDieState : AnimatorStateMachine.StateBase
         Animator.SetBool("IsDie", true);
     }
 
-    public override void OnEnd() { }
+    public override void OnEnd() 
+    {
+        Animator.SetBool("IsDie", false);
+    }
 }
 

@@ -53,24 +53,37 @@ public class AttackStrongPatternAState : PlayerStateBase
     public override void OnEnter()
     {
         _playerHPSTController.STDown(_playerParameter.AttackStrongSTCost);
-        _inputAction.IsAttackStrong = false;
+
         _coolTimer = _coolTime;
+
+        //アニメーション設定
         _anim.SetTrigger("Attack");
         _anim.SetInteger("AttackType", 1);
+
+    　 //ダメージ設定
         _weapon.Damage = _playerParameter.AttackStrongPower;
+
+        //音を立てる
         _makeASound.IsSoundChange(true);
         _isSound = false;
+
+        //入力値初期化
+        _inputAction.IsAttackStrong = false;
     }
 
     public override void OnUpdate()
     {
         _coolTimer -= Time.deltaTime;
+
+        //次の攻撃をするかどうか
         if(_coolTimer < _nextAttackJudgeTime)
         {
+            //次の攻撃に遷移可能
             if (_coolTimer < _nextAttackTime)
             {
                 if (_inputAction.IsAttackStrong && _playerHPSTController.CurrntStValue >= _playerParameter.AttackStrongSTCost)
                 {
+                    //強攻撃に遷移
                     _playerStateMachine.OnChangeState((int)PlayerStateMachine.StateType.AttackStrongPatternB);
                 }
             }
@@ -80,6 +93,7 @@ public class AttackStrongPatternAState : PlayerStateBase
             _inputAction.IsAttackStrong = false;
         }
 
+        //素振りの音を鳴らす
         if(!_isSound && _coolTimer <= _soundTime)
         {
             AudioManager.Instance.SEPlayOneShot(SE.PlayerAttackStrongSwish);

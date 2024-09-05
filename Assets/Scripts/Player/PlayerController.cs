@@ -96,6 +96,7 @@ public class PlayerController : MonoBehaviour, IDamage, ISlow
 
     public void Damage(int damage)
     {
+        AudioManager.Instance.SEPlayOneShot(SE.EnemyAttackHit);
         if(!_playerHPSTController.HPDown(damage))
         {
             GameManager.Instance.ChangeScene(SceneState.GameOver);

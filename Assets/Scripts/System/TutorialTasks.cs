@@ -149,6 +149,9 @@ public class TutorialAttackComboTask : ITutorialTask
 public class TutorialAvoidanceTask : ITutorialTask
 {
     private PlayerInputAction _inputAction;
+
+    public float _avoidTime = 5;
+
     public void Init(PlayerInputAction playerInput)
     {
         _inputAction = playerInput;
@@ -167,6 +170,70 @@ public class TutorialAvoidanceTask : ITutorialTask
     public bool CheckTask()
     {
         if (_inputAction.IsEvade)
+        {
+            return true;
+        }
+
+        _avoidTime -= Time.deltaTime;
+        if (_avoidTime < 0)
+        {
+            return true;
+        }
+        return false;
+    }
+
+}
+
+public class TutorialLockonTask : ITutorialTask
+{
+    private PlayerInputAction _inputAction;
+    public void Init(PlayerInputAction playerInput)
+    {
+        _inputAction = playerInput;
+    }
+
+    public string GetDescription()
+    {
+        return "マウスホイールクリック or 右スティック押し込み でロックオンができます\nもう1回押すことで解除できます";
+    }
+
+    public string GetTitle()
+    {
+        return "ロックオン";
+    }
+
+    public bool CheckTask()
+    {
+        if (_inputAction.IsLockon)
+        {
+            return true;
+        }
+        return false;
+    }
+
+}
+
+public class TutorialLockonSelectTask : ITutorialTask
+{
+    private PlayerInputAction _inputAction;
+    public void Init(PlayerInputAction playerInput)
+    {
+        _inputAction = playerInput;
+    }
+
+    public string GetDescription()
+    {
+        return "マウスホイール or 十字キー↑ でロックオン選択ができます";
+    }
+
+    public string GetTitle()
+    {
+        return "ロックオン選択";
+    }
+
+    public bool CheckTask()
+    {
+        if (_inputAction.IsLockonSelectGamepad || _inputAction.IsLockonSelectMouse.magnitude > 0)
         {
             return true;
         }

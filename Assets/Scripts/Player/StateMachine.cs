@@ -46,7 +46,7 @@ public abstract class StateMachine
 
     /// <summary>最初に行うステートの設定</summary>
     /// <param name="state">ステートのタイプ</param>
-    public void Initialize(int stateId)
+    protected void Initialize(int stateId)
     {
         //登録していなかったらエラーを出す
         if (!_states.ContainsKey(stateId))

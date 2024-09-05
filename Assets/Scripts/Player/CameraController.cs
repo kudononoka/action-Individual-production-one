@@ -3,7 +3,6 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using UnityEngine.InputSystem;
 using System.Linq;
 
 [Serializable]
@@ -27,7 +26,7 @@ public class CameraController
 
     [Header("ロックオン時のTargetとなるもの")]
     [SerializeField]
-    Transform _lockonTarget;
+    Transform _lockonTargetTra;
 
     [Header("カーソルの位置")]
     [SerializeField]
@@ -43,9 +42,9 @@ public class CameraController
 
     bool _pastIsLockon = false;
 
-    EnemyAI[] _lockonTargets = null;
+    EnemyAI[] _lockonTargetsEnemyAI = null;
 
-    EnemyAI _lockonTargetEnemy = null;
+    EnemyAI _lockonTargetEnemyAI = null;
 
     Camera _mainCamera;
 
@@ -55,7 +54,7 @@ public class CameraController
 
     int _currentLockonTargetID = 0;
 
-    public Transform LockonTarget => _lockonTarget;
+    public Transform LockonTarget => _lockonTargetTra;
     public void Init(PlayerInputAction inputAction)
     {
         _mainCamera = Camera.main;
@@ -63,51 +62,72 @@ public class CameraController
         _lockonCursorImage = _lockonCursor.GetComponent<Image>();
         _lockonCursorImage.enabled = false;
         _originTra = inputAction.transform;
+
+        //カメラを最初Defaultに設定
         CameraChange(false);
     }
 
     public void OnUpdate()
     {
-        if (_inputAction.IsLockon != _pastIsLockon)      //ロックオン切り替え入力された時だけ処理を行う
+        // ロックオン切り替え入力された時だけ処理を行う
+        if (_inputAction.IsLockon != _pastIsLockon)   
         {
             _pastIsLockon = _inputAction.IsLockon;
             _lockonCursorImage.enabled = _inputAction.IsLockon;
             CameraChange(_inputAction.IsLockon);
         }
 
-        if (_inputAction.IsLockon && _inputAction.IsLockonSelect)
+        //ロックオン選択が入力されたら(ゲームパッド用)
+        if (_inputAction.IsLockon && _inputAction.IsLockonSelectGamepad)
         {
             LockonTargetChange();
-            _lockonCursorTra = _lockonTarget.transform;
-            _inputAction.IsLockonSelect = false;
+            _lockonCursorTra = _lockonTargetTra.transform;
+            _inputAction.IsLockonSelectGamepad = false;
+        }
+        //ロックオン選択が入力されたら(マウスホイール用)
+        if (_inputAction.IsLockon && _inputAction.IsLockonSelectMouse.magnitude > 0)
+        {
+            int num = _inputAction.IsLockonSelectMouse.y < 0 ? -1 : 1; 
+            LockonTargetChange(num);
+            _lockonCursorTra = _lockonTargetTra.transform;
+            _inputAction.IsLockonSelectGamepad = false;
         }
 
         if (_isLockon)//ロックオン中
         {
-            if(!_lockonTargetEnemy.IsAlive)
+            //ロックオンしていた敵が死んだら
+            if(!_lockonTargetEnemyAI.IsAlive)
             {
+                //ロックオン対象となるものを再度探す
                 GetLockonTarget();
-                if (_lockonTargets == null || _lockonTargets.Length == 0)
+
+                //ロックオンするものがなかったら
+                if (_lockonTargetsEnemyAI == null || _lockonTargetsEnemyAI.Length == 0)
                 {
+                    //ロックオン解除
                     _isLockon = false;
                     _inputAction.IsLockon = false;
                     return;
                 }
+                //あったら
                 else
                 {
+                    //Target更新
                     _currentLockonTargetID = 0;
-                    _lockonTarget = _lockonTargets[_currentLockonTargetID].transform;
-                    _lockonTargetEnemy = _lockonTargets[_currentLockonTargetID];
-                    _lockonCursorTra = _lockonTarget.transform;
+                    _lockonTargetTra = _lockonTargetsEnemyAI[_currentLockonTargetID].transform;
+                    _lockonTargetEnemyAI = _lockonTargetsEnemyAI[_currentLockonTargetID];
+                    _lockonCursorTra = _lockonTargetTra.transform;
                 }
             }
 
-            var vec = _lockonTarget.position - _originTra.position;
+            //カメラの中心点をPlayerとロックオン対象の真ん中に設定
+            var vec = _lockonTargetTra.position - _originTra.position;
             Vector3 cameraConterPos = (vec * 0.5f) + _originTra.position;
             _lockonCameraCenter.position = cameraConterPos;
 
+            //ロックオンカーソル位置設定
             Vector3 cursorPos = _lockonCursorTra.position;
-            cursorPos.y += 1.7f;
+            cursorPos.y += 1;
             _lockonCursor.transform.position = _mainCamera.WorldToScreenPoint(cursorPos);
         }
     }
@@ -121,7 +141,7 @@ public class CameraController
         if (_isLockon)
         {
             GetLockonTarget();
-            if(_lockonTargets == null || _lockonTargets.Length == 0)
+            if(_lockonTargetsEnemyAI == null || _lockonTargetsEnemyAI.Length == 0)
             {
                 _isLockon = false;
                 _inputAction.IsLockon = false;
@@ -132,14 +152,15 @@ public class CameraController
             else
             {
                 _currentLockonTargetID = 0;
-                _lockonTarget = _lockonTargets[_currentLockonTargetID].transform;
-                _lockonTargetEnemy = _lockonTargets[_currentLockonTargetID];
-                _lockonCursorTra = _lockonTarget.transform;
+                _lockonTargetTra = _lockonTargetsEnemyAI[_currentLockonTargetID].transform;
+                _lockonTargetEnemyAI = _lockonTargetsEnemyAI[_currentLockonTargetID];
+                _lockonCursorTra = _lockonTargetTra.transform;
             }
         }
 
         if (_isLockon)
         {
+            //通常からロックオンカメラ用に変更
             _defaultCamera.Priority = 0;
             _lockonCamera.Priority = 10;
         }
@@ -150,31 +171,44 @@ public class CameraController
             pov.m_VerticalAxis.Value = Mathf.Repeat(_lockonCamera.transform.eulerAngles.x + 180, 360) - 180;
             pov.m_HorizontalAxis.Value = _lockonCamera.transform.eulerAngles.y;
 
+            //ロックオンカメラから通常に変更
             _defaultCamera.Priority = 10;
             _lockonCamera.Priority = 0;
         }
     }
 
+    /// <summary>ロックオン対象となる敵をあらいだす</summary>
     void GetLockonTarget()
     {
-        _lockonTargets = null;
+        _lockonTargetsEnemyAI = null;
 
+        //ロックオン可能範囲内のEnemyを保持
         var enemies = _lockonRange.EnemiesInRange;
 
-        _lockonTargets = enemies.Where(enemy => enemy.IsAlive == true)
+        //そのEnemyは生きていることを条件にPlayerから近い順で整理し配列にしなおす
+        _lockonTargetsEnemyAI = enemies.Where(enemy => enemy.IsAlive == true)
                                 .OrderBy(go => Vector3.Distance(go.gameObject.transform.position, _originTra.position))
                                 .ToArray();
     }
 
-    void LockonTargetChange()
+    /// <summary>ロックオンの対象を変える</summary>
+    void LockonTargetChange(int up = 1 )
     {
-        _currentLockonTargetID++;
-        if (_currentLockonTargetID == _lockonTargets.Length)
+        //ロックオン対象が複数の場合、選択しやすいようIDよりindex（次の対象のＩＤ）
+        //が下か上どちらでもすぐ変更できるようにした
+        _currentLockonTargetID += up;
+        if (_currentLockonTargetID == _lockonTargetsEnemyAI.Length)
         {
             _currentLockonTargetID = 0;
         }
-        _lockonTarget = _lockonTargets[_currentLockonTargetID].transform;
-        _lockonTargetEnemy = _lockonTargets[_currentLockonTargetID];
+        else if(_currentLockonTargetID < 0)
+        {
+            _currentLockonTargetID = _lockonTargetsEnemyAI.Length - 1;
+        }
+
+    　　//ロックオン対象の更新
+        _lockonTargetTra = _lockonTargetsEnemyAI[_currentLockonTargetID].transform;
+        _lockonTargetEnemyAI = _lockonTargetsEnemyAI[_currentLockonTargetID];
     }
 
 }

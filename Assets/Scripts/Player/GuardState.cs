@@ -43,11 +43,11 @@ public class GuardState : PlayerStateBase
         _characterController.Move(moveDir * _walkSpeed * Time.deltaTime);
 
         
-            if (moveDir.magnitude > 0)
-            {
-                targetRotation = Quaternion.LookRotation(moveDir, Vector3.up);
-            }
-            _playerTra.rotation = Quaternion.RotateTowards(_playerTra.rotation, targetRotation, _rotateSpeed * Time.deltaTime);
+        if (moveDir.magnitude > 0)
+        {
+            targetRotation = Quaternion.LookRotation(moveDir, Vector3.up);
+        }
+        _playerTra.rotation = Quaternion.RotateTowards(_playerTra.rotation, targetRotation, _rotateSpeed * Time.deltaTime);
 
         if (moveDir.magnitude >= 0.1)
         {
