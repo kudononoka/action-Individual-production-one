@@ -69,13 +69,13 @@ public class Weapon : MonoBehaviour
     
     private void OnTriggerEnter(Collider other)
     {
-        if (!other.gameObject.CompareTag(_ownerTagName))       //自分以外の当たり判定を行う
+        if(other.gameObject.CompareTag("Enemy"))
         {
             _hitDirection.HitAction(other.gameObject);
             if (other.gameObject.TryGetComponent<IDamage>(out var IDamage))
             {
                 IDamage.Damage(_damage);
-                _bloodParticleActive = true;　　　//血Effect表示
+                _bloodParticleActive = true;   //血Effect表示
                 BloodParticalActive(true);
             }
         }
