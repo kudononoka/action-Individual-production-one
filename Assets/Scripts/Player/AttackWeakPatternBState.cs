@@ -16,6 +16,18 @@ public class AttackWeakPatternBState : PlayerStateBase
     [SerializeField]
     float _nextAttackTime;
 
+    [Header("移動開始時間")]
+    [SerializeField]
+    float _moveStartTime;
+
+    [Header("移動速度")]
+    [SerializeField]
+    float _moveSpeed;
+
+    [Header("移動距離差分")]
+    [SerializeField]
+    float _movingDifference;
+
     float _coolTimer;
 
     Animator _anim;
@@ -30,9 +42,14 @@ public class AttackWeakPatternBState : PlayerStateBase
 
     Weapon _weapon;
 
-    MakeASound _makeASound;
+    CharacterController _characterController;
+
+    /// <summary>攻撃中移動する前のPlayerのPosition</summary>
+    Vector3 _beforeMovingPos;
+
     public override void Init()
     {
+        //Updateなどで使用するコンポーネントなどをここで保持しておく
         PlayerController playerController = _playerStateMachine.PlayerController;
         _anim = playerController.PlayerAnim;
         _playerTra = playerController.PlayerTra;
@@ -40,7 +57,7 @@ public class AttackWeakPatternBState : PlayerStateBase
         _playerHPSTController = playerController.PlayerHPSTController;
         _playerParameter = playerController.Parameter;
         _weapon = playerController.PlayerWeapon;
-        _makeASound = playerController.MakeASound;
+        _characterController = playerController.CharacterController;
     }
     public override void OnEnter()
     {
@@ -55,22 +72,26 @@ public class AttackWeakPatternBState : PlayerStateBase
 
         //ダメージ設定
         _weapon.Damage = _playerParameter.AttackWeakPower;
-        _makeASound.IsSoundChange(true);
 
         //素振り音
         AudioManager.Instance.SEPlayOneShot(SE.PlayerAttackWeakSwish);
         _inputAction.IsAttackWeak = false;
+
+        //現在のPlayerの位置を記憶しておく
+        _beforeMovingPos = _playerTra.position;
     }
 
     public override void OnUpdate()
     {
         _coolTimer -= Time.deltaTime;
-        //次の攻撃をするかどうかがきまる
-        if(_coolTimer < _nextAttackJudgeTime)
+
+        //攻撃の入力を受け付ける時間になったら
+        if (_coolTimer < _nextAttackJudgeTime)
         {
-            //次の攻撃遷移可能
+            //次の攻撃に遷移可能な時間になったら
             if (_coolTimer < _nextAttackTime)
             {
+                //攻撃の入力をされていたら
                 //弱攻撃
                 if (_inputAction.IsAttackWeak && _playerHPSTController.CurrntStValue >= _playerParameter.AttackWeakSTCost)
                 {
@@ -83,8 +104,10 @@ public class AttackWeakPatternBState : PlayerStateBase
                 }
             }
         }
+        //それ以外の時間は
         else
         {
+            //入力されても取り消しにする
             _inputAction.IsAttackWeak = false;
         }
 
@@ -96,10 +119,31 @@ public class AttackWeakPatternBState : PlayerStateBase
             else
                 _playerStateMachine.OnChangeState((int)PlayerStateMachine.StateType.Walk);
         }
+
+        //攻撃モーションに合わせて移動するためTimeで管理する
+        //移動する時間になったら
+        if (_coolTimer <= _moveStartTime)
+        {
+
+            //攻撃始めの位置から一定の距離離れたら
+            if (Vector3.Distance(_beforeMovingPos, _playerTra.position) >= _movingDifference)
+            {
+                //移動停止
+                _characterController.Move(Vector3.zero);
+            }
+            else
+            {
+                //移動
+                _characterController.Move(_playerTra.forward * _moveSpeed);
+            }
+
+        }
     }
     public override void OnEnd()
     {
+        //入力を取り消し
         _inputAction.IsAttackWeak = false;
-        _makeASound.IsSoundChange(false);
+        //移動停止
+        _characterController.Move(Vector3.zero);
     }
 }

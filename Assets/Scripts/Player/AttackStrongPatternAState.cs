@@ -20,8 +20,20 @@ public class AttackStrongPatternAState : PlayerStateBase
     [SerializeField]
     float _soundTime;
 
+    [Header("移動開始時間")]
+    [SerializeField]
+    float _moveStartTime;
+
+    [Header("移動速度")]
+    [SerializeField]
+    float _moveSpeed;
+
+    [Header("移動距離差分")]
+    [SerializeField]
+    float _movingDifference;
+
     /// <summary>素振り音を鳴らしたかどうか</summary>
-    bool _isSound = false;
+    bool _isMadeSound = false;
 
     float _coolTimer;
 
@@ -37,18 +49,22 @@ public class AttackStrongPatternAState : PlayerStateBase
 
     Weapon _weapon;
 
-    MakeASound _makeASound;
+    CharacterController _characterController;
+
+    /// <summary>攻撃中移動する前のPlayerのPosition</summary>
+    Vector3 _beforeMovingPos;
 
     public override void Init()
     {
-        PlayerController　playerController = _playerStateMachine.PlayerController;
+        //Updateなどで使用するコンポーネントなどをここで保持しておく
+        PlayerController playerController = _playerStateMachine.PlayerController;
         _anim = playerController.PlayerAnim;
         _playerTra = playerController.PlayerTra;
         _inputAction = playerController.InputAction;
         _playerHPSTController = playerController.PlayerHPSTController;
         _playerParameter = playerController.Parameter;
         _weapon = playerController.PlayerWeapon;
-        _makeASound = playerController.MakeASound;
+        _characterController = playerController.CharacterController;
     }
     public override void OnEnter()
     {
@@ -63,24 +79,26 @@ public class AttackStrongPatternAState : PlayerStateBase
     　 //ダメージ設定
         _weapon.Damage = _playerParameter.AttackStrongPower;
 
-        //音を立てる
-        _makeASound.IsSoundChange(true);
-        _isSound = false;
+        _isMadeSound = false;
 
         //入力値初期化
         _inputAction.IsAttackStrong = false;
+
+        //現在のPlayerの位置を記憶しておく
+        _beforeMovingPos = _playerTra.position;
     }
 
     public override void OnUpdate()
     {
         _coolTimer -= Time.deltaTime;
 
-        //次の攻撃をするかどうか
+        //攻撃の入力を受け付ける時間になったら
         if(_coolTimer < _nextAttackJudgeTime)
         {
-            //次の攻撃に遷移可能
+            //次の攻撃に遷移可能な時間になったら
             if (_coolTimer < _nextAttackTime)
             {
+                //攻撃の入力をされていたら
                 if (_inputAction.IsAttackStrong && _playerHPSTController.CurrntStValue >= _playerParameter.AttackStrongSTCost)
                 {
                     //強攻撃に遷移
@@ -88,16 +106,18 @@ public class AttackStrongPatternAState : PlayerStateBase
                 }
             }
         }
+        //それ以外の時間は
         else
         {
+            //入力されても取り消しにする
             _inputAction.IsAttackStrong = false;
         }
 
-        //素振りの音を鳴らす
-        if(!_isSound && _coolTimer <= _soundTime)
+        //アニメーションと合わせて素振り音を鳴らす
+        if (!_isMadeSound && _coolTimer <= _soundTime)
         {
             AudioManager.Instance.SEPlayOneShot(SE.PlayerAttackStrongSwish);
-            _isSound = true;
+            _isMadeSound = true;
         }
 
         if (_coolTimer <= 0.95)
@@ -108,10 +128,30 @@ public class AttackStrongPatternAState : PlayerStateBase
             else
                 _playerStateMachine.OnChangeState((int)PlayerStateMachine.StateType.Walk);
         }
+
+        //移動する時間になったら
+        if (_coolTimer <= _moveStartTime)
+        {
+
+            //攻撃始めの位置から一定の距離離れたら
+            if (Vector3.Distance(_beforeMovingPos, _playerTra.position) >= _movingDifference)
+            {
+                //移動停止
+                _characterController.Move(Vector3.zero);
+            }
+            else
+            {
+                //移動
+                _characterController.Move(_playerTra.forward * _moveSpeed);
+            }
+
+        }
     }
     public override void OnEnd()
     {
+        //入力を取り消し
         _inputAction.IsAttackStrong = false;
-        _makeASound.IsSoundChange(false);
+        //移動停止
+        _characterController.Move(Vector3.zero);
     }
 }

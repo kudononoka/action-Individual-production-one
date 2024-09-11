@@ -4788,20 +4788,32 @@ MonoBehaviour:
       _particle: {fileID: 875486464439865019}
     _attackWeakPatternAState:
       _coolTime: 1.1
-      _nextAttackJudgeTime: 0.5
+      _nextAttackJudgeTime: 0.4
       _nextAttackTime: 0.2
+      _moveStartTime: 0.7
+      _moveSpeed: 0.07
+      _movingDifference: 0.4
     _attackWeakPatternBState:
       _coolTime: 1.3
       _nextAttackJudgeTime: 0.5
       _nextAttackTime: 0.3
+      _moveStartTime: 0.3
+      _moveSpeed: 0.85
+      _movingDifference: 1
     _attackStrongPatternAState:
       _coolTime: 2.5
       _nextAttackJudgeTime: 1.7
       _nextAttackTime: 1
       _soundTime: 1.8
+      _moveStartTime: 1.95
+      _moveSpeed: 0.07
+      _movingDifference: 0.7
     _attackStrongPatternBState:
       _coolTime: 1.5
       _soundTime: 0.8
+      _moveStartTime: 1.48
+      _moveSpeed: 0.07
+      _movingDifference: 1.8
   _capsuleCollider: {fileID: 6507428122661970017}
   _makeASound: {fileID: 4651018821564287795}
   _playerHPSTController:
@@ -7517,7 +7529,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8075423193137713046, guid: e3e428cfffd0bb54a94b84346ec7eecf, type: 3}
       propertyPath: InitialModule.startColor.maxColor.a
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8075423193137713046, guid: e3e428cfffd0bb54a94b84346ec7eecf, type: 3}
       propertyPath: InitialModule.startRotationY.scalar
@@ -7525,11 +7537,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8075423193137713046, guid: e3e428cfffd0bb54a94b84346ec7eecf, type: 3}
       propertyPath: ColorModule.gradient.maxGradient.atime1
-      value: 15998
+      value: 25443
       objectReference: {fileID: 0}
     - target: {fileID: 8075423193137713046, guid: e3e428cfffd0bb54a94b84346ec7eecf, type: 3}
       propertyPath: ColorModule.gradient.maxGradient.atime2
-      value: 33153
+      value: 33539
       objectReference: {fileID: 0}
     - target: {fileID: 8075423193137713046, guid: e3e428cfffd0bb54a94b84346ec7eecf, type: 3}
       propertyPath: ColorModule.gradient.maxGradient.key1.a

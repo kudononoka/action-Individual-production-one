@@ -85,13 +85,14 @@ public class AttackWeakPatternAState : PlayerStateBase
     {
         _coolTimer -= Time.deltaTime;
 
-        ///次の攻撃をする時かどうか
-        if(_coolTimer < _nextAttackJudgeTime)
+        //攻撃の入力を受け付ける時間になったら
+        if (_coolTimer < _nextAttackJudgeTime)
         {
-            //次の攻撃に遷移できるタイミング
+            //次の攻撃に遷移可能な時間になったら
             if (_coolTimer < _nextAttackTime)
             {
-            　　//弱攻撃の遷移
+                //攻撃の入力をされていたら
+                //弱攻撃の遷移
                 if (_inputAction.IsAttackWeak && _playerHPSTController.CurrntStValue >= _playerParameter.AttackWeakSTCost)
                 {
                     _playerStateMachine.OnChangeState((int)PlayerStateMachine.StateType.AttackWeakPatternB);
@@ -105,8 +106,10 @@ public class AttackWeakPatternAState : PlayerStateBase
             }
 
         }
+        //それ以外の時間は
         else
         {
+            //入力されても取り消しにする
             _inputAction.IsAttackWeak = false;
         }
 
