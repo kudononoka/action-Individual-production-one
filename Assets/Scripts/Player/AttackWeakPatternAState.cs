@@ -44,6 +44,8 @@ public class AttackWeakPatternAState : PlayerStateBase
 
     CharacterController _characterController;
 
+    CameraController _cameraController;
+
     /// <summary>攻撃中移動する前のPlayerのPosition</summary>
     Vector3 _beforeMovingPos;
 
@@ -58,6 +60,7 @@ public class AttackWeakPatternAState : PlayerStateBase
         _playerParameter = playerController.Parameter;
         _weapon = playerController.PlayerWeapon;
         _characterController = playerController.CharacterController;
+        _cameraController = playerController.CameraController;
     }
     public override void OnEnter()
     {
@@ -79,6 +82,15 @@ public class AttackWeakPatternAState : PlayerStateBase
 
         //現在のPlayerの位置を記憶しておく
         _beforeMovingPos = _playerTra.position;
+
+        //ロックオン中
+        if(_inputAction.IsLockon)
+        {
+            //ロックオン対象の方を向く
+            Vector3 targetPos = _cameraController.LockonTarget.position;
+            targetPos.y = _playerTra.position.y;
+            _playerTra.LookAt(targetPos);
+        }
     }
 
     public override void OnUpdate()
