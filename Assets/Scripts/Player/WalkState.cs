@@ -138,9 +138,11 @@ public class WalkState : PlayerStateBase
     public override void OnEnd()
     {
         _anim.SetBool("IsWalkSlow", false);
+        _anim.SetFloat("move", 0);
         _isWalkSlow = false;
         _anim.SetLayerWeight(2, 0);
         AudioManager.Instance.SEStop();
+        _characterController.Move(Vector3.zero);
     }
 
     public void SetLayerWeightChanging()
