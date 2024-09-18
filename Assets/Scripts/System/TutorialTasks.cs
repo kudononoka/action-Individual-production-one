@@ -62,7 +62,7 @@ public class TutorialCameraMoveTask : ITutorialTask
 
 }
 
-public class TutorialWeakAttackTask : ITutorialTask
+public class TutorialAttackTask : ITutorialTask
 {
     private PlayerInputAction _inputAction;
     public void Init(PlayerInputAction playerInput)
@@ -72,7 +72,7 @@ public class TutorialWeakAttackTask : ITutorialTask
 
     public string GetDescription()
     {
-        return "左クリック or □ で弱攻撃ができます";
+        return "左クリック or □ で攻撃ができます";
     }
 
     public string GetTitle()
@@ -82,36 +82,7 @@ public class TutorialWeakAttackTask : ITutorialTask
 
     public bool CheckTask()
     {
-        if (_inputAction.IsAttackWeak)
-        {
-            return true;
-        }
-        return false;
-    }
-
-}
-
-public class TutorialStrongAttackTask : ITutorialTask
-{
-    private PlayerInputAction _inputAction;
-    public void Init(PlayerInputAction playerInput)
-    {
-        _inputAction = playerInput;
-    }
-
-    public string GetDescription()
-    {
-        return "右クリック or △ で強攻撃ができます";
-    }
-
-    public string GetTitle()
-    {
-        return "基本攻撃 2 / 2";
-    }
-
-    public bool CheckTask()
-    {
-        if (_inputAction.IsAttackStrong)
+        if (_inputAction.IsAttack)
         {
             return true;
         }
@@ -125,7 +96,7 @@ public class TutorialAttackComboTask : ITutorialTask
     public float _comboPracticeTime = 8;
     public string GetDescription()
     {
-        return "弱攻撃 と　強攻撃　を組み合わせて攻撃することができます\n□ + □ + △\n □ + △ + △";
+        return "攻撃 は最大４回コンボで攻撃することができます";
     }
 
     public string GetTitle()

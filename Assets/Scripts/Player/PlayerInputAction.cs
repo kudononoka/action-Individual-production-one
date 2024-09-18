@@ -14,13 +14,7 @@ public class PlayerInputAction : MonoBehaviour
     Vector2 _inputCameraMove = Vector2.zero;
 
     [SerializeField] 
-    bool _isAttackWeak = false;
-
-    [SerializeField] 
-    bool _isAttackStrong = false;
-
-    [SerializeField] 
-    bool _isGuard = false;
+    bool _isAttack = false;
 
     [SerializeField] 
     bool _isLockon = false;
@@ -40,14 +34,8 @@ public class PlayerInputAction : MonoBehaviour
     /// <summary>入力値(カメラ移動)</summary>
     public Vector2 CameraMove => _inputCameraMove;
 
-    /// <summary>入力値(弱攻撃)</summary>
-    public bool IsAttackWeak { get => _isAttackWeak;  set => _isAttackWeak = value; }
-
-    /// <summary>入力値(強攻撃)</summary>
-    public bool IsAttackStrong { get => _isAttackStrong; set => _isAttackStrong = value; }
-
-    /// <summary>入力値(ガード)</summary>
-    public bool IsGuard => _isGuard;
+    /// <summary>入力値(攻撃)</summary>
+    public bool IsAttack { get => _isAttack;  set => _isAttack = value; }
 
     /// <summary>入力(ロックオン)</summary>
     public bool IsLockon { get => _isLockon; set => _isLockon = value; }
@@ -74,32 +62,12 @@ public class PlayerInputAction : MonoBehaviour
         _inputCameraMove = context.ReadValue<Vector2>();
     }
 
-    public void OnAttackWeak(InputAction.CallbackContext context)
+    public void OnAttack(InputAction.CallbackContext context)
     {
         if (context.performed)
         {
-            _isAttackWeak = true;
+            _isAttack = true;
         }
-    }
-
-    public void OnAttackStrong(InputAction.CallbackContext context)
-    {
-        if (context.performed)
-        {
-            _isAttackStrong = true;
-        }
-    }
-
-    public void OnGuard(InputAction.CallbackContext context)
-    {
-        //if (context.performed)
-        //{
-        //    _isGuard = true;
-        //}
-        //else if (context.canceled)
-        //{
-        //    _isGuard = false;
-        //}
     }
 
     public void OnLockon(InputAction.CallbackContext context)

@@ -2,19 +2,15 @@
 using UnityEngine;
 
 [Serializable]
-public class AttackWeakPatternAState : PlayerStateBase
+public class AttackComboFourState : PlayerStateBase
 {
-    [Header("弱攻撃にかかる時間")]
+    [Header("強攻撃にかかる時間")]
     [SerializeField]
     float _coolTime;
 
-    [Header("次の攻撃をするかが確定される時間")]
+    [Header("素振り音を鳴らすタイミング")]
     [SerializeField]
-    float _nextAttackJudgeTime;
-
-    [Header("次の攻撃につながるまでの時間")]
-    [SerializeField]
-    float _nextAttackTime;
+    float _soundTime;
 
     [Header("移動開始時間")]
     [SerializeField]
@@ -28,19 +24,20 @@ public class AttackWeakPatternAState : PlayerStateBase
     [SerializeField]
     float _movingDifference;
 
+    /// <summary>素振り音を鳴らしたかどうか</summary>
+    bool _isMadeSound = false;
+
     float _coolTimer;
 
-    Animator _playerAnim;
+    Animator _anim;
 
     PlayerInputAction _inputAction;
 
     Transform _playerTra;
 
-    PlayerHPSTController _playerHPSTController;
+    Weapon _weapon;
 
     PlayerParameter _playerParameter;
-
-    Weapon _weapon;
 
     CharacterController _characterController;
 
@@ -53,38 +50,36 @@ public class AttackWeakPatternAState : PlayerStateBase
     {
         //Updateなどで使用するコンポーネントなどをここで保持しておく
         PlayerController playerController = _playerStateMachine.PlayerController;
-        _playerAnim = playerController.PlayerAnim;
+        _anim = playerController.PlayerAnim;
         _playerTra = playerController.PlayerTra;
         _inputAction = playerController.InputAction;
-        _playerHPSTController = playerController.PlayerHPSTController;
-        _playerParameter = playerController.Parameter;
         _weapon = playerController.PlayerWeapon;
+        _playerParameter = playerController.Parameter;
         _characterController = playerController.CharacterController;
         _cameraController = playerController.CameraController;
     }
     public override void OnEnter()
     {
-        _playerHPSTController.STDown(_playerParameter.AttackWeakSTCost);
-
         //初期化
         _coolTimer = _coolTime;
 
         //アニメーション設定
-        _playerAnim.SetTrigger("Attack");
-        _playerAnim.SetInteger("AttackType", 0);
+        _anim.SetTrigger("Attack");
 
         //ダメージ設定
-        _weapon.Damage = _playerParameter.AttackWeakPower;
+        _weapon.Damage = _playerParameter.AttackStrongPower;
 
-        //素振り音
-        AudioManager.Instance.SEPlayOneShot(SE.PlayerAttackWeakSwish);
-        _inputAction.IsAttackWeak = false;
+        //最初は音を立てない
+        _isMadeSound = false;
+
+        //入力をなかったことに
+        _inputAction.IsAttack = false;
 
         //現在のPlayerの位置を記憶しておく
         _beforeMovingPos = _playerTra.position;
 
         //ロックオン中
-        if(_inputAction.IsLockon)
+        if (_inputAction.IsLockon)
         {
             //ロックオン対象の方を向く
             Vector3 targetPos = _cameraController.LockonTarget.position;
@@ -97,49 +92,24 @@ public class AttackWeakPatternAState : PlayerStateBase
     {
         _coolTimer -= Time.deltaTime;
 
-        //攻撃の入力を受け付ける時間になったら
-        if (_coolTimer < _nextAttackJudgeTime)
+        if (_coolTimer <= 0)
         {
-            //次の攻撃に遷移可能な時間になったら
-            if (_coolTimer < _nextAttackTime)
-            {
-                //攻撃の入力をされていたら
-                //弱攻撃の遷移
-                if (_inputAction.IsAttackWeak && _playerHPSTController.CurrntStValue >= _playerParameter.AttackWeakSTCost)
-                {
-                    _playerStateMachine.OnChangeState((int)PlayerStateMachine.StateType.AttackWeakPatternB);
-                }
-
-                //強攻撃に遷移
-                else if(_inputAction.IsAttackStrong && _playerHPSTController.CurrntStValue >= _playerParameter.AttackStrongSTCost)
-                {
-                    _playerStateMachine.OnChangeState((int)PlayerStateMachine.StateType.AttackStrongPatternA);
-                }
-            }
-
-        }
-        //それ以外の時間は
-        else
-        {
-            //入力されても取り消しにする
-            _inputAction.IsAttackWeak = false;
-        }
-
-        if(_coolTimer <= 0.1)
-        {
-
             //移動かIdleに遷移
             if (_inputAction.InputMove.magnitude <= 0)
                 _playerStateMachine.OnChangeState((int)PlayerStateMachine.StateType.Idle);
-
             else
                 _playerStateMachine.OnChangeState((int)PlayerStateMachine.StateType.Walk);
-
         }
 
-        //攻撃モーションに合わせて移動するためTimeで管理する
+        //アニメーションと合わせて素振り音を鳴らす
+        if (!_isMadeSound && _coolTimer <= _soundTime)
+        {
+            AudioManager.Instance.SEPlayOneShot(SE.PlayerAttackStrongSwish);
+            _isMadeSound = true;
+        }
+
         //移動する時間になったら
-        if(_coolTimer <= _moveStartTime)
+        if (_coolTimer <= _moveStartTime)
         {
 
             //攻撃始めの位置から一定の距離離れたら
@@ -159,7 +129,7 @@ public class AttackWeakPatternAState : PlayerStateBase
     public override void OnEnd()
     {
         //入力を取り消し
-        _inputAction.IsAttackWeak = false;
+        _inputAction.IsAttack = false;
         //移動停止
         _characterController.Move(Vector3.zero);
     }

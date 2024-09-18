@@ -116,14 +116,8 @@ public class WalkState : PlayerStateBase
         _anim.SetFloat("move", moveDir.magnitude);
 
         //遷移先
-        if (_inputAction.IsAttackWeak && _playerHPSTController.CurrntStValue >= _playerParameter.AttackWeakSTCost)
-            _playerStateMachine.OnChangeState((int)PlayerStateMachine.StateType.AttackWeakPatternA);
-
-        if (_inputAction.IsAttackStrong && _playerHPSTController.CurrntStValue >= _playerParameter.AttackStrongSTCost)
-            _playerStateMachine.OnChangeState((int)PlayerStateMachine.StateType.AttackStrongPatternA);
-
-        if (_inputAction.IsGuard && _playerHPSTController.CurrntStValue >= _playerParameter.GuardHitSTCost)
-            _playerStateMachine.OnChangeState((int)PlayerStateMachine.StateType.Guard);
+        if (_inputAction.IsAttack && _playerHPSTController.CurrntStValue >= _playerParameter.AttackWeakSTCost)
+            _playerStateMachine.OnChangeState((int)PlayerStateMachine.StateType.AttackComboOne);
 
         if(_inputAction.IsEvade && _playerHPSTController.CurrntStValue >= _playerParameter.EvadeSTCost)
             _playerStateMachine.OnChangeState((int)PlayerStateMachine.StateType.Evade);

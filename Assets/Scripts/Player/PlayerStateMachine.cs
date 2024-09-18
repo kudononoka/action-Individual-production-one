@@ -8,7 +8,6 @@ public class PlayerStateMachine : StateMachine
 
     
     IdleState _idleState = new();
-    GuardState _guardState = new();
 
     [SerializeField]
     WalkState _walkState = new();
@@ -17,16 +16,16 @@ public class PlayerStateMachine : StateMachine
     EvadeState _evadeState = new();
 
     [SerializeField]
-    AttackWeakPatternAState _attackWeakPatternAState = new();
+    AttackComboOneState _attackComboOneState = new();
 
     [SerializeField]
-    AttackWeakPatternBState _attackWeakPatternBState = new();
+    AttackComboTwoState _attackComboTwoState = new();
 
     [SerializeField]
-    AttackStrongPatternAState _attackStrongPatternAState = new();
+    AttackComboThreeState _attackComboThreeState = new();
 
     [SerializeField]
-    AttackStrongPatternBState _attackStrongPatternBState = new();
+    AttackComboFourState _attackComboFourState = new();
 
     public StateType CurrentState => _currentStateType;
 
@@ -37,18 +36,16 @@ public class PlayerStateMachine : StateMachine
         Idle,
         /// <summary>歩行</summary>
         Walk,
-        /// <summary>ガード</summary>
-        Guard,
         /// <summary>回避</summary>
         Evade,
-        /// <summary>弱攻撃(コンボ1回目・コンボ3回目)</summary>
-        AttackWeakPatternA,
-        /// <summary>弱攻撃(コンボ2回目)</summary>
-        AttackWeakPatternB,
-        /// <summary>強攻撃(コンボ1回目)</summary>
-        AttackStrongPatternA,
-        /// <summary>強攻撃(コンボ2回目)</summary>
-        AttackStrongPatternB,
+        /// <summary>攻撃(コンボ1回目)</summary>
+        AttackComboOne,
+        /// <summary>攻撃(コンボ2回目)</summary>
+        AttackComboTwo,
+        /// <summary>攻撃(コンボ1回目)</summary>
+        AttackComboThree,
+        /// <summary>攻撃(コンボ2回目)</summary>
+        AttackComboFour,
     }
 
     PlayerController _playeController;
@@ -59,12 +56,11 @@ public class PlayerStateMachine : StateMachine
     {
         _idleState.Set(this);
         _walkState.Set(this);
-        _guardState.Set(this);
         _evadeState.Set(this);
-        _attackWeakPatternAState.Set(this);
-        _attackWeakPatternBState.Set(this);
-        _attackStrongPatternAState.Set(this);
-        _attackStrongPatternBState.Set(this);
+        _attackComboOneState.Set(this);
+        _attackComboTwoState.Set(this);
+        _attackComboThreeState.Set(this);
+        _attackComboFourState.Set(this);
     }
     /// <summary>ステートの登録と初期化</summary>
     public void Init(PlayerController playerController)
@@ -73,12 +69,11 @@ public class PlayerStateMachine : StateMachine
 
         StateAdd((int)StateType.Walk, _walkState);
         StateAdd((int)StateType.Idle, _idleState);
-        StateAdd((int)StateType.Guard, _guardState);
         StateAdd((int)StateType.Evade, _evadeState);
-        StateAdd((int)StateType.AttackWeakPatternA, _attackWeakPatternAState);
-        StateAdd((int)StateType.AttackWeakPatternB, _attackWeakPatternBState);
-        StateAdd((int)StateType.AttackStrongPatternA, _attackStrongPatternAState);
-        StateAdd((int)StateType.AttackStrongPatternB, _attackStrongPatternBState);
+        StateAdd((int)StateType.AttackComboOne, _attackComboOneState);
+        StateAdd((int)StateType.AttackComboTwo, _attackComboTwoState);
+        StateAdd((int)StateType.AttackComboThree, _attackComboThreeState);
+        StateAdd((int)StateType.AttackComboFour, _attackComboFourState);
 
         StateSet();
 

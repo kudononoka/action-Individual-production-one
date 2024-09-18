@@ -10,8 +10,7 @@ public class TutorialSystem : MonoBehaviour
     {
         new TutorialMoveTask(),
         new TutorialCameraMoveTask(),
-        new TutorialWeakAttackTask(),
-        new TutorialStrongAttackTask(),
+        new TutorialAttackTask(),
         new TutorialAttackComboTask(),
         new TutorialAvoidanceTask(),
         new TutorialLockonTask(),

@@ -25,19 +25,9 @@ public class IdleState : PlayerStateBase
             _playerStateMachine.OnChangeState((int)PlayerStateMachine.StateType.Walk);
         }
 
-        if(_inputAction.IsAttackWeak && _playerHPSTController.CurrntStValue >= _playerParameter.AttackWeakSTCost)
+        if(_inputAction.IsAttack && _playerHPSTController.CurrntStValue >= _playerParameter.AttackWeakSTCost)
         {
-            _playerStateMachine.OnChangeState((int)PlayerStateMachine.StateType.AttackWeakPatternA);
-        }
-
-        if (_inputAction.IsAttackStrong && _playerHPSTController.CurrntStValue >= _playerParameter.AttackStrongSTCost)
-        {
-            _playerStateMachine.OnChangeState((int)PlayerStateMachine.StateType.AttackStrongPatternA);
-        }
-
-        if(_inputAction.IsGuard && _playerHPSTController.CurrntStValue >= _playerParameter.GuardHitSTCost)
-        {
-            _playerStateMachine.OnChangeState((int)PlayerStateMachine.StateType.Guard);
+            _playerStateMachine.OnChangeState((int)PlayerStateMachine.StateType.AttackComboOne);
         }
 
         if(_inputAction.IsEvade && _playerHPSTController.CurrntStValue >= _playerParameter.EvadeSTCost)

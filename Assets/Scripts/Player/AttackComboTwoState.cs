@@ -2,7 +2,7 @@
 using UnityEngine;
 
 [Serializable]
-public class AttackWeakPatternBState : PlayerStateBase
+public class AttackComboTwoState : PlayerStateBase
 {
     [Header("弱攻撃にかかる時間")]
     [SerializeField]
@@ -71,14 +71,13 @@ public class AttackWeakPatternBState : PlayerStateBase
 
         //アニメーション設定
         _anim.SetTrigger("Attack");
-        _anim.SetInteger("AttackType", 0);
 
         //ダメージ設定
         _weapon.Damage = _playerParameter.AttackWeakPower;
 
         //素振り音
         AudioManager.Instance.SEPlayOneShot(SE.PlayerAttackWeakSwish);
-        _inputAction.IsAttackWeak = false;
+        _inputAction.IsAttack = false;
 
         //現在のPlayerの位置を記憶しておく
         _beforeMovingPos = _playerTra.position;
@@ -104,23 +103,19 @@ public class AttackWeakPatternBState : PlayerStateBase
             if (_coolTimer < _nextAttackTime)
             {
                 //攻撃の入力をされていたら
-                //弱攻撃
-                if (_inputAction.IsAttackWeak && _playerHPSTController.CurrntStValue >= _playerParameter.AttackWeakSTCost)
+                if (_inputAction.IsAttack && _playerHPSTController.CurrntStValue >= _playerParameter.AttackStrongSTCost)
                 {
-                    _playerStateMachine.OnChangeState((int)PlayerStateMachine.StateType.AttackWeakPatternA);
-                }
-                //強攻撃
-                else if (_inputAction.IsAttackStrong && _playerHPSTController.CurrntStValue >= _playerParameter.AttackStrongSTCost)
-                {
-                    _playerStateMachine.OnChangeState((int)PlayerStateMachine.StateType.AttackStrongPatternA);
+                    //次の攻撃に遷移
+                    _playerStateMachine.OnChangeState((int)PlayerStateMachine.StateType.AttackComboThree);
                 }
             }
+
         }
         //それ以外の時間は
         else
         {
             //入力されても取り消しにする
-            _inputAction.IsAttackWeak = false;
+            _inputAction.IsAttack = false;
         }
 
         if (_coolTimer <= 0.2)
@@ -154,7 +149,7 @@ public class AttackWeakPatternBState : PlayerStateBase
     public override void OnEnd()
     {
         //入力を取り消し
-        _inputAction.IsAttackWeak = false;
+        _inputAction.IsAttack = false;
         //移動停止
         _characterController.Move(Vector3.zero);
     }
