@@ -25,12 +25,15 @@ public enum SE
 {
     /// <summary>Player足音</summary>
     PlayerFootsteps,
+    /// <summary>Playerステップ音(回避)</summary>
+    PlayerStep,
     /// <summary>Playerが武器を振る音(弱攻撃)</summary>
     PlayerAttackWeakSwish,
     /// <summary>Playerが武器を振る音(強攻撃)</summary>
     PlayerAttackStrongSwish,
     /// <summary>Player攻撃が当たった音</summary>
     PlayerAttackHit,
+
     /// <summary>Enemyの攻撃音</summary>
     EnemyAttack,
     /// <summary>Enemyの攻撃が当たった音</summary>

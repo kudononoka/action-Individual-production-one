@@ -59,6 +59,10 @@ public class UIController : MonoBehaviour
     {
         _enemyKillCount = 0;
         _enemyMaxCount = count;
+        if (_enemyCountText == null)
+        {
+            _enemyCountText = GameObject.Find("EnemyCount").GetComponent<Text>();
+        }
         _enemyCountText.text = $"{_enemyKillCount} / {_enemyMaxCount}";
     }
 

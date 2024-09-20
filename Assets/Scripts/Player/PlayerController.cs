@@ -40,6 +40,8 @@ public class PlayerController : MonoBehaviour, IDamage, ISlow
 
     PlayerInputAction _inputAction;
 
+    TimeManager _timeManager;
+
     Transform _playerTra;
 
     bool _isAction = false;
@@ -62,18 +64,27 @@ public class PlayerController : MonoBehaviour, IDamage, ISlow
 
     public MakeASound MakeASound => _makeASound;
 
+    public TimeManager TimeManager => _timeManager;
+
     void Start()
     {
+        _timeManager = FindObjectOfType<TimeManager>();
+        _timeManager.SlowSystem.Add(this);
+
         _characterController = GetComponent<CharacterController>();
+
         _playerTra = GetComponent<Transform>();
+
         _inputAction = GetComponent<PlayerInputAction>();
+
         _stateMachine.Init(this);
         _cameraController.Init(_inputAction);
         _playerHPSTController.Init(_parameter.HPMax, _parameter.STMax, _parameter.StRecoverySpeed);
+
         _playerWeapon.DamageColliderEnabledSet(false);
 
-        TimeManager timeManager = FindObjectOfType<TimeManager>();
-        timeManager.SlowSystem.Add(this);
+
+
     }
 
     private void OnDestroy()
@@ -116,7 +127,6 @@ public class PlayerController : MonoBehaviour, IDamage, ISlow
 
     public void OnSlow(float slowSpeedRate)
     {
-        Debug.Log("s");
         _playerModelAnim.speed = slowSpeedRate;
     }
 

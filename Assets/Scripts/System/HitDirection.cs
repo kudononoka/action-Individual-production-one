@@ -47,6 +47,8 @@ public class HitDirection : MonoBehaviour
         //ヒットエフェクト再生
         _hitSlashEffect.Play();
         _hitEffect.Play();
+
+        Debug.Log("Hit");
     }
 
     public void Update()

@@ -438,18 +438,43 @@ MonoBehaviour:
   - _key: 0
     _value:
       _audioClip: {fileID: 8300000, guid: 05a51dde4b4ba8248972cfd3358014b2, type: 3}
-      _volum: 0.5
+      _volum: 0.3
       _pitch: 1
   - _key: 1
     _value:
-      _audioClip: {fileID: 8300000, guid: 2ac3eeb30c3f9cc4db290f0bb4534d6f, type: 3}
+      _audioClip: {fileID: 8300000, guid: 0e7f866a8a8ad1b4f9b1b1f6b388801e, type: 3}
       _volum: 0.25
-      _pitch: 0.74
+      _pitch: 0.637
   - _key: 2
     _value:
       _audioClip: {fileID: 8300000, guid: 2ac3eeb30c3f9cc4db290f0bb4534d6f, type: 3}
       _volum: 0.25
       _pitch: 0.616
+  - _key: 3
+    _value:
+      _audioClip: {fileID: 8300000, guid: 2ac3eeb30c3f9cc4db290f0bb4534d6f, type: 3}
+      _volum: 0.25
+      _pitch: 0.68
+  - _key: 4
+    _value:
+      _audioClip: {fileID: 8300000, guid: 36d33b59ac0515c4dae6f4bb89de9345, type: 3}
+      _volum: 0.25
+      _pitch: 1
+  - _key: 5
+    _value:
+      _audioClip: {fileID: 8300000, guid: 3028c20e54ec630458ef4f86fa3bbb6a, type: 3}
+      _volum: 0.25
+      _pitch: 1
+  - _key: 6
+    _value:
+      _audioClip: {fileID: 8300000, guid: 004eb3ff4fd8d1a428fabec5c7d2e0b2, type: 3}
+      _volum: 0.25
+      _pitch: 1
+  - _key: 7
+    _value:
+      _audioClip: {fileID: 8300000, guid: 821a9327220299844847d80b02fcf3b1, type: 3}
+      _volum: 0.25
+      _pitch: 1
   _bgmProperties:
   - _key: 0
     _value:
@@ -459,7 +484,7 @@ MonoBehaviour:
   - _key: 1
     _value:
       _audioClip: {fileID: 8300000, guid: 31b413eaadce1464c9b75f9f479c96da, type: 3}
-      _volum: 0.1
+      _volum: 0.204
       _pitch: 1
   - _key: 2
     _value:

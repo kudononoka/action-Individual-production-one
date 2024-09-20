@@ -1,0 +1,221 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &-6193881365164968918
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 30bf6cf37e1f3a645b13174314506b4d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  nodeData:
+    _selfNode:
+      _id: 2
+      _nodeType: 3
+      _className: AttackNode
+    _rect:
+      serializedVersion: 2
+      x: 400
+      y: 471.2
+      width: 83.20001
+      height: 76.79999
+    _childData: []
+  _attackTime: 1.5
+--- !u!114 &-5520704827181494791
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 75ec32de92b0b114db2d433c0dee40f6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  nodeData:
+    _selfNode:
+      _id: 3
+      _nodeType: 3
+      _className: MoveToTargetNode
+    _rect:
+      serializedVersion: 2
+      x: 400
+      y: 188
+      width: 131.20001
+      height: 76.8
+    _childData: []
+  _moveSpeed: 3
+  _stopDistanceMin: 2
+  _stopDistanceMax: 10
+--- !u!114 &-5016016713011151274
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3f9d00444e863fd4aa83cc6a69fda229, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  nodeData:
+    _selfNode:
+      _id: 0
+      _nodeType: 1
+      _className: SequenceNode
+    _rect:
+      serializedVersion: 2
+      x: 220.8
+      y: 200
+      width: 133.59999
+      height: 76.8
+    _childData:
+    - _id: 2
+      _nodeType: 3
+      _className: AttackNode
+    - _id: 1
+      _nodeType: 3
+      _className: WaitNode
+    - _id: 3
+      _nodeType: 3
+      _className: MoveToTargetNode
+    - _id: 4
+      _nodeType: 3
+      _className: WaitNode
+    - _id: 5
+      _nodeType: 4
+      _className: LookAt
+  _childNodes:
+  - {fileID: 8662373685268806540}
+  - {fileID: -5520704827181494791}
+  - {fileID: 6145326227904728346}
+  - {fileID: -2172613264880683431}
+  - {fileID: -6193881365164968918}
+--- !u!114 &-2172613264880683431
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe37ca0a823caaa4b914f10ee47a4654, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  nodeData:
+    _selfNode:
+      _id: 5
+      _nodeType: 4
+      _className: LookAt
+    _rect:
+      serializedVersion: 2
+      x: 400
+      y: 370.40002
+      width: 85.600006
+      height: 76.79999
+    _childData: []
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d79de49c93d794b4db85a4c6d7e86867, type: 3}
+  m_Name: SlimeBattle 1
+  m_EditorClassIdentifier: 
+  _root: {fileID: 5887751524933870804}
+  _nodes:
+  - {fileID: -5016016713011151274}
+  - {fileID: 6145326227904728346}
+  - {fileID: -6193881365164968918}
+  - {fileID: -5520704827181494791}
+  - {fileID: 8662373685268806540}
+  - {fileID: -2172613264880683431}
+--- !u!114 &5887751524933870804
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 349c16b37960b314c87d6ff95abb8623, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  nodeData:
+    _selfNode:
+      _id: -1
+      _nodeType: 0
+      _className: RootNode
+    _rect:
+      serializedVersion: 2
+      x: 100
+      y: 200
+      width: 74.399994
+      height: 76.8
+    _childData:
+    - _id: 0
+      _nodeType: 1
+      _className: SequenceNode
+  _childNode: {fileID: -5016016713011151274}
+--- !u!114 &6145326227904728346
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7266640d2301a6b47a7c27463069351e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  nodeData:
+    _selfNode:
+      _id: 1
+      _nodeType: 3
+      _className: WaitNode
+    _rect:
+      serializedVersion: 2
+      x: 400
+      y: 276.80002
+      width: 71.20001
+      height: 76.79999
+    _childData: []
+  _waitTime: 2
+--- !u!114 &8662373685268806540
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7266640d2301a6b47a7c27463069351e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  nodeData:
+    _selfNode:
+      _id: 4
+      _nodeType: 3
+      _className: WaitNode
+    _rect:
+      serializedVersion: 2
+      x: 400
+      y: 95.2
+      width: 71.20001
+      height: 76.8
+    _childData: []
+  _waitTime: 1

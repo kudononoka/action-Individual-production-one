@@ -28,9 +28,6 @@ public class WalkState : PlayerStateBase
     /// <summary>ロックオンするTarget</summary>
     Transform _lockonTarget;
 
-    /// <summary>ロックオン時どの方向(前後左右)に動いているか</summary>
-    DirMovement _dirMovement = new();
-
     /// <summary>ロックオン時のAnimatorのLayerのWeight切り替え</summary>
     float _layerWeightValue = 0f;
 

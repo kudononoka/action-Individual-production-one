@@ -85,13 +85,15 @@ public abstract class AnimatorStateMachine
     /// <param name="state">切り替えたいステートのタイプ</param>
     public void OnChangeState(int stateId)
     {
-        _currentState.OnEnd();
+        _currentState.OnEnd(); 
+
         CurrentChangeState(stateId);
         if (!_states.ContainsKey(stateId))
         {
             Debug.LogError("not set state! : " + stateId);
             return;
         }
+
         // ステートを切り替える
         _currentState = _states[stateId];
         _currentState.OnEnter();

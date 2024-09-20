@@ -77,7 +77,7 @@ public class TutorialAttackTask : ITutorialTask
 
     public string GetTitle()
     {
-        return "基本攻撃 1 / 2";
+        return "基本攻撃";
     }
 
     public bool CheckTask()
@@ -130,7 +130,7 @@ public class TutorialAvoidanceTask : ITutorialTask
 
     public string GetDescription()
     {
-        return "Space or ✕ で素早い移動をすることができ、回避にも利用できます";
+        return "Space or × で素早い移動をすることができ、回避にも利用できます";
     }
 
     public string GetTitle()

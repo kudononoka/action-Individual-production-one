@@ -55,6 +55,9 @@ public class CameraController
     int _currentLockonTargetID = 0;
 
     public Transform LockonTarget => _lockonTargetTra;
+
+    public LockonRange LockonRange => _lockonRange;
+
     public void Init(PlayerInputAction inputAction)
     {
         _mainCamera = Camera.main;

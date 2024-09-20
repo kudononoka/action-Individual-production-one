@@ -20,7 +20,11 @@ public class EvadeState : PlayerStateBase
     [SerializeField]
     ParticleSystem _particle;
 
-    float _coolTimer;
+    [Header("ジャスト回避後のスロー秒数")]
+    [SerializeField]
+    float _slowTime;
+
+    float _slowTimer;
 
     Animator _anim;
 
@@ -34,8 +38,6 @@ public class EvadeState : PlayerStateBase
 
     CharacterController _characterController;
 
-    DirMovement _dirMovement = new();
-
     PlayerHPSTController _playerHPSTController;
 
     PlayerParameter _playerParameter;
@@ -45,6 +47,8 @@ public class EvadeState : PlayerStateBase
     MakeASound _makeASound;
 
     CameraController _cameraController;
+
+    TimeManager _timeManager;
 
     Vector3 _moveDir;
 
@@ -63,54 +67,84 @@ public class EvadeState : PlayerStateBase
         _playerParameter = playerController.Parameter;
         _capsuleCollider = playerController.CapsuleCollider;
         _makeASound = playerController.MakeASound;
+        _timeManager = playerController.TimeManager;
     }
     public override void OnEnter()
     {
-        _playerHPSTController.STDown(_playerParameter.EvadeSTCost);
-
-        
-
+        //現在のポジションを記憶
         _pos = _playerTra.position;
 
         //回避方向
-        //var _forward = Quaternion.AngleAxis(_mcTra.eulerAngles.y, Vector3.up);
-        //_moveDir = _forward * new Vector3(_inputAction.InputMove.x, 0, _inputAction.InputMove.y).normalized;
-        _moveDir = _playerTra.forward;
+        var _forward = Quaternion.AngleAxis(_mcTra.eulerAngles.y, Vector3.up);
+        _moveDir = _forward * new Vector3(_inputAction.InputMove.x, 0, _inputAction.InputMove.y).normalized;
 
-        _anim.SetInteger("EvadeType", 0);
+        if(_moveDir == Vector3.zero)
+        {
+            _moveDir = _playerTra.forward;
+        }
 
+        //アニメーション設定
         _anim.SetTrigger("Evade");
+
+        //当たり判定なし
         _capsuleCollider.enabled = false;
 
-        _makeASound.IsSoundChange(true);
+        //回避パーティクル再生
         _particle.Play();
 
+        //入力取り消し
         _inputAction.IsEvade = false;
+
+        //ジャスト回避判定
+        JustAvoidanceJudgment justAvoidanceJudgment = new JustAvoidanceJudgment();
+
+        bool isJust = false;
+        foreach (var target in _cameraController.LockonRange.EnemiesInRange)
+        {
+            isJust = justAvoidanceJudgment.OnJudge(target.gameObject);
+        }
+        //ジャスト回避できていたら
+        if (isJust)
+        {
+            //スロー
+            _timeManager.SlowSystem.OnOffSlow(true);
+        }
+
+        //音再生
+        AudioManager.Instance.SEPlayOneShot(SE.PlayerStep);
+
+        //スロー時間初期化
+        _slowTimer = _slowTime;
     }
 
     public override void OnUpdate()
     {
-        _coolTimer -= Time.deltaTime;
-        //var _forward = Quaternion.AngleAxis(_mcTra.eulerAngles.y, Vector3.up);
-        //var moveDir = _forward * new Vector3(_inputAction.InputMove.x, 0, _inputAction.InputMove.y).normalized;
+        _slowTimer -= Time.deltaTime;
+       
+        //移動
         _characterController.Move(_moveDir * _moveSpeed * Time.deltaTime);
-
-
+        //移動方向を向く
         _playerTra.rotation = Quaternion.LookRotation(_moveDir, Vector3.up);
         
-
+        //一定の距離を移動できたら
         if (Vector3.Distance(_pos, _playerTra.position) >= _evadeDistance)
         {
-            if (_inputAction.IsAttackWeak && _playerHPSTController.CurrntStValue >= _playerParameter.AttackWeakSTCost)
-                _playerStateMachine.OnChangeState((int)PlayerStateMachine.StateType.AttackWeakPatternA);
-
-            else if (_inputAction.IsAttackStrong && _playerHPSTController.CurrntStValue >= _playerParameter.AttackStrongSTCost)
-                _playerStateMachine.OnChangeState((int)PlayerStateMachine.StateType.AttackStrongPatternA);
-
+            //条件によって遷移
+            //攻撃
+            if (_inputAction.IsAttack)
+                _playerStateMachine.OnChangeState((int)PlayerStateMachine.StateType.AttackComboOne);
+            //移動
             else if (_inputAction.InputMove.magnitude > 0.1f)
                 _playerStateMachine.OnChangeState((int)PlayerStateMachine.StateType.Walk);
+            //直立
             else
                 _playerStateMachine.OnChangeState((int)PlayerStateMachine.StateType.Idle);
+        }
+        
+        //スロー解除
+        if(_slowTimer >= _slowTime && _timeManager.SlowSystem.IsSlowing)
+        {
+            _timeManager.SlowSystem.OnOffSlow(false);
         }
     }
 
@@ -118,6 +152,5 @@ public class EvadeState : PlayerStateBase
     {
         _inputAction.IsEvade = false;
         _capsuleCollider.enabled = true;
-        _makeASound.IsSoundChange(false);
     }
 }

@@ -30,6 +30,7 @@ public class BattleState : EnemyStateBase
         _enemyAI = _enemyStateMachine.EnemyAI;
         _animatorControlle = _enemyAI.AnimatorControlle;
 
+        //BehaviorTreeÇÃèâä˙âª
         _tree = _origin.Instance();
 
         _tree.RootNodeData.Init(_target, _my);
@@ -43,20 +44,18 @@ public class BattleState : EnemyStateBase
     public override void OnEnter()
     {
         _animatorControlle.OnChangeState((int)EnemyAnimatorControlle.StateType.Battle);
+        _agent.isStopped = false;
     }
 
     public override void OnUpdate()
     {
         _tree.Evaluate();
-
-        if(!_enemyAI.IsAlive)
-        {
-            _enemyStateMachine.OnChangeState((int)EnemyStateMachine.StateType.Normal);
-        }
     }
+
     public override void OnEnd()
     {
+        //í«è]ÇÇ‚ÇﬂÇÈ
         _agent.SetDestination(_my.transform.position);
-        _animatorControlle.OnChangeState((int)EnemyAnimatorControlle.StateType.Die);
+        _agent.isStopped = true;
     }
 }

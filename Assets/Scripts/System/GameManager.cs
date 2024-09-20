@@ -44,18 +44,21 @@ public class GameManager : MonoBehaviour
 
     public virtual void Awake()
     {
+        //空だったら
         if (_instance == null)
         {
             _instance = this;
             Setting(_currentScene);
             DontDestroyOnLoad(this.gameObject);
         }
+        //自分が入ってたら
         else if (Instance == this)
         {
             _instance._currentScene = this._currentScene;
             _instance.Setting(_instance._currentScene);
             DontDestroyOnLoad(this.gameObject);
         }
+        //自分以外すでにあったら
         else
         {
             _instance._currentScene = this._currentScene;
@@ -81,53 +84,69 @@ public class GameManager : MonoBehaviour
 
     private void Setting(SceneState currentScene)
     {
+        //フェードアウト
         _fade = FindObjectOfType<Fade>();
         _fade.FadeOut(_fadeTime);
 
+        //BGMの再生とGameScene時のEnemyのキル数リセット設定
         switch (currentScene)
         {
             case SceneState.Title:
                 AudioManager.Instance.BGMPlay(BGM.Title);
                 break;
+
             case SceneState.GameOver:
                 AudioManager.Instance.BGMPlay(BGM.GameOver);
                 break;
+
             case SceneState.GameClear:
                 AudioManager.Instance.BGMPlay(BGM.GameClear);
                 break;
+
             case SceneState.InGame:
-                _instance._enemyCount = 7;
+                //フィールド上の敵の数を取得
+                _instance._enemyCount = FindObjectsOfType<EnemyAI>().Length;
                 _instance._enemyMaxCount.Value = _enemyCount;
+                //現在のキル数を０に
                 _instance._currentEnemyKillCount.Value = 0;
+
                 AudioManager.Instance.BGMPlay(BGM.Game);
                 break;
+
             case SceneState.Tutorial:
                 AudioManager.Instance.BGMPlay(BGM.Game);
                 break;
         }
+
     }
 
     /// <summary>シーン遷移</summary>
     /// <param name="sceneState"></param>
     public void ChangeScene(SceneState sceneState)
     {
+        //現在のシーンの更新
         _currentScene = sceneState;
         var nextSceneName = _sceneData[(int)sceneState].SceneName;
 
         _fade = FindObjectOfType<Fade>();
 
+        //フェードイン後次のシーンに移動
         _fade.FadeIn(_fadeTime, () =>
         {
             SceneManager.LoadScene(nextSceneName);
         });
     }
 
+    /// <summary>Enemyのキル数更新</summary>
     public void EnemyKill()
     {
+        //現在のEnemy数を１減らす
         _enemyCount--;
         _currentEnemyKillCount.Value++;
+        //全て倒したら
         if(_enemyCount == 0 )
         {
+            //ゲームクリア
             ChangeScene(SceneState.GameClear);
         }
     }

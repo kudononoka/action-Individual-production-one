@@ -4565,7 +4565,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 5713799513526631647}
         m_TargetAssemblyTypeName: PlayerInputAction, Assembly-CSharp
-        m_MethodName: OnAttackWeak
+        m_MethodName: OnAttack
         m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -4577,38 +4577,6 @@ MonoBehaviour:
         m_CallState: 2
     m_ActionId: da42273c-ce98-4ca0-bb9c-20a034a6e775
     m_ActionName: Player/AttackWeak[/DualShock4GamepadHID/buttonWest,/Mouse/leftButton]
-  - m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 5713799513526631647}
-        m_TargetAssemblyTypeName: PlayerInputAction, Assembly-CSharp
-        m_MethodName: OnAttackStrong
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-    m_ActionId: 6a42f7fe-22ac-4be4-aee6-97ae263e068e
-    m_ActionName: Player/AttackStrong[/DualShock4GamepadHID/buttonNorth,/Mouse/rightButton]
-  - m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 5713799513526631647}
-        m_TargetAssemblyTypeName: PlayerInputAction, Assembly-CSharp
-        m_MethodName: OnGuard
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-    m_ActionId: 8ea0f3f4-7143-46bc-b160-9e2468f1d1be
-    m_ActionName: Player/Guard[/DualShock4GamepadHID/rightShoulder,/Keyboard/shift]
   - m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 5713799513526631647}
@@ -4629,7 +4597,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 5713799513526631647}
         m_TargetAssemblyTypeName: PlayerInputAction, Assembly-CSharp
-        m_MethodName: OnEvade
+        m_MethodName: OnLockon
         m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -4698,19 +4666,7 @@ MonoBehaviour:
     m_ActionId: bd44cff8-f929-4a6b-a3a4-204c4cca1d50
     m_ActionName: Player/LockonSelect[/DualShock4GamepadHID/dpad/up]
   - m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 5713799513526631647}
-        m_TargetAssemblyTypeName: PlayerInputAction, Assembly-CSharp
-        m_MethodName: OnLockonSelectGamepod
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
     m_ActionId: 7ea815d8-80f0-43f2-9f5b-bbc5a8e8346b
     m_ActionName: Player/LockonSelectGamepad[/DualShock4GamepadHID/dpad/up]
   m_NeverAutoSwitchControlSchemes: 0
@@ -4786,34 +4742,35 @@ MonoBehaviour:
       _moveSpeed: 10
       _evadeDistance: 5
       _particle: {fileID: 875486464439865019}
-    _attackWeakPatternAState:
-      _coolTime: 1.1
-      _nextAttackJudgeTime: 0.4
-      _nextAttackTime: 0.2
+      _slowTime: 2
+    _attackComboOneState:
+      _coolTime: 1
+      _nextAttackJudgeTime: 0.6
+      _nextAttackTime: 0.3
       _moveStartTime: 0.7
       _moveSpeed: 0.07
       _movingDifference: 0.4
-    _attackWeakPatternBState:
-      _coolTime: 1.3
-      _nextAttackJudgeTime: 0.5
-      _nextAttackTime: 0.3
-      _moveStartTime: 0.3
+    _attackComboTwoState:
+      _coolTime: 1.2
+      _nextAttackJudgeTime: 0.7
+      _nextAttackTime: 0.4
+      _moveStartTime: 0.9
       _moveSpeed: 0.85
       _movingDifference: 1
-    _attackStrongPatternAState:
-      _coolTime: 2.5
-      _nextAttackJudgeTime: 1.7
-      _nextAttackTime: 1
-      _soundTime: 1.8
-      _moveStartTime: 1.95
-      _moveSpeed: 0.07
-      _movingDifference: 0.7
-    _attackStrongPatternBState:
-      _coolTime: 1.5
-      _soundTime: 0.8
+    _attackComboThreeState:
+      _coolTime: 2.2
+      _nextAttackJudgeTime: 1.8
+      _nextAttackTime: 1.3
+      _soundTime: 1.9
+      _moveStartTime: 1.5
+      _moveSpeed: 0.1
+      _movingDifference: 0.6
+    _attackComboFourState:
+      _coolTime: 1.2
+      _soundTime: 1.05
       _moveStartTime: 1.48
       _moveSpeed: 0.07
-      _movingDifference: 1.8
+      _movingDifference: 2.5
   _capsuleCollider: {fileID: 6507428122661970017}
   _makeASound: {fileID: 4651018821564287795}
   _playerHPSTController:
@@ -4838,9 +4795,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _inputMove: {x: 0, y: 0}
   _inputCameraMove: {x: 0, y: 0}
-  _isAttackWeak: 0
-  _isAttackStrong: 0
-  _isGuard: 0
+  _isAttack: 0
   _isLockon: 0
   _isLockonSelectGamepad: 0
   _isLockonSelectMouse: {x: 0, y: 0}
@@ -6302,7 +6257,7 @@ SphereCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Radius: 10
+  m_Radius: 15
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!54 &8394391535104618964
 Rigidbody:

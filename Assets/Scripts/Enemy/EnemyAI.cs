@@ -86,12 +86,19 @@ public class EnemyAI : MonoBehaviour, IDamage, ISlow
         AudioManager.Instance.SEPlayOneShot(SE.PlayerAttackHit);
 
         _isAlive = _enemyHPController.HPDown(damage);
+
+        //探索中だったら
+        if(_enemyStateMachine.CurrentState == EnemyStateMachine.StateType.Search)
+        {
+            //戦闘状態に切り替える
+            _enemyStateMachine.OnChangeState((int)EnemyStateMachine.StateType.Battle);
+        }
+
         //死んでいたら
         if (!_isAlive)
         {
             //死んだアニメーション再生
             _animatorControlle.OnChangeState((int)EnemyAnimatorControlle.StateType.Die);
-            _enemyStateMachine.OnChangeState((int)EnemyStateMachine.StateType.Normal);
             GameManager.Instance.EnemyKill();
         }
     }
