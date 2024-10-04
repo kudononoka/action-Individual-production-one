@@ -8,7 +8,7 @@ public class LookAt : BehaviorTreeBaseNode
     public LookAt()
     {
         nodeName = "look at";
-        nodeData = new NodeData(NodeType.ConditionNode, typeof(LookAt).FullName);
+        nodeData = new NodeData(NodeType.ActionNode, typeof(LookAt).FullName);
     }
 
     public override void Init(GameObject target, GameObject my)

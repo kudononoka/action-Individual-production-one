@@ -64,11 +64,12 @@ public class DecoratoeNodeCondition : BehaviorTreeBaseNode, IChildNodeSetting
 
         Result resultAction = _action.Evaluate();         //条件がすべてそろったら
 
-        if(resultAction == Result.Success)
+        if(resultAction == Result.Runnimg)
         {
-            return Result.Success;
+            return Result.Runnimg;
         }
-        return Result.Runnimg;
+
+        return Result.Success;
     }
 
 }
