@@ -40,6 +40,9 @@ public class BehaviorTreeGraphSearchWindowProvider : ScriptableObject, ISearchWi
             { nameof(AttackNode), typeof(AttackNode) },
             { nameof(AnimationNode), typeof(AnimationNode) },
             { nameof(TargetDistanceJudge), typeof(TargetDistanceJudge) },
+            { nameof(SetActiveNode), typeof(SetActiveNode) },
+            { nameof(ChangePositionNode), typeof(ChangePositionNode) },
+            { nameof(EffectPlayNode), typeof(EffectPlayNode) },
 
         };
     }
@@ -64,6 +67,10 @@ public class BehaviorTreeGraphSearchWindowProvider : ScriptableObject, ISearchWi
         entries.Add(new SearchTreeEntry(new GUIContent(nameof(AttackNode))) { level = 1, userData = typeof(AttackNode).FullName});
         entries.Add(new SearchTreeEntry(new GUIContent(nameof(AnimationNode))) { level = 1, userData = typeof(AnimationNode).FullName});
         entries.Add(new SearchTreeEntry(new GUIContent(nameof(TargetDistanceJudge))) { level = 1, userData = typeof(TargetDistanceJudge).FullName});
+        entries.Add(new SearchTreeEntry(new GUIContent(nameof(SetActiveNode))) { level = 1, userData = typeof(SetActiveNode).FullName});
+        entries.Add(new SearchTreeEntry(new GUIContent(nameof(ChangePositionNode))) { level = 1, userData = typeof(ChangePositionNode).FullName});
+        entries.Add(new SearchTreeEntry(new GUIContent(nameof(EffectPlayNode))) { level = 1, userData = typeof(EffectPlayNode).FullName});
+
         return entries;
     }
 

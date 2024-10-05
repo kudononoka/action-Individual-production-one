@@ -23,7 +23,7 @@ public class TargetDistanceJudge : BehaviorTreeBaseNode
     public TargetDistanceJudge()
     {
         nodeName = "target distance";
-        nodeData = new NodeData(NodeType.CompositeNode, typeof(TargetDistanceJudge).FullName);
+        nodeData = new NodeData(NodeType.ConditionNode, typeof(TargetDistanceJudge).FullName);
     }
 
     public override void Init(GameObject target, GameObject my)
