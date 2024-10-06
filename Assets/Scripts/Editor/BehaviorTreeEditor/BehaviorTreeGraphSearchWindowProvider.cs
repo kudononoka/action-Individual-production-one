@@ -43,6 +43,7 @@ public class BehaviorTreeGraphSearchWindowProvider : ScriptableObject, ISearchWi
             { nameof(SetActiveNode), typeof(SetActiveNode) },
             { nameof(ChangePositionNode), typeof(ChangePositionNode) },
             { nameof(EffectPlayNode), typeof(EffectPlayNode) },
+            { nameof(Probability), typeof(Probability) },
 
         };
     }
@@ -70,6 +71,7 @@ public class BehaviorTreeGraphSearchWindowProvider : ScriptableObject, ISearchWi
         entries.Add(new SearchTreeEntry(new GUIContent(nameof(SetActiveNode))) { level = 1, userData = typeof(SetActiveNode).FullName});
         entries.Add(new SearchTreeEntry(new GUIContent(nameof(ChangePositionNode))) { level = 1, userData = typeof(ChangePositionNode).FullName});
         entries.Add(new SearchTreeEntry(new GUIContent(nameof(EffectPlayNode))) { level = 1, userData = typeof(EffectPlayNode).FullName});
+        entries.Add(new SearchTreeEntry(new GUIContent(nameof(Probability))) { level = 1, userData = typeof(Probability).FullName});
 
         return entries;
     }
