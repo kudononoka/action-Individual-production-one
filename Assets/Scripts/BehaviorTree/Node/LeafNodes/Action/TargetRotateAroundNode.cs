@@ -27,6 +27,7 @@ public class TargetRotateAroundNode : BehaviorTreeBaseNode
     {
         _target = target.GetComponent<Transform>();
         _my = my.GetComponent<Transform>();
+        _timer = 0;
     }
 
     public override Result Evaluate()
@@ -39,7 +40,8 @@ public class TargetRotateAroundNode : BehaviorTreeBaseNode
             return Result.Success;
         }
 
-        _my.RotateAround(_target.position, Vector3.up, _aroundSpeed);
+        _my.LookAt(_target.position);
+        _my.RotateAround(_target.position, Vector3.down, _aroundSpeed);
 
         return Result.Runnimg;
     }

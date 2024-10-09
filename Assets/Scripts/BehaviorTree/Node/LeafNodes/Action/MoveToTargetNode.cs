@@ -17,10 +17,10 @@ public class MoveToTargetNode : BehaviorTreeBaseNode
     [SerializeField]
     float _stopDistanceMin;
 
-    [Header("移動をやめる時のTargetとの距離")]
-    [Tooltip("Targetから離れすぎると尾行をやめる")]
-    [SerializeField]
-    float _stopDistanceMax;
+    //[Header("移動をやめる時のTargetとの距離")]
+    //[Tooltip("Targetから離れすぎると尾行をやめる")]
+    //[SerializeField]
+    //float _stopDistanceMax;
 
     /// <summary>動かしたいオブジェクト</summary>
     NavMeshAgent _agent = null;
@@ -42,12 +42,13 @@ public class MoveToTargetNode : BehaviorTreeBaseNode
         _my = my.GetComponent<Transform>();
         _agent = my.GetComponent<NavMeshAgent>();
         _anim = my.GetComponent<Animator>();
-        _agent.speed = _moveSpeed;
     }
 
     public override Result Evaluate()
     {
         _agent.speed = _moveSpeed;
+
+        _agent.isStopped = false;
 
         _agent.SetDestination(_target.position);　//Targetまで移動
 
@@ -56,18 +57,18 @@ public class MoveToTargetNode : BehaviorTreeBaseNode
         //Targeに追いついたら成功を返す
         if (Vector3.Distance(_target.position, _my.position) <= _stopDistanceMin)  
         {
-            _agent.SetDestination(_my.position);
+            _agent.isStopped = true;
             _anim.SetBool("IsWalk", false);
             return Result.Success;
         }
 
-        //Targetとの距離がはなれてしまったら失敗を返す
-        else if (Vector3.Distance(_target.position, _my.position) >= _stopDistanceMax) 
-        {
-            _agent.SetDestination(_my.position);
-            _anim.SetBool("IsWalk", false);
-            return Result.Failure;
-        }
+        ////Targetとの距離がはなれてしまったら失敗を返す
+        //else if (Vector3.Distance(_target.position, _my.position) >= _stopDistanceMax) 
+        //{
+        //    _agent.isStopped = true;
+        //    _anim.SetBool("IsWalk", false);
+        //    return Result.Failure;
+        //}
 
         return Result.Runnimg;
     }

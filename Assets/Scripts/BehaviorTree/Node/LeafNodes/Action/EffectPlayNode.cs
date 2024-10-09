@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class EffectPlayNode : BehaviorTreeBaseNode
 {
-    [Header("Effect‚ğÄ¶‚·‚éƒIƒuƒWƒFƒNƒg‚Ì–¼‘O")]
+    [Header("Effectï¿½ï¿½ï¿½Äï¿½ï¿½ï¿½ï¿½ï¿½Iï¿½uï¿½Wï¿½Fï¿½Nï¿½gï¿½Ì–ï¿½ï¿½O")]
     [SerializeField] string _effectObjectName = "";
 
     ParticleSystem _particle;
@@ -17,7 +17,7 @@ public class EffectPlayNode : BehaviorTreeBaseNode
 
     public override void Init(GameObject target, GameObject my)
     {
-        _particle = my.transform.FindChild(_effectObjectName).GetComponent<ParticleSystem>();
+        _particle = my.transform.Find(_effectObjectName).GetComponent<ParticleSystem>();
     }
 
     public override Result Evaluate()
