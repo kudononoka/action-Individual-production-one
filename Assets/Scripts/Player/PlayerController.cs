@@ -28,9 +28,6 @@ public class PlayerController : MonoBehaviour, IDamage, ISlow
     CapsuleCollider _capsuleCollider;
 
     [SerializeField]
-    MakeASound _makeASound;
-
-    [SerializeField]
     PlayerHPSTController _playerHPSTController = new();
 
     [SerializeField]
@@ -62,8 +59,6 @@ public class PlayerController : MonoBehaviour, IDamage, ISlow
 
     public CapsuleCollider CapsuleCollider => _capsuleCollider;
 
-    public MakeASound MakeASound => _makeASound;
-
     public TimeManager TimeManager => _timeManager;
 
     void Start()
@@ -82,8 +77,6 @@ public class PlayerController : MonoBehaviour, IDamage, ISlow
         _playerHPSTController.Init(_parameter.HPMax, _parameter.STMax, _parameter.StRecoverySpeed);
 
         _playerWeapon.DamageColliderEnabledSet(false);
-
-
 
     }
 
@@ -114,9 +107,10 @@ public class PlayerController : MonoBehaviour, IDamage, ISlow
         }
     }
 
-    public void AttackEffectPlay()
+    public void AttackEffectPlay(int isChargeAttackFlag)
     {
-        _attackEffectPlay.SlashEffectPlay();
+        bool isChargeAttack = isChargeAttackFlag == 0 ? false : true;
+        _attackEffectPlay.SlashEffectPlay(isChargeAttack);
     }
 
     public void AttackCollider(int enableFlag)

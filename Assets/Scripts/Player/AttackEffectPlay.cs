@@ -9,11 +9,12 @@ public class AttackEffectPlay
     [SerializeField]
     ParticleSystem[] _slashEffect;
 
-    public void SlashEffectPlay()
+    public void SlashEffectPlay(bool isChargeAttack)
     {
-        foreach (ParticleSystem p in _slashEffect)
+        int count = isChargeAttack ? 3 : 1;
+        for (int i = 0; i < count; i++)
         {
-            p.Play();
+            _slashEffect[i].Play();
         }
     }
 }

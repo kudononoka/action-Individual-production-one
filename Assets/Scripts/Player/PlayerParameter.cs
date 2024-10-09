@@ -21,11 +21,14 @@ public class PlayerParameter
     [Header("ガード時の歩行速度")]
     [SerializeField] float _guardWalkSpeed;
 
-    [Header("弱攻撃力")]
+    [Header("弱攻撃力(コンボ攻撃１・２回目)")]
     [SerializeField] int _attackWeakPower;
 
-    [Header("強攻撃力")]
+    [Header("強攻撃力(コンボ攻撃３・４回目)")]
     [SerializeField] int _attackStrongPower;
+
+    [Header("ため攻撃力")]
+    [SerializeField] int _attackChargePower;
 
     [Header("方向転換速度")]
     [SerializeField] float _rotateSpeed;
@@ -62,6 +65,9 @@ public class PlayerParameter
 
     /// <summary>強攻撃力</summary>
     public int AttackStrongPower => _attackStrongPower;
+
+    /// <summary>溜め攻撃力</summary>
+    public int AttackChargePower => _attackChargePower;
 
     /// <summary>弱攻撃にかかるST値</summary>
     public float AttackWeakSTCost => _attackWeakSTCost;

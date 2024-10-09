@@ -27,7 +27,7 @@ public class IdleState : PlayerStateBase
 
         if(_inputAction.IsAttack && _playerHPSTController.CurrntStValue >= _playerParameter.AttackWeakSTCost)
         {
-            _playerStateMachine.OnChangeState((int)PlayerStateMachine.StateType.AttackComboOne);
+            _playerStateMachine.OnChangeState((int)PlayerStateMachine.StateType.ChargeAttack);
         }
 
         if(_inputAction.IsEvade && _playerHPSTController.CurrntStValue >= _playerParameter.EvadeSTCost)

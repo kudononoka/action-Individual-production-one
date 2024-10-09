@@ -68,6 +68,11 @@ public class PlayerInputAction : MonoBehaviour
         {
             _isAttack = true;
         }
+
+        if (context.canceled)
+        {
+            _isAttack = false;
+        }
     }
 
     public void OnLockon(InputAction.CallbackContext context)

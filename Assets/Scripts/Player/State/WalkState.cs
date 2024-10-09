@@ -62,7 +62,6 @@ public class WalkState : PlayerStateBase
         _cameraController = playerController.CameraController;
         _playerHPSTController = playerController.PlayerHPSTController;
         _playerParameter = playerController.Parameter;
-        _makeASound = playerController.MakeASound;
         _mcTra = Camera.main.transform;
     }
 
@@ -88,14 +87,12 @@ public class WalkState : PlayerStateBase
         {
             _isWalkSlow = false;
             _anim.SetBool("IsWalkSlow",false);
-            _makeASound.IsSoundChange(true);         //音を立てる
             AudioManager.Instance.SEPlay(SE.PlayerFootsteps);
         }
         else
         {
             _isWalkSlow = true;
             _anim.SetBool("IsWalkSlow", true);
-            _makeASound.IsSoundChange(false);       //音を立てない
             AudioManager.Instance.SEStop();
         }
 
@@ -114,7 +111,7 @@ public class WalkState : PlayerStateBase
 
         //遷移先
         if (_inputAction.IsAttack && _playerHPSTController.CurrntStValue >= _playerParameter.AttackWeakSTCost)
-            _playerStateMachine.OnChangeState((int)PlayerStateMachine.StateType.AttackComboOne);
+            _playerStateMachine.OnChangeState((int)PlayerStateMachine.StateType.ChargeAttack);
 
         if(_inputAction.IsEvade && _playerHPSTController.CurrntStValue >= _playerParameter.EvadeSTCost)
             _playerStateMachine.OnChangeState((int)PlayerStateMachine.StateType.Evade);

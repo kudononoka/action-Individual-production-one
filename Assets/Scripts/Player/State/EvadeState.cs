@@ -66,7 +66,6 @@ public class EvadeState : PlayerStateBase
         _playerHPSTController = playerController.PlayerHPSTController;
         _playerParameter = playerController.Parameter;
         _capsuleCollider = playerController.CapsuleCollider;
-        _makeASound = playerController.MakeASound;
         _timeManager = playerController.TimeManager;
     }
     public override void OnEnter()
@@ -132,7 +131,7 @@ public class EvadeState : PlayerStateBase
             //条件によって遷移
             //攻撃
             if (_inputAction.IsAttack)
-                _playerStateMachine.OnChangeState((int)PlayerStateMachine.StateType.AttackComboOne);
+                _playerStateMachine.OnChangeState((int)PlayerStateMachine.StateType.ChargeAttack);
             //移動
             else if (_inputAction.InputMove.magnitude > 0.1f)
                 _playerStateMachine.OnChangeState((int)PlayerStateMachine.StateType.Walk);

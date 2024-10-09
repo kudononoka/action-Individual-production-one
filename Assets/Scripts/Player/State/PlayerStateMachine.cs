@@ -27,6 +27,9 @@ public class PlayerStateMachine : StateMachine
     [SerializeField]
     AttackComboFourState _attackComboFourState = new();
 
+    [SerializeField]
+    ChargeAttackState _chargeAttackState = new();
+
     public StateType CurrentState => _currentStateType;
 
     /// <summary>プレイヤーの行動状態</summary>
@@ -46,6 +49,8 @@ public class PlayerStateMachine : StateMachine
         AttackComboThree,
         /// <summary>攻撃(コンボ2回目)</summary>
         AttackComboFour,
+        /// <summary>ため攻撃</summary>
+        ChargeAttack
     }
 
     PlayerController _playeController;
@@ -61,6 +66,7 @@ public class PlayerStateMachine : StateMachine
         _attackComboTwoState.Set(this);
         _attackComboThreeState.Set(this);
         _attackComboFourState.Set(this);
+        _chargeAttackState.Set(this);
     }
     /// <summary>ステートの登録と初期化</summary>
     public void Init(PlayerController playerController)
@@ -74,6 +80,7 @@ public class PlayerStateMachine : StateMachine
         StateAdd((int)StateType.AttackComboTwo, _attackComboTwoState);
         StateAdd((int)StateType.AttackComboThree, _attackComboThreeState);
         StateAdd((int)StateType.AttackComboFour, _attackComboFourState);
+        StateAdd((int)StateType.ChargeAttack, _chargeAttackState);
 
         StateSet();
 
