@@ -51,7 +51,7 @@ public abstract class StateMachine
         //登録していなかったらエラーを出す
         if (!_states.ContainsKey(stateId))
         {
-            Debug.LogError("not set state! : " + stateId);
+            Debug.Log("not set state! : " + stateId);
             return;
         }
         //最初に行われるステートとして設定
@@ -62,7 +62,7 @@ public abstract class StateMachine
     /// <summary>現在のステートを毎フレーム行う</summary>
     public void OnUpdate()
     {
-        _currentState.OnUpdate();
+        _currentState?.OnUpdate();
         //Debug.Log(_currentState.ToString());
     }
 
@@ -77,13 +77,13 @@ public abstract class StateMachine
     /// <param name="state">切り替えたいステートのタイプ</param>
     public void OnChangeState(int stateId)
     {
-        _currentState.OnEnd();
-        CurrentChangeState(stateId);
         if (!_states.ContainsKey(stateId))
         {
-            Debug.LogError("not set state! : " + stateId);
+            Debug.Log("not set state! : " + stateId);
             return;
         }
+        _currentState.OnEnd();
+        CurrentChangeState(stateId);
         // ステートを切り替える
         _currentState = _states[stateId];
         _currentState.OnEnter();

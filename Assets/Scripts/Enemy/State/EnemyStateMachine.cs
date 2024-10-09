@@ -1,23 +1,31 @@
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 [Serializable]
 /// <summary>エネミー専用ステートマシーン</summary>
 public class EnemyStateMachine : StateMachine
 {
+    [Header("登録したいState")]
+    [SerializeField] StateType _insertState;
+
     StateType _currentStateType;
 
     public StateType CurrentState => _currentStateType;
 
     /// <summary>エネミーの行動状態</summary>
+    [Serializable]
+    [Flags]
     public enum StateType
     {
         /// <summary>通常</summary>
-        Normal,
+        Idle = 1 << 0,
         /// <summary>探索</summary>
-        Search,
+        Search = 1 << 1,
         /// <summary>戦闘</summary>
-        Battle,
+        Battle = 1 << 2,
+        /// <summary>ダウン</summary>
+        Down = 1 << 3,
     }
 
     EnemyAI _enemyAI;
@@ -32,31 +40,41 @@ public class EnemyStateMachine : StateMachine
     [SerializeField]
     SearchState _searchState = new();
 
-    /// <summary>各ステートの設定</summary>
-    public void StateSet()
-    {
-        _normalState.Set(this);
-        _battleState.Set(this);
-        _searchState.Set(this);
-    }
+    [SerializeField]
+    DownState _downState = new();
+
+    List<EnemyStateBase> _states = new List<EnemyStateBase>();
 
     /// <summary>ステートの登録と初期化</summary>
-    public void Init(EnemyAI enemyAI)
+    public void Init(EnemyAI enemyAI, StateType startState)
     {
         _enemyAI = enemyAI;
 
-        StateAdd((int)StateType.Normal, _normalState);
-        StateAdd((int)StateType.Battle, _battleState);
-        StateAdd((int)StateType.Search, _searchState);
-        
-        StateSet();
+        _states.Add(_normalState);
+        _states.Add(_searchState);
+        _states.Add(_battleState);
+        _states.Add(_downState);
 
-        foreach (var state in States)
+        int states = (int)_insertState;
+
+        for (int i = 0; i < 4; i++)
         {
-            state.Value.Init();
+            int flag = states & 1;
+            if (flag == 1)
+            {
+                int id = 1;
+                for (int j = 0; j < i; j++)
+                {
+                    id *= 2;
+                }
+                _states[i].Set(this);
+                _states[i].Init();
+                StateAdd(id, _states[i]);
+            }
+            states = states >> 1;
         }
 
-        Initialize((int)StateType.Normal);
+        Initialize((int)startState);
     }
 
     /// <summary> Stateの変更</summary>
