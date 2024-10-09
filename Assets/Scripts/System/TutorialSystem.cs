@@ -12,6 +12,7 @@ public class TutorialSystem : MonoBehaviour
         new TutorialCameraMoveTask(),
         new TutorialAttackTask(),
         new TutorialAttackComboTask(),
+        new TutorialChargeAttack(),
         new TutorialAvoidanceTask(),
         new TutorialLockonTask(),
         new TutorialLockonSelectTask(),
@@ -34,7 +35,7 @@ public class TutorialSystem : MonoBehaviour
     Animator _tutorialCanvasAnim;
 
     [SerializeField]
-    EnemyAI[] _enemyAI;
+    EnemyAI _enemyAI;
 
     int _taskNum = -1;
 
@@ -105,14 +106,7 @@ public class TutorialSystem : MonoBehaviour
 
         _tutorialCanvasAnim.SetTrigger("Active");
 
-        foreach (var enemy in _enemyAI)
-        {
-            if (!enemy.IsAlive)
-            {
-                enemy.Resuscitation();
-            }
-        }
-
+        _enemyAI.StateReset(_currentTask.EnemyType);
         return true;
     }
 }

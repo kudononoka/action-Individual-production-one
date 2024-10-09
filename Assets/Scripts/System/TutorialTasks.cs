@@ -1,11 +1,14 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
 public class TutorialMoveTask : ITutorialTask
 {
     private PlayerInputAction _inputAction;
+
+    EnemyStateMachine.StateType ITutorialTask.EnemyType { get => EnemyStateMachine.StateType.Idle; }
 
     public void Init(PlayerInputAction playerInput)
     {
@@ -36,6 +39,9 @@ public class TutorialMoveTask : ITutorialTask
 public class TutorialCameraMoveTask : ITutorialTask
 {
     private PlayerInputAction _inputAction;
+
+    EnemyStateMachine.StateType ITutorialTask.EnemyType { get => EnemyStateMachine.StateType.Idle; }
+
     public void Init(PlayerInputAction playerInput)
     {
         _inputAction = playerInput;
@@ -65,6 +71,9 @@ public class TutorialCameraMoveTask : ITutorialTask
 public class TutorialAttackTask : ITutorialTask
 {
     private PlayerInputAction _inputAction;
+
+    EnemyStateMachine.StateType ITutorialTask.EnemyType { get => EnemyStateMachine.StateType.Idle; }
+
     public void Init(PlayerInputAction playerInput)
     {
         _inputAction = playerInput;
@@ -94,6 +103,9 @@ public class TutorialAttackTask : ITutorialTask
 public class TutorialAttackComboTask : ITutorialTask
 {
     public float _comboPracticeTime = 8;
+
+    EnemyStateMachine.StateType ITutorialTask.EnemyType { get => EnemyStateMachine.StateType.Idle; }
+
     public string GetDescription()
     {
         return "攻撃 は最大４回コンボで攻撃することができます";
@@ -116,10 +128,54 @@ public class TutorialAttackComboTask : ITutorialTask
 
 }
 
+public class TutorialChargeAttack : ITutorialTask
+{
+    private PlayerInputAction _inputAction;
+
+    EnemyStateMachine.StateType ITutorialTask.EnemyType { get => EnemyStateMachine.StateType.Down; }
+
+    private float _timer;
+
+    private float _chargeTime = 3;
+
+    public void Init(PlayerInputAction playerInput)
+    {
+        _inputAction = playerInput;
+    }
+
+    public string GetDescription()
+    {
+        return "左クリック or □ で長押しでため攻撃ができます";
+    }
+
+    public string GetTitle()
+    {
+        return "ため攻撃";
+    }
+
+    public bool CheckTask()
+    {
+        if (_inputAction.IsAttack)
+        {
+
+            _timer += Time.deltaTime;
+            //チャージできたら
+            if (_timer >= _chargeTime)
+            {
+                return true;
+            }
+        }
+        return false;
+    }
+
+}
+
 
 public class TutorialAvoidanceTask : ITutorialTask
 {
     private PlayerInputAction _inputAction;
+
+    EnemyStateMachine.StateType ITutorialTask.EnemyType { get => EnemyStateMachine.StateType.Idle; }
 
     public float _avoidTime = 5;
 
@@ -158,6 +214,9 @@ public class TutorialAvoidanceTask : ITutorialTask
 public class TutorialLockonTask : ITutorialTask
 {
     private PlayerInputAction _inputAction;
+
+    EnemyStateMachine.StateType ITutorialTask.EnemyType { get => EnemyStateMachine.StateType.Idle; }
+
     public void Init(PlayerInputAction playerInput)
     {
         _inputAction = playerInput;
@@ -187,6 +246,9 @@ public class TutorialLockonTask : ITutorialTask
 public class TutorialLockonSelectTask : ITutorialTask
 {
     private PlayerInputAction _inputAction;
+
+    EnemyStateMachine.StateType ITutorialTask.EnemyType { get => EnemyStateMachine.StateType.Idle;}
+
     public void Init(PlayerInputAction playerInput)
     {
         _inputAction = playerInput;

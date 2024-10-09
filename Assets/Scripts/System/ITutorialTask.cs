@@ -5,6 +5,7 @@ using UnityEngine.InputSystem;
 
 public interface ITutorialTask 
 {
+    public EnemyStateMachine.StateType EnemyType { get;}
     /// <summary>‰Šú‰»</summary>
     public void Init(PlayerInputAction playerInput){}
 
