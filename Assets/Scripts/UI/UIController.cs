@@ -12,6 +12,9 @@ public class UIController : MonoBehaviour
     [SerializeField, Tooltip("PlayerSTバー")] 
     Slider _playerStVer;
 
+    [SerializeField, Tooltip("EnemyHPバー")]
+    Slider _enemyHpVer;
+
     [SerializeField, Tooltip("PlayerHPText")] 
     Text _playerHpValueText;
 
@@ -31,18 +34,33 @@ public class UIController : MonoBehaviour
     /// <summary>現在のST</summary>
     float _playerStNow;
 
+    /// <summary>Enemyの現在のHp</summary>
+    int _enemyHpNow;
+    /// <summary>EnemyのHP最大値</summary>
+    int _enemyHpMax;
+
     int _enemyMaxCount;
     int _enemyKillCount;
 
     /// <summary>HPをMaxに設定する</summary>
     /// <param name="value">HP最大値</param>
-    public void SetUpMaxHP(int value)
+    public void PlayerSetUpMaxHP(int value)
     {
         _playerHpMax = value;
         _playerHpNow = _playerHpMax;
         _playerHpVer.maxValue = _playerHpMax;
         _playerHpVer.value = _playerHpMax;
         _playerHpValueText.text = $"{_playerHpNow} / {_playerHpMax}";
+    }
+
+    /// <summary>HPをMaxに設定する</summary>
+    /// <param name="value">HP最大値</param>
+    public void EnemySetUpMaxHP(int value)
+    {
+        _enemyHpMax = value;
+        _enemyHpNow = _enemyHpMax;
+        _enemyHpVer.maxValue = _enemyHpMax;
+        _enemyHpVer.value = _enemyHpMax;
     }
 
     /// <summary>STをMaxに設定する</summary>
@@ -68,9 +86,16 @@ public class UIController : MonoBehaviour
 
     /// <summary>現在のHP値をVerの値に設定</summary>
     /// <param name="currentValue">現在のHP値</param>
-    public void SetCurrentHP(int currentValue)
+    public void PlayerSetCurrentHP(int currentValue)
     {
-        ChangingVerValueHP(currentValue);
+        PlayerChangingVerValueHP(currentValue);
+    }
+
+    /// <summary>現在のHP値をVerの値に設定</summary>
+    /// <param name="currentValue">現在のHP値</param>
+    public void EnemySetCurrentHP(int currentValue)
+    {
+        EnemyChangingVerValueHP(currentValue);
     }
 
     /// <summary>現在のST値をVerの値に設定</summary>
@@ -91,7 +116,7 @@ public class UIController : MonoBehaviour
 
     /// <summary>DoTweenでVerの値を滑らかに変化させる</summary>
     /// <param name="value">設定したいHP値</param>
-    public void ChangingVerValueHP(int value)
+    public void PlayerChangingVerValueHP(int value)
     {
         DOTween.To(() => _playerHpNow,
                     x =>
@@ -99,6 +124,18 @@ public class UIController : MonoBehaviour
                         _playerHpNow = x;
                         _playerHpVer.value = _playerHpNow;
                         _playerHpValueText.text = $"{$"{_playerHpNow} / {_playerHpMax}"}";
+                    }, value, _changeTime);
+    }
+
+    /// <summary>DoTweenでVerの値を滑らかに変化させる</summary>
+    /// <param name="value">設定したいHP値</param>
+    public void EnemyChangingVerValueHP(int value)
+    {
+        DOTween.To(() => _enemyHpNow,
+                    x =>
+                    {
+                        _enemyHpNow = x;
+                        _enemyHpVer.value = _enemyHpNow;
                     }, value, _changeTime);
     }
 

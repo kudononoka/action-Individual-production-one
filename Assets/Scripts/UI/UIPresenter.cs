@@ -13,6 +13,9 @@ public class UIPresenter : MonoBehaviour
     [SerializeField, Tooltip("Player")] 
     PlayerController _playerConroller;
 
+    [SerializeField, Tooltip("Enemy")]
+    EnemyAI _enemyAI;
+
     void Start()
     {
         //GameManager
@@ -21,11 +24,16 @@ public class UIPresenter : MonoBehaviour
         gameManager.EnemyCount.Subscribe(value => _uiController.SetUpEnemyCount(value));
         gameManager.CurrentKillCount.Skip(1).Subscribe(value => _uiController.SetCurrentEnemyKillCount(value));
 
+        //Enemy
+        EnemyHPController enemyHPController = _enemyAI.HPController;
+        enemyHPController.MaxHpChanged.Subscribe(value => _uiController.EnemySetUpMaxHP(value));
+        enemyHPController.CurrentHpChanged.Skip(1).Subscribe(value => _uiController.EnemySetCurrentHP(value));
+
         //Player
         PlayerHPSTController playerHpStController = _playerConroller.PlayerHPSTController;
         //HP
-        playerHpStController.MaxHpChanged.Subscribe(value => _uiController.SetUpMaxHP(value));
-        playerHpStController.CurrentHpChanged.Skip(1).Subscribe(value => _uiController.SetCurrentHP(value));
+        playerHpStController.MaxHpChanged.Subscribe(value => _uiController.PlayerSetUpMaxHP(value));
+        playerHpStController.CurrentHpChanged.Skip(1).Subscribe(value => _uiController.PlayerSetCurrentHP(value));
         //ST
         playerHpStController.MaxStChanged.Subscribe(value => _uiController.SetUpMaxST(value));
         playerHpStController.CurrentStChanged.Skip(1).Subscribe(value => _uiController.SetCurrentST(value));
