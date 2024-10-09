@@ -40,6 +40,13 @@ public enum SE
     EnemyAttackHit,
     /// <summary>Enemyの攻撃サイン音</summary>
     EnemyAttackSign,
+    /// <summary>Enemyテレポート音</summary>
+    EnemyTeleport,
+
+    /// <summary>Playerの攻撃溜め中音</summary>
+    PlayerCharge,
+    /// <summary>Playerのチャージ終わった後の音</summary>
+    PlayerChargeEnd
 }
 
 /// <summary>どの状態時にBGMを再生するか管理するenum</summary>
