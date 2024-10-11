@@ -1,4 +1,4 @@
-using System;
+ï»¿using System;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
@@ -8,19 +8,19 @@ using UnityEngine.InputSystem;
 [Serializable]
 public class ChargeAttackState : PlayerStateBase
 {
-    [Header("UŒ‚‚Å‚«‚é‚Ü‚Å‚Ì—­‚ßŠÔ")]
+    [Header("æ”»æ’ƒã§ãã‚‹ã¾ã§ã®æºœã‚æ™‚é–“")]
     [SerializeField] float _chargeTime = 3;
 
-    [Header("UŒ‚ŠÔ")]
+    [Header("æ”»æ’ƒæ™‚é–“")]
     [SerializeField] float _coolTime;
 
-    [Header("—­‚ßƒp[ƒeƒBƒNƒ‹‚ğÄ¶‚·‚éŠÔ")]
+    [Header("æºœã‚ãƒ‘ãƒ¼ãƒ†ã‚£ã‚¯ãƒ«ã‚’å†ç”Ÿã™ã‚‹æ™‚é–“")]
     [SerializeField] float _chargeParticleStartTime;
 
-    [Header("—­‚ß’†‚ÌEffect")]
+    [Header("æºœã‚ä¸­ã®Effect")]
     [SerializeField] ParticleSystem _chargeParticle;
 
-    [Header("—­‚ßI‚í‚Á‚½‚ÌEffect")]
+    [Header("æºœã‚çµ‚ã‚ã£ãŸæ™‚ã®Effect")]
     [SerializeField] ParticleSystem _chargeEndParticle;
 
     float _timer = 0f;
@@ -33,6 +33,12 @@ public class ChargeAttackState : PlayerStateBase
 
     Weapon _weapon;
 
+    Transform _playerTra;
+
+    CameraController _cameraController;
+
+    Transform _mcTra;
+
     bool _isAttack = false;
 
     bool _isMadeSound = false;
@@ -40,44 +46,58 @@ public class ChargeAttackState : PlayerStateBase
     bool _isParticlePlay = false;
     public override void Init()
     {
-        //Update‚È‚Ç‚Åg—p‚·‚éƒRƒ“ƒ|[ƒlƒ“ƒg‚È‚Ç‚ğ‚±‚±‚Å•Û‚µ‚Ä‚¨‚­
+        //Updateãªã©ã§ä½¿ç”¨ã™ã‚‹ã‚³ãƒ³ãƒãƒ¼ãƒãƒ³ãƒˆãªã©ã‚’ã“ã“ã§ä¿æŒã—ã¦ãŠã
         PlayerController playerController = _playerStateMachine.PlayerController;
         _playerAnim = playerController.PlayerAnim;
         _inputAction = playerController.InputAction;
         _playerParameter = playerController.Parameter;
         _weapon = playerController.PlayerWeapon;
+        _playerTra = playerController.PlayerTra;
+        _cameraController = playerController.CameraController;
+        _mcTra = Camera.main.transform;
     }
     public override void OnEnter()
     {
-        //ƒAƒjƒ[ƒVƒ‡ƒ“İ’è
+        //ã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³è¨­å®š
         _playerAnim.SetInteger("AttackType", 1);
         _playerAnim.SetTrigger("Attack");
 
-        //‰Šú‰»
+        //åˆæœŸåŒ–
         _timer = 0f;
 
-        //ƒ_ƒ[ƒWİ’è
+        //ãƒ€ãƒ¡ãƒ¼ã‚¸è¨­å®š
         _weapon.Damage = _playerParameter.AttackChargePower;
+
+        _weapon.AttackState = PlayerStateMachine.StateType.ChargeAttack;
+
+        //ãƒ­ãƒƒã‚¯ã‚ªãƒ³ä¸­
+        if (_inputAction.IsLockon)
+        {
+            //ãƒ­ãƒƒã‚¯ã‚ªãƒ³å¯¾è±¡ã®æ–¹ã‚’å‘ã
+            Vector3 targetPos = _cameraController.LockonTarget.position;
+            targetPos.y = _playerTra.position.y;
+            _playerTra.LookAt(targetPos);
+        }
     }
 
     public override void OnUpdate()
     {
-        //UŒ‚‚ğ‚·‚é
+        //æ”»æ’ƒã‚’ã™ã‚‹
         if (_isAttack)
         {
             _timer -= Time.deltaTime;
 
-            //‘fU‚è‰¹‚ğˆê‰ñ–Â‚ç‚·
+            //ç´ æŒ¯ã‚ŠéŸ³ã‚’ä¸€å›é³´ã‚‰ã™
             if (!_isMadeSound)
             {
                 AudioManager.Instance.SEPlayOneShot(SE.PlayerAttackStrongSwish);
                 _isMadeSound = true;
             }
 
-            //UŒ‚‚ªI‚í‚Á‚½‚ç
+            //æ”»æ’ƒãŒçµ‚ã‚ã£ãŸã‚‰
             if (_timer <= 0.1f)
             {
-                //ˆÚ“®‚©Idle‚É‘JˆÚ
+                //ç§»å‹•ã‹Idleã«é·ç§»
                 if (_inputAction.InputMove.magnitude <= 0)
                     _playerStateMachine.OnChangeState((int)PlayerStateMachine.StateType.Idle);
 
@@ -86,62 +106,73 @@ public class ChargeAttackState : PlayerStateBase
             }
 
         }
-        //UŒ‚‘O‚Ì—­‚ß
+        //æ”»æ’ƒå‰ã®æºœã‚
         else
         {
 
-            //ƒ{ƒ^ƒ“‚ğ‰Ÿ‚µ‚Ä‚¢‚éŠÔ
+            //ãƒœã‚¿ãƒ³ã‚’æŠ¼ã—ã¦ã„ã‚‹é–“
             if (_inputAction.IsAttack)
             {
 
                 _timer += Time.deltaTime;
 
-                //ƒ`ƒƒ[ƒW‚Å‚«‚½‚ç
+                //ãƒãƒ£ãƒ¼ã‚¸ã§ããŸã‚‰
                 if (_timer >= _chargeTime)
                 {
-                    //ƒ`ƒƒ[ƒWŠ®—¹‚Ìƒp[ƒeƒBƒNƒ‹Ä¶
+                    //ãƒãƒ£ãƒ¼ã‚¸å®Œäº†ã®ãƒ‘ãƒ¼ãƒ†ã‚£ã‚¯ãƒ«å†ç”Ÿ
                     ParticleStop(_chargeParticle);
                     ParticlePlay(_chargeEndParticle);
-                    //‰¹Ä¶
+                    //éŸ³å†ç”Ÿ
                     AudioManager.Instance.SEPlay(SE.PlayerChargeEnd);
                 }
 
-                //ƒ`ƒƒ[ƒWŠJn
+                //ãƒãƒ£ãƒ¼ã‚¸é–‹å§‹
                 else if (_timer >= _chargeParticleStartTime)
                 {
-                    //ƒp[ƒeƒBƒNƒ‹Ä¶
+                    //ãƒ‘ãƒ¼ãƒ†ã‚£ã‚¯ãƒ«å†ç”Ÿ
                     ParticlePlay(_chargeParticle);
-                    //‰¹Ä¶
+                    //éŸ³å†ç”Ÿ
                     AudioManager.Instance.SEPlay(SE.PlayerCharge);
+                }
+
+                //ç§»å‹•å…¥åŠ›ãŒã‚ã£ãŸã‚‰
+                if (!_inputAction.IsLockon && _inputAction.InputMove.magnitude > 0)
+                {
+                    //å…¥åŠ›ã—ãŸæ–¹å‘ã‚’å‘ã
+                    var _forward = Quaternion.AngleAxis(_mcTra.eulerAngles.y, Vector3.up);
+                    var moveDir = _forward * new Vector3(_inputAction.InputMove.x, 0, _inputAction.InputMove.y).normalized;
+                    _playerTra.rotation = Quaternion.LookRotation(moveDir, Vector3.up);
                 }
 
             }
 
-            //ƒ{ƒ^ƒ“‚ğ—£‚µ‚½‚ç
+            //ãƒœã‚¿ãƒ³ã‚’é›¢ã—ãŸã‚‰
             else
             {
 
-                //ƒ`ƒƒ[ƒW‚ªŠ®—¹‚µ‚Ä‚¢‚½‚ç
+                //ãƒãƒ£ãƒ¼ã‚¸ãŒå®Œäº†ã—ã¦ã„ãŸã‚‰
                 if (_timer >= _chargeTime)
                 {
-                    //ƒp[ƒeƒBƒNƒ‹
+                    //ãƒ‘ãƒ¼ãƒ†ã‚£ã‚¯ãƒ«
                     ParticleStop(_chargeEndParticle);
-                    //‰¹
+                    //éŸ³
                     AudioManager.Instance.SEStop();
-                    //ƒAƒjƒ[ƒVƒ‡ƒ“
+                    //ã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³
                     _playerAnim.SetTrigger("Attack");
-                    //UŒ‚ŠJn
+                    //æ”»æ’ƒé–‹å§‹
                     _isAttack = true;
-                    //UŒ‚ŠÔ‚Éİ’è
+                    //æ”»æ’ƒæ™‚é–“ã«è¨­å®š
                     _timer = _coolTime;
                 }
 
-                //ƒ`ƒƒ[ƒW‚ªŠ®—¹‚µ‚Ä‚¢‚È‚©‚Á‚½‚ç
+                //ãƒãƒ£ãƒ¼ã‚¸ãŒå®Œäº†ã—ã¦ã„ãªã‹ã£ãŸã‚‰
                 else
                 {
-                    //ƒp[ƒeƒBƒNƒ‹’â~
+                    //ãƒ‘ãƒ¼ãƒ†ã‚£ã‚¯ãƒ«åœæ­¢
                     ParticleStop(_chargeParticle);
-                    //’ÊíUŒ‚‚Ö‘JˆÚ
+                    //éŸ³åœæ­¢
+                    AudioManager.Instance.SEStop();
+                    //é€šå¸¸æ”»æ’ƒã¸é·ç§»
                     _playerStateMachine.OnChangeState((int)PlayerStateMachine.StateType.AttackComboOne);
                 }
             }
@@ -164,7 +195,7 @@ public class ChargeAttackState : PlayerStateBase
     }
     public override void OnEnd()
     {
-        //‰Šú‰»
+        //åˆæœŸåŒ–
         _timer = 0;
         _isAttack = false;
         _isMadeSound = false;

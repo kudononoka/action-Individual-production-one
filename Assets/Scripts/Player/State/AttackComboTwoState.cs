@@ -46,6 +46,8 @@ public class AttackComboTwoState : PlayerStateBase
 
     CameraController _cameraController;
 
+    Transform _mcTra;
+
     /// <summary>攻撃中移動する前のPlayerのPosition</summary>
     Vector3 _beforeMovingPos;
 
@@ -61,16 +63,15 @@ public class AttackComboTwoState : PlayerStateBase
         _weapon = playerController.PlayerWeapon;
         _characterController = playerController.CharacterController;
         _cameraController = playerController.CameraController;
+        _mcTra = Camera.main.transform;
     }
     public override void OnEnter()
     {
         _playerHPSTController.STDown(_playerParameter.AttackWeakSTCost);
 
+        _anim.SetTrigger("Attack");
         //初期化
         _coolTimer = _coolTime;
-
-        //アニメーション設定
-        _anim.SetTrigger("Attack");
 
         //ダメージ設定
         _weapon.Damage = _playerParameter.AttackWeakPower;
@@ -90,6 +91,18 @@ public class AttackComboTwoState : PlayerStateBase
             targetPos.y = _playerTra.position.y;
             _playerTra.LookAt(targetPos);
         }
+        //通常時
+        else
+        {
+            //移動入力があったら
+            if (_inputAction.InputMove.magnitude > 0)
+            {
+                //入力した方向を向く
+                var _forward = Quaternion.AngleAxis(_mcTra.eulerAngles.y, Vector3.up);
+                var moveDir = _forward * new Vector3(_inputAction.InputMove.x, 0, _inputAction.InputMove.y).normalized;
+                _playerTra.rotation = Quaternion.LookRotation(moveDir, Vector3.up);
+            }
+        }
     }
 
     public override void OnUpdate()
@@ -103,7 +116,7 @@ public class AttackComboTwoState : PlayerStateBase
             if (_coolTimer < _nextAttackTime)
             {
                 //攻撃の入力をされていたら
-                if (_inputAction.IsAttack && _playerHPSTController.CurrntStValue >= _playerParameter.AttackStrongSTCost)
+                if (_inputAction.IsAttack && _anim.GetBool("NextAttack"))
                 {
                     //次の攻撃に遷移
                     _playerStateMachine.OnChangeState((int)PlayerStateMachine.StateType.AttackComboThree);
@@ -120,6 +133,7 @@ public class AttackComboTwoState : PlayerStateBase
 
         if (_coolTimer <= 0.2)
         {
+            _anim.SetBool("NextAttack", false);
             //移動かIdleに遷移
             if (_inputAction.InputMove.magnitude <= 0)
                 _playerStateMachine.OnChangeState((int)PlayerStateMachine.StateType.Idle);
