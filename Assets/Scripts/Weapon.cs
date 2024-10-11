@@ -23,6 +23,9 @@ public class Weapon : MonoBehaviour
     [SerializeField]
     float _particlePlayTime;
 
+    [SerializeField]
+    PlayerStateMachine.StateType _attackState = PlayerStateMachine.StateType.AttackComboOne;
+
     float _particlePlayTimer = 0;
 
     bool _bloodParticleActive = false;
@@ -31,6 +34,7 @@ public class Weapon : MonoBehaviour
 
     /// <summary>与えるダメージ</summary>
     public int Damage { get => _damage; set => _damage = value; }
+    public PlayerStateMachine.StateType AttackState { get => _attackState; set => _attackState = value; }
 
     public void Update()
     {
@@ -44,7 +48,6 @@ public class Weapon : MonoBehaviour
                 _bloodParticleActive = false;
             }
        }
-
     }
 
     /// <summary>血のParticalの非表示と表示切り替え</summary>
@@ -71,7 +74,7 @@ public class Weapon : MonoBehaviour
     {
         if(other.gameObject.CompareTag("Enemy"))
         {
-            _hitDirection.HitAction(other.gameObject);
+            _hitDirection.HitAction(other.gameObject, _attackState);
             if (other.gameObject.TryGetComponent<IDamage>(out var IDamage))
             {
                 IDamage.Damage(_damage);
