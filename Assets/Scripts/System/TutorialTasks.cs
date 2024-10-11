@@ -1,28 +1,20 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using System.Runtime.CompilerServices;
-using UnityEngine;
-using UnityEngine.InputSystem;
-
+﻿
+/// <summary>移動用チュートリアル</summary>
 public class TutorialMoveTask : ITutorialTask
 {
     private PlayerInputAction _inputAction;
 
-    EnemyStateMachine.StateType ITutorialTask.EnemyType { get => EnemyStateMachine.StateType.Idle; }
+    EnemyStateMachine.StateType ITutorialTask.EnemyType => EnemyStateMachine.StateType.Idle;
+
+    public string GetDescription => "WSAD or 左スティック　で　移動";
+
+    public string GetTitle => "移動";
+
+    public float NextTutorialTaskTime => 4f;
 
     public void Init(PlayerInputAction playerInput)
     {
         _inputAction = playerInput;
-    }
-
-    public string GetDescription()
-    {
-        return "WSAD or 左スティック　で　移動";
-    }
-
-    public string GetTitle()
-    {
-        return "移動";
     }
 
     public bool CheckTask()
@@ -35,26 +27,22 @@ public class TutorialMoveTask : ITutorialTask
     }
 
 }
-
+/// <summary>カメラ操作用チュートリアル</summary>
 public class TutorialCameraMoveTask : ITutorialTask
 {
     private PlayerInputAction _inputAction;
 
-    EnemyStateMachine.StateType ITutorialTask.EnemyType { get => EnemyStateMachine.StateType.Idle; }
+    EnemyStateMachine.StateType ITutorialTask.EnemyType  => EnemyStateMachine.StateType.Idle;
+
+    public string GetDescription => "マウス移動 or 右スティック　でカメラ操作";
+
+    public string GetTitle => "カメラ移動";
+
+    public float NextTutorialTaskTime => 4f;
 
     public void Init(PlayerInputAction playerInput)
     {
         _inputAction = playerInput;
-    }
-
-    public string GetDescription()
-    {
-        return "マウス移動 or 右スティック　でカメラ操作";
-    }
-
-    public string GetTitle()
-    {
-        return "カメラ移動";
     }
 
     public bool CheckTask()
@@ -67,26 +55,22 @@ public class TutorialCameraMoveTask : ITutorialTask
     }
 
 }
-
+/// <summary>攻撃用チュートリアル</summary>
 public class TutorialAttackTask : ITutorialTask
 {
     private PlayerInputAction _inputAction;
 
-    EnemyStateMachine.StateType ITutorialTask.EnemyType { get => EnemyStateMachine.StateType.Idle; }
+    EnemyStateMachine.StateType ITutorialTask.EnemyType => EnemyStateMachine.StateType.Idle;
+
+    public string GetDescription => "左クリック or □ で攻撃ができます";
+
+    public string GetTitle => "基本攻撃";
+
+    public float NextTutorialTaskTime => 6f;
 
     public void Init(PlayerInputAction playerInput)
     {
         _inputAction = playerInput;
-    }
-
-    public string GetDescription()
-    {
-        return "左クリック or □ で攻撃ができます";
-    }
-
-    public string GetTitle()
-    {
-        return "基本攻撃";
     }
 
     public bool CheckTask()
@@ -99,27 +83,27 @@ public class TutorialAttackTask : ITutorialTask
     }
 
 }
-
+/// <summary>コンボ攻撃用チュートリアル</summary>
 public class TutorialAttackComboTask : ITutorialTask
 {
-    public float _comboPracticeTime = 8;
+    private PlayerInputAction _inputAction;
 
-    EnemyStateMachine.StateType ITutorialTask.EnemyType { get => EnemyStateMachine.StateType.Idle; }
+    EnemyStateMachine.StateType ITutorialTask.EnemyType => EnemyStateMachine.StateType.Idle;
 
-    public string GetDescription()
+    public string GetDescription => "攻撃 は最大４回コンボで攻撃することができます";
+
+    public string GetTitle => "基本攻撃の連撃";
+
+    public float NextTutorialTaskTime => 8f;
+
+    public void Init(PlayerInputAction playerInput)
     {
-        return "攻撃 は最大４回コンボで攻撃することができます";
-    }
-
-    public string GetTitle()
-    {
-        return "基本攻撃の連撃";
+        _inputAction = playerInput;
     }
 
     public bool CheckTask()
     {
-        _comboPracticeTime -= Time.deltaTime;
-        if(_comboPracticeTime < 0)
+        if (_inputAction.IsAttack)
         {
             return true;
         }
@@ -127,72 +111,56 @@ public class TutorialAttackComboTask : ITutorialTask
     }
 
 }
-
+/// <summary>ため攻撃用チュートリアル</summary>
 public class TutorialChargeAttack : ITutorialTask
 {
     private PlayerInputAction _inputAction;
 
-    EnemyStateMachine.StateType ITutorialTask.EnemyType { get => EnemyStateMachine.StateType.Down; }
+    EnemyStateMachine.StateType ITutorialTask.EnemyType  => EnemyStateMachine.StateType.Down; 
 
-    private float _timer;
+    public string GetDescription => 
+        "左クリック or □ で長押しでため攻撃ができます" +
+        "\n黄色い雷電がなくなった時にボタンを離すことで高いダメージを与える攻撃ができます";
 
-    private float _chargeTime = 3;
+    public string GetTitle => "ため攻撃";
+
+    public float NextTutorialTaskTime => 12f;
 
     public void Init(PlayerInputAction playerInput)
     {
         _inputAction = playerInput;
-    }
-
-    public string GetDescription()
-    {
-        return "左クリック or □ で長押しでため攻撃ができます";
-    }
-
-    public string GetTitle()
-    {
-        return "ため攻撃";
     }
 
     public bool CheckTask()
     {
         if (_inputAction.IsAttack)
         {
-
-            _timer += Time.deltaTime;
-            //チャージできたら
-            if (_timer >= _chargeTime)
-            {
-                return true;
-            }
+            return true;
         }
         return false;
     }
 
 }
 
-
+/// <summary>ステップ回避用チュートリアル</summary>
 public class TutorialAvoidanceTask : ITutorialTask
 {
     private PlayerInputAction _inputAction;
 
-    EnemyStateMachine.StateType ITutorialTask.EnemyType { get => EnemyStateMachine.StateType.Idle; }
+    EnemyStateMachine.StateType ITutorialTask.EnemyType  => EnemyStateMachine.StateType.Idle; 
 
-    public float _avoidTime = 5;
+    public string GetDescription => 
+        "Space or × で素早い移動をすることができ、回避にも利用できます";
+
+    public string GetTitle => "ステップ(回避)";
+
+    public float NextTutorialTaskTime => 4f;
 
     public void Init(PlayerInputAction playerInput)
     {
         _inputAction = playerInput;
     }
 
-    public string GetDescription()
-    {
-        return "Space or × で素早い移動をすることができ、回避にも利用できます";
-    }
-
-    public string GetTitle()
-    {
-        return "ステップ(回避)";
-    }
 
     public bool CheckTask()
     {
@@ -200,36 +168,30 @@ public class TutorialAvoidanceTask : ITutorialTask
         {
             return true;
         }
-
-        _avoidTime -= Time.deltaTime;
-        if (_avoidTime < 0)
-        {
-            return true;
-        }
         return false;
     }
 
 }
-
+/// <summary>ロックオン用チュートリアル</summary>
 public class TutorialLockonTask : ITutorialTask
 {
     private PlayerInputAction _inputAction;
 
-    EnemyStateMachine.StateType ITutorialTask.EnemyType { get => EnemyStateMachine.StateType.Idle; }
+    EnemyStateMachine.StateType ITutorialTask.EnemyType 
+        => EnemyStateMachine.StateType.Idle; 
+
+    public string GetDescription => 
+        "マウスホイールクリック or 右スティック押し込み でロックオンができます" +
+        "\nもう1回押すことで解除できます" +
+        "\nロックオンをすることで攻撃時自動的に対象の方を向くので攻撃が当たりやすくなります";
+
+    public string GetTitle => "ロックオン";
+
+    public float NextTutorialTaskTime => 8f;
 
     public void Init(PlayerInputAction playerInput)
     {
         _inputAction = playerInput;
-    }
-
-    public string GetDescription()
-    {
-        return "マウスホイールクリック or 右スティック押し込み でロックオンができます\nもう1回押すことで解除できます";
-    }
-
-    public string GetTitle()
-    {
-        return "ロックオン";
     }
 
     public bool CheckTask()
@@ -242,26 +204,23 @@ public class TutorialLockonTask : ITutorialTask
     }
 
 }
-
+/// <summary>ロックオン選択チュートリアル</summary>
 public class TutorialLockonSelectTask : ITutorialTask
 {
     private PlayerInputAction _inputAction;
 
     EnemyStateMachine.StateType ITutorialTask.EnemyType { get => EnemyStateMachine.StateType.Idle;}
 
+    public string GetDescription => 
+        "マウスホイール or 十字キー↑ でロックオン選択ができます";
+
+    public string GetTitle => "ロックオン選択";
+
+    public float NextTutorialTaskTime => 3f;
+
     public void Init(PlayerInputAction playerInput)
     {
         _inputAction = playerInput;
-    }
-
-    public string GetDescription()
-    {
-        return "マウスホイール or 十字キー↑ でロックオン選択ができます";
-    }
-
-    public string GetTitle()
-    {
-        return "ロックオン選択";
     }
 
     public bool CheckTask()
@@ -273,4 +232,24 @@ public class TutorialLockonSelectTask : ITutorialTask
         return false;
     }
 
+}
+/// <summary>チュートリアル終了</summary>
+public class TutorialSuccess : ITutorialTask
+{
+    EnemyStateMachine.StateType ITutorialTask.EnemyType { get => EnemyStateMachine.StateType.Idle; }
+
+    public string GetDescription => 
+        "これでチュートリアル終了です。7秒後、戦闘に入ります" +
+        "\n敵のHPが0になったらゲームクリア!" +
+        "\nその前にPlayerのHPが0になるとゲームオーバーです。" +
+        "\n頑張ってください";
+
+    public string GetTitle => "";
+
+    public float NextTutorialTaskTime => 7f;
+
+    public bool CheckTask()
+    {
+        return true;
+    }
 }

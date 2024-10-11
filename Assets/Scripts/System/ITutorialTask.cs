@@ -1,21 +1,20 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.InputSystem;
-
+ï»¿
 public interface ITutorialTask 
 {
-    public EnemyStateMachine.StateType EnemyType { get;}
-    /// <summary>‰Šú‰»</summary>
-    public void Init(PlayerInputAction playerInput){}
+    EnemyStateMachine.StateType EnemyType { get;}
+    /// <summary>åˆæœŸåŒ–</summary>
+    void Init(PlayerInputAction playerInput){}
 
-    /// <summary>ƒ`ƒ…[ƒgƒŠƒAƒ‹‚Ìƒ^ƒCƒgƒ‹‚ğæ“¾</summary>
-    string GetTitle();
+    /// <summary>ãƒãƒ¥ãƒ¼ãƒˆãƒªã‚¢ãƒ«ã®ã‚¿ã‚¤ãƒˆãƒ«ã‚’å–å¾—</summary>
+    string GetTitle { get; }
 
-    /// <summary>à–¾•¶‚ğæ“¾</summary>
-    string GetDescription();
+    /// <summary>èª¬æ˜æ–‡ã‚’å–å¾—</summary>
+    string GetDescription { get; }
 
-    /// <summary>ƒ`ƒ…[ƒgƒŠƒAƒ‹‚ª’B¬‚³‚ê‚½‚©”»’è‚·‚é</summary>
-    /// <returns>True‚¾‚Á‚½‚ç’B¬I</returns>
+    /// <summary>ãƒãƒ¥ãƒ¼ãƒˆãƒªã‚¢ãƒ«é”æˆå¾Œã€æ¬¡ã®ãƒãƒ¥ãƒ¼ãƒˆãƒªã‚¢ãƒ«ã«é·ç§»ã™ã‚‹ã¾ã§ã®æ™‚é–“</summary>
+    float NextTutorialTaskTime { get; }
+
+    /// <summary>ãƒãƒ¥ãƒ¼ãƒˆãƒªã‚¢ãƒ«ãŒé”æˆã•ã‚ŒãŸã‹åˆ¤å®šã™ã‚‹</summary>
+    /// <returns>Trueã ã£ãŸã‚‰é”æˆï¼</returns>
     bool CheckTask();
 }

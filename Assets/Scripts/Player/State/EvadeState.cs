@@ -91,9 +91,6 @@ public class EvadeState : PlayerStateBase
         //回避パーティクル再生
         _particle.Play();
 
-        //入力取り消し
-        _inputAction.IsEvade = false;
-
         //ジャスト回避判定
         JustAvoidanceJudgment justAvoidanceJudgment = new JustAvoidanceJudgment();
 
