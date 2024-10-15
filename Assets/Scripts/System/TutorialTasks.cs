@@ -90,7 +90,7 @@ public class TutorialAttackComboTask : ITutorialTask
 
     EnemyStateMachine.StateType ITutorialTask.EnemyType => EnemyStateMachine.StateType.Idle;
 
-    public string GetDescription => "攻撃 は最大４回コンボで攻撃することができます";
+    public string GetDescription => "攻撃 は最大４回連撃することができます";
 
     public string GetTitle => "基本攻撃の連撃";
 

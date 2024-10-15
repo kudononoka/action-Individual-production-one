@@ -99,7 +99,7 @@ public class TutorialSystem : MonoBehaviour
                         //チュートリアル終了
                         _isTutorial = false;
                         //ゲームシーンに遷移
-                        GameManager.Instance.ChangeScene(SceneState.InGame);
+                        GameManager.Instance.ChangeScene(GameState.InGame);
                     }
 
                     //初期化
