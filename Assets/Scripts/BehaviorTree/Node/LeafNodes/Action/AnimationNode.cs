@@ -1,8 +1,8 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-/// <summary>Animator‚Ìƒpƒ‰ƒ[ƒ^[’l‚ğ•ÏX‚·‚éƒNƒ‰ƒX</summary>
+/// <summary>Animatorã®ãƒ‘ãƒ©ãƒ¡ãƒ¼ã‚¿ãƒ¼å€¤ã‚’å¤‰æ›´ã™ã‚‹ã‚¯ãƒ©ã‚¹</summary>
 [SerializeField]
 public class AnimationNode : BehaviorTreeBaseNode
 {
@@ -20,13 +20,13 @@ public class AnimationNode : BehaviorTreeBaseNode
         Int,
     }
 
-    [Header("Animationƒpƒ‰ƒ[ƒ^[–¼")]
+    [Header("Animationãƒ‘ãƒ©ãƒ¡ãƒ¼ã‚¿ãƒ¼å")]
     [SerializeField] string _animPara = "";
 
-    [Header("Animation‚Ìƒ^ƒCƒv")]
+    [Header("Animationã®ã‚¿ã‚¤ãƒ—")]
     [SerializeField] AnimParaValueType _animState = AnimParaValueType.Bool;
 
-    [Header("Animationƒpƒ‰ƒ[ƒ^[’l")]
+    [Header("Animationãƒ‘ãƒ©ãƒ¡ãƒ¼ã‚¿ãƒ¼å€¤")]
 
     [SerializeField] bool _isBoolValue = false;
 
@@ -45,7 +45,7 @@ public class AnimationNode : BehaviorTreeBaseNode
     {
         if (_anim == null)
         {
-            Debug.LogError("QÆæƒIƒuƒWƒFƒNƒg‚ÉAnimator‚ªƒAƒ^ƒbƒ`‚³‚ê‚Ä‚¢‚Ü‚¹‚ñ");
+            Debug.LogError("å‚ç…§å…ˆã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã«AnimatorãŒã‚¢ã‚¿ãƒƒãƒã•ã‚Œã¦ã„ã¾ã›ã‚“");
         }
 
         switch (_animState)

@@ -17,11 +17,6 @@ public class MoveToTargetNode : BehaviorTreeBaseNode
     [SerializeField]
     float _stopDistanceMin;
 
-    //[Header("移動をやめる時のTargetとの距離")]
-    //[Tooltip("Targetから離れすぎると尾行をやめる")]
-    //[SerializeField]
-    //float _stopDistanceMax;
-
     /// <summary>動かしたいオブジェクト</summary>
     NavMeshAgent _agent = null;
     /// <summary>目的地</summary>
@@ -61,14 +56,6 @@ public class MoveToTargetNode : BehaviorTreeBaseNode
             _anim.SetBool("IsWalk", false);
             return Result.Success;
         }
-
-        ////Targetとの距離がはなれてしまったら失敗を返す
-        //else if (Vector3.Distance(_target.position, _my.position) >= _stopDistanceMax) 
-        //{
-        //    _agent.isStopped = true;
-        //    _anim.SetBool("IsWalk", false);
-        //    return Result.Failure;
-        //}
 
         return Result.Runnimg;
     }

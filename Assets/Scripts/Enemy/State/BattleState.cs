@@ -1,4 +1,4 @@
-using System;
+ï»¿using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -20,17 +20,14 @@ public class BattleState : EnemyStateBase
     [SerializeField]
     GameObject _my = null;
 
-    EnemyAnimatorControlle _animatorControlle;
-
     [SerializeField]
     NavMeshAgent _agent;
 
     public override void Init()
     {
         _enemyAI = _enemyStateMachine.EnemyAI;
-        _animatorControlle = _enemyAI.AnimatorControlle;
 
-        //BehaviorTree‚Ì‰Šú‰»
+        //BehaviorTreeã®åˆæœŸåŒ–
         _tree = _origin.Instance();
 
         _tree.RootNodeData.Init(_target, _my);
@@ -43,7 +40,7 @@ public class BattleState : EnemyStateBase
 
     public override void OnEnter()
     {
-        _animatorControlle.OnChangeState((int)EnemyAnimatorControlle.StateType.Battle);
+        //è¿½å¾“ã‚’é–‹å§‹
         _agent.isStopped = false;
     }
 
@@ -54,7 +51,7 @@ public class BattleState : EnemyStateBase
 
     public override void OnEnd()
     {
-        //’Ç]‚ğ‚â‚ß‚é
+        //è¿½å¾“ã‚’ã‚„ã‚ã‚‹
         _agent.SetDestination(_my.transform.position);
         _agent.isStopped = true;
     }

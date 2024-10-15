@@ -37,28 +37,38 @@ public class SelectorNode : BehaviorTreeBaseNode, IChildNodeSetting
 
     public override Result Evaluate()
     {
+        //実行する子Nodeがなかったら
         if (_current == null)
         {
             _currentChildIndex = 0;
+            //０番目のNodeを入れる
             _current = _childNodes[_currentChildIndex];
         }
 
+        //子Node実行
         Result result = _current.Evaluate();
 
+        //成功が返ってきたら
         if (result == Result.Success)  
         {
             _current = null;
+            //成功を返す
             return Result.Success;
         }
 
+        //失敗が返ってきたら
         if (result == Result.Failure)
         {
             _currentChildIndex++;
+            //全ての子Nodeの実行が終わったら
             if (_currentChildIndex == _childNodes.Count)
             {
                 _current = null;
+                //失敗を返す
                 return Result.Failure;
             }
+
+            //次の子Nodeに移行
             _current = _childNodes[_currentChildIndex];
         }
 

@@ -1,14 +1,14 @@
-using System;
+﻿using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class TargetRotateAroundNode : BehaviorTreeBaseNode
 {
-    [Header("����Ă��鎞��")]
+    [Header("回っている時間")]
     [SerializeField] float _rotateAroundTime;
 
-    [Header("��鑬�x")]
+    [Header("回る速度")]
     [SerializeField] float _aroundSpeed;
 
     Transform _target;
@@ -40,7 +40,10 @@ public class TargetRotateAroundNode : BehaviorTreeBaseNode
             return Result.Success;
         }
 
+        //ターゲットの方を向く
         _my.LookAt(_target.position);
+
+        //ターゲットを中心にまわる
         _my.RotateAround(_target.position, Vector3.down, _aroundSpeed);
 
         return Result.Runnimg;

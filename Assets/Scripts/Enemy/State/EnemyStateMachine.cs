@@ -61,22 +61,31 @@ public class EnemyStateMachine : StateMachine
         _states.Add(_downState);
         _states.Add(_deathState);
 
+        //登録したいStateを実際に登録する
         int states = (int)_insertState;
 
         for (int i = 0; i < _states.Count; i++)
         {
+            //フラグがたっているかどうか
             int flag = states & 1;
+
+            //フラグがたっていたら
             if (flag == 1)
             {
+                //登録時enum(10進数)のため10進数を求める
                 int id = 1;
                 for (int j = 0; j < i; j++)
                 {
                     id *= 2;
                 }
+                //Stateの初期化
                 _states[i].Set(this);
                 _states[i].Init();
+                //登録
                 StateAdd(id, _states[i]);
             }
+
+            //右に１シフトする
             states = states >> 1;
         }
 

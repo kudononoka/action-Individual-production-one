@@ -1,9 +1,11 @@
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
+
+/// <summary>オブジェクトのMeshRendererコンポーネントの表示非表示で疑似的にないように錯覚させる</summary>
 
 public class SetActiveNode : BehaviorTreeBaseNode
 {
-    [Header("�\�����邩�ǂ���")]
+    [Header("表示するかどうか")]
     [SerializeField] bool _isActive = false;
 
     SkinnedMeshRenderer[] _skinnedMeshRenderer; 
@@ -17,6 +19,7 @@ public class SetActiveNode : BehaviorTreeBaseNode
 
     public override void Init(GameObject target, GameObject my)
     {
+        //自分のMeshRendererコンポーネントを全て取得
         _skinnedMeshRenderer = my.GetComponentsInChildren<SkinnedMeshRenderer>();
         _meshRenderer = my.GetComponentsInChildren<MeshRenderer>();
 
@@ -24,6 +27,7 @@ public class SetActiveNode : BehaviorTreeBaseNode
 
     public override Result Evaluate()
     {
+        //表示・非表示
         foreach (var renderer in _skinnedMeshRenderer)
         {
             renderer.enabled = _isActive;

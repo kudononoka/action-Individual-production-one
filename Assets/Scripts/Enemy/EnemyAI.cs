@@ -4,8 +4,6 @@ using UnityEngine;
 
 public class EnemyAI : MonoBehaviour, IDamage, ISlow
 {
-    EnemyAnimatorControlle _animatorControlle = new();
-
     [Header("実行中ずっとIdleのままにするか")]
     [SerializeField]
     bool _isIdle = false;
@@ -24,6 +22,9 @@ public class EnemyAI : MonoBehaviour, IDamage, ISlow
     EnemyAttackControlle _enemyAttackControlle = new();
 
     [SerializeField]
+    Animator _animModel;
+
+    [SerializeField]
     int _downHp = 50;
 
     [SerializeField]
@@ -40,11 +41,11 @@ public class EnemyAI : MonoBehaviour, IDamage, ISlow
 
     public MoveDestinationPoint MoveDestinationPoint => _moveDestinationPoint;
 
-    public EnemyAnimatorControlle AnimatorControlle => _animatorControlle;
-
     public SightController SightController => _sightController;
 
     public EnemyHPController HPController => _enemyHPController;
+
+    public Animator Animator => _animModel;
 
     public bool IsAlive => _isAlive;    
 
@@ -57,9 +58,6 @@ public class EnemyAI : MonoBehaviour, IDamage, ISlow
         _isAlive = true;
 
         _moveDestinationPoint = GetComponent<MoveDestinationPoint>();
-
-        _animatorControlle.SetAnimator(GetComponent<Animator>());
-        _animatorControlle.Init();
 
         _sightController = GetComponent<SightController>();
 
@@ -94,9 +92,6 @@ public class EnemyAI : MonoBehaviour, IDamage, ISlow
     public void Damage(int damage)
     {
         if (!_isAlive) return;
-
-        //ヒットアニメーション再生
-        _animatorControlle.OnChangeState((int)EnemyAnimatorControlle.StateType.GetHit);
 
         _isAlive = _enemyHPController.HPDown(damage);
 
@@ -133,13 +128,13 @@ public class EnemyAI : MonoBehaviour, IDamage, ISlow
     public void OnSlow(float slowSpeedRate)
     {
         //アニメーション再生速度変更
-        _animatorControlle.SetAnimSpeed(slowSpeedRate);
+        _animModel.speed = slowSpeedRate;
     }
 
     public void OffSlow()
     {
         //アニメーション再生速度を通常に戻す
-        _animatorControlle.SetAnimSpeed(1);
+        _animModel.speed = 1;
     }
 
     public void AudioEvent()

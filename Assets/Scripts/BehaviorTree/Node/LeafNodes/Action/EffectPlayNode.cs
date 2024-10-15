@@ -2,9 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>パーティクルの再生</summary>
 public class EffectPlayNode : BehaviorTreeBaseNode
 {
-    [Header("Effect���Đ�����I�u�W�F�N�g�̖��O")]
+    [Header("Scene内の再生したいEffectObject")]
     [SerializeField] string _effectObjectName = "";
 
     ParticleSystem _particle;
