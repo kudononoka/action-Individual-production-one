@@ -11,15 +11,7 @@ public class GameManager : MonoBehaviour
     [SerializeField]
     float _fadeTime;
 
-    int _enemyCount = 0;
-
     Fade _fade;
-
-    public IObservable<int> EnemyCount => _enemyMaxCount;
-    readonly ReactiveProperty<int> _enemyMaxCount = new();
-
-    public IObservable<int> CurrentKillCount => _currentEnemyKillCount;
-    readonly ReactiveProperty<int> _currentEnemyKillCount = new();
 
     #region　シングルトン
     public static GameManager Instance
@@ -69,52 +61,36 @@ public class GameManager : MonoBehaviour
     #endregion
 
     [Header("現在のシーン")]
-    [SerializeField] SceneState _currentScene = SceneState.Title;
+    [SerializeField] GameState _currentScene = GameState.Title;
 
     [Header("シーンのStateとそれに連動するシーン名")]
     [SerializeField]
     SceneData[] _sceneData =
     {
-        new SceneData(SceneState.Title),
-        new SceneData(SceneState.Tutorial),
-        new SceneData(SceneState.InGame),
-        new SceneData(SceneState.GameOver),
-        new SceneData(SceneState.GameClear),
+        new SceneData(GameState.Title),
+        new SceneData(GameState.Tutorial),
+        new SceneData(GameState.InGame),
     };
 
-    private void Setting(SceneState currentScene)
+    private void Setting(GameState currentScene)
     {
         //フェードアウト
         _fade = FindObjectOfType<Fade>();
         _fade.FadeOut(_fadeTime);
 
-        //BGMの再生とGameScene時のEnemyのキル数リセット設定
+        //BGMの再生
         switch (currentScene)
         {
-            case SceneState.Title:
+            case GameState.Title:
                 AudioManager.Instance.BGMPlay(BGM.Title);
                 break;
 
-            case SceneState.GameOver:
-                AudioManager.Instance.BGMPlay(BGM.GameOver);
-                break;
-
-            case SceneState.GameClear:
-                AudioManager.Instance.BGMPlay(BGM.GameClear);
-                break;
-
-            case SceneState.InGame:
-                //フィールド上の敵の数を取得
-                _instance._enemyCount = FindObjectsOfType<EnemyAI>().Length;
-                _instance._enemyMaxCount.Value = _enemyCount;
-                //現在のキル数を０に
-                _instance._currentEnemyKillCount.Value = 0;
-
+            case GameState.InGame:
                 AudioManager.Instance.BGMPlay(BGM.Game);
                 break;
 
-            case SceneState.Tutorial:
-                AudioManager.Instance.BGMPlay(BGM.Game);
+            case GameState.Tutorial:
+                AudioManager.Instance.BGMPlay(BGM.Tutorial);
                 break;
         }
 
@@ -122,10 +98,14 @@ public class GameManager : MonoBehaviour
 
     /// <summary>シーン遷移</summary>
     /// <param name="sceneState"></param>
-    public void ChangeScene(SceneState sceneState)
+    public void ChangeScene(GameState sceneState)
     {
         //現在のシーンの更新
         _currentScene = sceneState;
+        if ((int)sceneState >= _sceneData.Length)
+        {
+            Debug.LogError("シーンの名前登録していないです");
+        }
         var nextSceneName = _sceneData[(int)sceneState].SceneName;
 
         _fade = FindObjectOfType<Fade>();
@@ -137,23 +117,27 @@ public class GameManager : MonoBehaviour
         });
     }
 
-    /// <summary>Enemyのキル数更新</summary>
-    public void EnemyKill()
+    public void GameEnd(GameState gameState)
     {
-        //現在のEnemy数を１減らす
-        _enemyCount--;
-        _currentEnemyKillCount.Value++;
-        //全て倒したら
-        if(_enemyCount == 0 )
+        GameEndUIControler gameEndUI = FindObjectOfType<GameEndUIControler>();
+        //BGM
+        switch (gameState)
         {
-            //ゲームクリア
-            ChangeScene(SceneState.GameClear);
+            case GameState.GameOver:
+                gameEndUI.GameOverCanvasActive();
+                AudioManager.Instance.BGMPlay(BGM.GameOver);
+                break;
+
+            case GameState.GameClear:
+                gameEndUI.GameClearCanvasActive();
+                AudioManager.Instance.BGMPlay(BGM.GameClear);
+                break;
         }
     }
 }
 
-/// <summary>シーンの状態管理</summary>
-public enum SceneState
+/// <summary>ゲームの状態管理</summary>
+public enum GameState
 {
     /// <summary>タイトル</summary>
     Title,
@@ -172,16 +156,16 @@ public enum SceneState
 public class SceneData
 {
     [SerializeField]
-    SceneState _sceneState;
+    GameState _sceneState;
 
     [SerializeField]
     string _sceneName;
 
-    public SceneState SceneState => _sceneState;
+    public GameState SceneState => _sceneState;
 
     public string SceneName => _sceneName;
 
-    public SceneData(SceneState sceneState)
+    public SceneData(GameState sceneState)
     {
         _sceneState = sceneState;
     }

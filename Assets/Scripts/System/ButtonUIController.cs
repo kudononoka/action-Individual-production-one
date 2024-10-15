@@ -8,7 +8,7 @@ public class ButtonUIController : MonoBehaviour
     Image _image = null;
 
     [SerializeField]
-    SceneState _nextSceneState;
+    GameState _nextSceneState;
     // Start is called before the first frame update
     void Start()
     {
