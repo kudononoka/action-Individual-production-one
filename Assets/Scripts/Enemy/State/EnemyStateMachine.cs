@@ -1,31 +1,33 @@
-using System;
+ï»¿using System;
 using System.Collections.Generic;
 using UnityEngine;
 
 [Serializable]
-/// <summary>ƒGƒlƒ~[ê—pƒXƒe[ƒgƒ}ƒV[ƒ“</summary>
+/// <summary>ã‚¨ãƒãƒŸãƒ¼å°‚ç”¨ã‚¹ãƒ†ãƒ¼ãƒˆãƒã‚·ãƒ¼ãƒ³</summary>
 public class EnemyStateMachine : StateMachine
 {
-    [Header("“o˜^‚µ‚½‚¢State")]
+    [Header("ç™»éŒ²ã—ãŸã„State")]
     [SerializeField] StateType _insertState;
 
     StateType _currentStateType;
 
     public StateType CurrentState => _currentStateType;
 
-    /// <summary>ƒGƒlƒ~[‚Ìs“®ó‘Ô</summary>
+    /// <summary>ã‚¨ãƒãƒŸãƒ¼ã®è¡Œå‹•çŠ¶æ…‹</summary>
     [Serializable]
     [Flags]
     public enum StateType
     {
-        /// <summary>’Êí</summary>
+        /// <summary>é€šå¸¸</summary>
         Idle = 1 << 0,
-        /// <summary>’Tõ</summary>
+        /// <summary>æ¢ç´¢</summary>
         Search = 1 << 1,
-        /// <summary>í“¬</summary>
+        /// <summary>æˆ¦é—˜</summary>
         Battle = 1 << 2,
-        /// <summary>ƒ_ƒEƒ“</summary>
+        /// <summary>ãƒ€ã‚¦ãƒ³</summary>
         Down = 1 << 3,
+        /// <summary>æ­»äº¡</summary>
+        Death = 1 << 4,
     }
 
     EnemyAI _enemyAI;
@@ -43,9 +45,12 @@ public class EnemyStateMachine : StateMachine
     [SerializeField]
     DownState _downState = new();
 
+    [SerializeField]
+    DeathState _deathState = new();
+
     List<EnemyStateBase> _states = new List<EnemyStateBase>();
 
-    /// <summary>ƒXƒe[ƒg‚Ì“o˜^‚Æ‰Šú‰»</summary>
+    /// <summary>ã‚¹ãƒ†ãƒ¼ãƒˆã®ç™»éŒ²ã¨åˆæœŸåŒ–</summary>
     public void Init(EnemyAI enemyAI, StateType startState)
     {
         _enemyAI = enemyAI;
@@ -54,10 +59,11 @@ public class EnemyStateMachine : StateMachine
         _states.Add(_searchState);
         _states.Add(_battleState);
         _states.Add(_downState);
+        _states.Add(_deathState);
 
         int states = (int)_insertState;
 
-        for (int i = 0; i < 4; i++)
+        for (int i = 0; i < _states.Count; i++)
         {
             int flag = states & 1;
             if (flag == 1)
@@ -77,7 +83,7 @@ public class EnemyStateMachine : StateMachine
         Initialize((int)startState);
     }
 
-    /// <summary> State‚Ì•ÏX</summary>
+    /// <summary> Stateã®å¤‰æ›´</summary>
     /// <param name="stateId"></param>
     public override void CurrentChangeState(int stateId)
     {
@@ -85,12 +91,12 @@ public class EnemyStateMachine : StateMachine
     }
 }
 
-/// <summary>ƒGƒlƒ~[ê—pƒXƒe[ƒg‚ÌŠî’êƒNƒ‰ƒX</summary>
+/// <summary>ã‚¨ãƒãƒŸãƒ¼å°‚ç”¨ã‚¹ãƒ†ãƒ¼ãƒˆã®åŸºåº•ã‚¯ãƒ©ã‚¹</summary>
 public abstract class EnemyStateBase : StateMachine.StateBase
 {
     protected EnemyStateMachine _enemyStateMachine = null;
 
-    /// <summary>StateMacine‚ğƒZƒbƒg‚·‚éŠÖ”</summary>
+    /// <summary>StateMacineã‚’ã‚»ãƒƒãƒˆã™ã‚‹é–¢æ•°</summary>
     /// <param name="stateMachine"></param>
     public void Set(EnemyStateMachine stateMachine)
     {
