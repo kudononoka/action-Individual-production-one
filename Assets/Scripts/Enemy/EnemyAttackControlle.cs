@@ -6,20 +6,6 @@ public class EnemyAttackControlle : MonoBehaviour
     [SerializeField]
     int _damage = 0;
 
-    [SerializeField]
-    ParticleSystem _attackSineEffect;
-
-    public void AttackSign()
-    {
-        _attackSineEffect.Play();
-        AudioManager.Instance.SEPlayOneShot(SE.EnemyAttackSign);
-    }
-
-    public void Attack()
-    {
-        AudioManager.Instance.SEPlayOneShot(SE.EnemyAttack);
-    }
-
     private void OnTriggerEnter(Collider other)
     {
         if(other.gameObject.CompareTag("Player"))

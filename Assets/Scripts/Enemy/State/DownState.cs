@@ -23,6 +23,16 @@ public class DownState : EnemyStateBase
 
     public override void OnEnter()
     {
+        SkinnedMeshRenderer[] _skinnedMeshRenderer = _enemyAI.gameObject.GetComponentsInChildren<SkinnedMeshRenderer>();
+        MeshRenderer[] _meshRenderer = _enemyAI.gameObject.GetComponentsInChildren<MeshRenderer>();
+        foreach (var renderer in _skinnedMeshRenderer)
+        {
+            renderer.enabled = true;
+        }
+        foreach (var renderer in _meshRenderer)
+        {
+            renderer.enabled = true;
+        }
         _anim.SetBool("IsDown", true);
     }
 

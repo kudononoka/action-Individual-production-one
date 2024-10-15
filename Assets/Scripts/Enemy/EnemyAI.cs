@@ -1,4 +1,4 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -6,9 +6,13 @@ public class EnemyAI : MonoBehaviour, IDamage, ISlow
 {
     EnemyAnimatorControlle _animatorControlle = new();
 
-    [Header("Às’†‚¸‚Á‚ÆIdle‚Ì‚Ü‚Ü‚É‚·‚é‚©")]
+    [Header("å®Ÿè¡Œä¸­ãšã£ã¨Idleã®ã¾ã¾ã«ã™ã‚‹ã‹")]
     [SerializeField]
     bool _isIdle = false;
+
+    [Header("æœ€åˆã®EnemyçŠ¶æ…‹")]
+    [SerializeField]
+    EnemyStateMachine.StateType _startState;
 
     [SerializeField]
     EnemyStateMachine _enemyStateMachine = new();
@@ -18,6 +22,15 @@ public class EnemyAI : MonoBehaviour, IDamage, ISlow
 
     [SerializeField]
     EnemyAttackControlle _enemyAttackControlle = new();
+
+    [SerializeField]
+    int _downHp = 50;
+
+    [SerializeField]
+    bool _isDowned = false;
+
+    [SerializeField]
+    SE _soundSE = SE.EnemyAttack;
 
     MoveDestinationPoint _moveDestinationPoint;
 
@@ -30,6 +43,8 @@ public class EnemyAI : MonoBehaviour, IDamage, ISlow
     public EnemyAnimatorControlle AnimatorControlle => _animatorControlle;
 
     public SightController SightController => _sightController;
+
+    public EnemyHPController HPController => _enemyHPController;
 
     public bool IsAlive => _isAlive;    
 
@@ -48,11 +63,11 @@ public class EnemyAI : MonoBehaviour, IDamage, ISlow
 
         _sightController = GetComponent<SightController>();
 
-        _enemyStateMachine.Init(this);
+        _enemyStateMachine.Init(this, _startState);
 
         _enemyHPController.Init();
 
-        //ƒXƒ[ˆ—‚Ì“o˜^
+        //ã‚¹ãƒ­ãƒ¼å‡¦ç†ã®ç™»éŒ²
         TimeManager timeManager = FindObjectOfType<TimeManager>();
         timeManager.SlowSystem.Add(this);
     }
@@ -60,7 +75,7 @@ public class EnemyAI : MonoBehaviour, IDamage, ISlow
 
     private void OnDestroy()
     {
-        //ƒXƒ[ˆ—‚Ì‰ğœ
+        //ã‚¹ãƒ­ãƒ¼å‡¦ç†ã®è§£é™¤
         TimeManager timeManager = FindObjectOfType<TimeManager>();
         if (timeManager != null)
             timeManager.SlowSystem.Remove(this);
@@ -80,59 +95,56 @@ public class EnemyAI : MonoBehaviour, IDamage, ISlow
     {
         if (!_isAlive) return;
 
-        //ƒqƒbƒgƒAƒjƒ[ƒVƒ‡ƒ“Ä¶
+        //ãƒ’ãƒƒãƒˆã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³å†ç”Ÿ
         _animatorControlle.OnChangeState((int)EnemyAnimatorControlle.StateType.GetHit);
-
-        AudioManager.Instance.SEPlayOneShot(SE.PlayerAttackHit);
 
         _isAlive = _enemyHPController.HPDown(damage);
 
-        //’Tõ’†‚¾‚Á‚½‚ç
+        //æ¢ç´¢ä¸­ã ã£ãŸã‚‰
         if(_enemyStateMachine.CurrentState == EnemyStateMachine.StateType.Search)
         {
-            //í“¬ó‘Ô‚ÉØ‚è‘Ö‚¦‚é
+            //æˆ¦é—˜çŠ¶æ…‹ã«åˆ‡ã‚Šæ›¿ãˆã‚‹
             _enemyStateMachine.OnChangeState((int)EnemyStateMachine.StateType.Battle);
         }
 
-        //€‚ñ‚Å‚¢‚½‚ç
         if (!_isAlive)
         {
-            //€‚ñ‚¾ƒAƒjƒ[ƒVƒ‡ƒ“Ä¶
-            _animatorControlle.OnChangeState((int)EnemyAnimatorControlle.StateType.Die);
-            GameManager.Instance.EnemyKill();
+            //æ­»ã‚“ã ã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³å†ç”Ÿ
+            _enemyStateMachine.OnChangeState((int)EnemyStateMachine.StateType.Death);
+            GameManager.Instance.GameEnd(GameState.GameClear);
         }
+
+        if (!_isDowned && _enemyHPController.CurrentHPValue <= _downHp)
+        {
+            _isDowned = true;
+            _enemyStateMachine.OnChangeState((int)EnemyStateMachine.StateType.Down);
+        }
+
     }
 
-    /// <summary>Enemy‚ª¶‚«•Ô‚Á‚½‚æ‚¤‚Èˆ—(ƒ`ƒ…[ƒgƒŠƒAƒ‹’†‰½‰ñ‚à“|‚³‚ê‚Ä‚¢‚¢‚æ‚¤‚É)</summary>
-    public void Resuscitation()
+    /// <summary>ãƒãƒ¥ãƒ¼ãƒˆãƒªã‚¢ãƒ«ç”¨</summary>
+    public void StateReset(EnemyStateMachine.StateType setState)
     {
         _enemyHPController.Init();
         _isAlive = true;
-        _animatorControlle.OnChangeState((int)EnemyAnimatorControlle.StateType.Idle);
+        _enemyStateMachine.OnChangeState((int)setState);
     }
 
     public void OnSlow(float slowSpeedRate)
     {
-        //ƒAƒjƒ[ƒVƒ‡ƒ“Ä¶‘¬“x•ÏX
+        //ã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³å†ç”Ÿé€Ÿåº¦å¤‰æ›´
         _animatorControlle.SetAnimSpeed(slowSpeedRate);
     }
 
     public void OffSlow()
     {
-        //ƒAƒjƒ[ƒVƒ‡ƒ“Ä¶‘¬“x‚ğ’Êí‚É–ß‚·
+        //ã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³å†ç”Ÿé€Ÿåº¦ã‚’é€šå¸¸ã«æˆ»ã™
         _animatorControlle.SetAnimSpeed(1);
     }
 
-    /// <summary>Animation‚ÌEvent‚ÅŒÄ‚Ño‚·(UŒ‚‘O‚Ì‰‰o)</summary>
-    public void AttackSignPlay()
+    public void AudioEvent()
     {
-        _enemyAttackControlle.AttackSign();
-    }
-
-    /// <summary>Animation‚ÌEvent‚ÅŒÄ‚Ño‚·(UŒ‚‚Ì‰‰o)</summary>
-    public void Attack()
-    {
-        _enemyAttackControlle.Attack();
+        AudioManager.Instance.SEPlayOneShot(_soundSE);
     }
 
 }
