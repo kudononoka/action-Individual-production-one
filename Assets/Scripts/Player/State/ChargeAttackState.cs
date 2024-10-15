@@ -18,10 +18,10 @@ public class ChargeAttackState : PlayerStateBase
     [SerializeField] float _chargeParticleStartTime;
 
     [Header("溜め中のEffect")]
-    [SerializeField] ParticleSystem _chargeParticle;
+    [SerializeField] GameObject _chargeParticle;
 
     [Header("溜め終わった時のEffect")]
-    [SerializeField] ParticleSystem _chargeEndParticle;
+    [SerializeField] GameObject _chargeEndParticle;
 
     float _timer = 0f;
 
@@ -55,6 +55,8 @@ public class ChargeAttackState : PlayerStateBase
         _playerTra = playerController.PlayerTra;
         _cameraController = playerController.CameraController;
         _mcTra = Camera.main.transform;
+        ParticleActive(_chargeParticle, false);
+        ParticleActive(_chargeEndParticle, false);
     }
     public override void OnEnter()
     {
@@ -119,9 +121,9 @@ public class ChargeAttackState : PlayerStateBase
                 //チャージできたら
                 if (_timer >= _chargeTime)
                 {
-                    //チャージ完了のパーティクル再生
-                    ParticleStop(_chargeParticle);
-                    ParticlePlay(_chargeEndParticle);
+                    //チャージ終了用パーティクル表示
+                    ParticleActive(_chargeParticle, false);
+                    ParticleActive(_chargeEndParticle, true);
                     //音再生
                     AudioManager.Instance.SEPlay(SE.PlayerChargeEnd);
                 }
@@ -129,8 +131,8 @@ public class ChargeAttackState : PlayerStateBase
                 //チャージ開始
                 else if (_timer >= _chargeParticleStartTime)
                 {
-                    //パーティクル再生
-                    ParticlePlay(_chargeParticle);
+                    //パーティクル表示
+                    ParticleActive(_chargeParticle, true);
                     //音再生
                     AudioManager.Instance.SEPlay(SE.PlayerCharge);
                 }
@@ -153,8 +155,8 @@ public class ChargeAttackState : PlayerStateBase
                 //チャージが完了していたら
                 if (_timer >= _chargeTime)
                 {
-                    //パーティクル
-                    ParticleStop(_chargeEndParticle);
+                    //パーティクル非表示
+                    ParticleActive(_chargeEndParticle, false);
                     //音
                     AudioManager.Instance.SEStop();
                     //アニメーション
@@ -168,8 +170,8 @@ public class ChargeAttackState : PlayerStateBase
                 //チャージが完了していなかったら
                 else
                 {
-                    //パーティクル停止
-                    ParticleStop(_chargeParticle);
+                    //パーティクル非表示
+                    ParticleActive(_chargeParticle, false);
                     //音停止
                     AudioManager.Instance.SEStop();
                     //通常攻撃へ遷移
@@ -181,18 +183,11 @@ public class ChargeAttackState : PlayerStateBase
 
     }
 
-    public void ParticlePlay(ParticleSystem particles)
+    public void ParticleActive(GameObject particles, bool isActive)
     {
-        if(particles.isPlaying)
-            return;
-
-        particles.Play();
+        particles.SetActive(isActive);
     }
 
-    public void ParticleStop(ParticleSystem particles)
-    {
-        particles.Stop();
-    }
     public override void OnEnd()
     {
         //初期化
