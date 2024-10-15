@@ -463,8 +463,8 @@ MonoBehaviour:
   - _key: 5
     _value:
       _audioClip: {fileID: 8300000, guid: 47d81872ff303404f827101e47063603, type: 3}
-      _volum: 0.25
-      _pitch: 0.829
+      _volum: 0.7
+      _pitch: 1
   - _key: 6
     _value:
       _audioClip: {fileID: 8300000, guid: 004eb3ff4fd8d1a428fabec5c7d2e0b2, type: 3}
@@ -477,7 +477,7 @@ MonoBehaviour:
       _pitch: 1
   - _key: 8
     _value:
-      _audioClip: {fileID: 8300000, guid: dcc116c486a7d0447a00605415d3f2f7, type: 3}
+      _audioClip: {fileID: 8300000, guid: 82b5d1d15278f4e4194d21517fac9cf9, type: 3}
       _volum: 0.25
       _pitch: 1
   - _key: 9
@@ -490,24 +490,34 @@ MonoBehaviour:
       _audioClip: {fileID: 8300000, guid: bb3f38d9bc999264982847bd68306054, type: 3}
       _volum: 0.25
       _pitch: 0.8
+  - _key: 11
+    _value:
+      _audioClip: {fileID: 8300000, guid: c256100b32331854a9acb352ec59ab15, type: 3}
+      _volum: 0.25
+      _pitch: 0.8
   _bgmProperties:
   - _key: 0
     _value:
-      _audioClip: {fileID: 8300000, guid: aee83395850824c4b8a7efb12a337391, type: 3}
+      _audioClip: {fileID: 8300000, guid: ea8d08b9d36e9e7429733b3826f9d1ca, type: 3}
       _volum: 1
       _pitch: 1
   - _key: 1
     _value:
-      _audioClip: {fileID: 8300000, guid: 31b413eaadce1464c9b75f9f479c96da, type: 3}
-      _volum: 0.204
+      _audioClip: {fileID: 8300000, guid: 2a8cc91e2ac182543ad08ed52c3ec0cd, type: 3}
+      _volum: 0.15
       _pitch: 1
   - _key: 2
     _value:
-      _audioClip: {fileID: 8300000, guid: f68f6cf875e159841b03d4703cec014e, type: 3}
+      _audioClip: {fileID: 8300000, guid: c5d0e0a745f03ce4e80080b39744ad2b, type: 3}
       _volum: 1
       _pitch: 1
   - _key: 3
     _value:
-      _audioClip: {fileID: 8300000, guid: f87b387b0d4655c478d220f42418bd41, type: 3}
+      _audioClip: {fileID: 8300000, guid: c5d0e0a745f03ce4e80080b39744ad2b, type: 3}
       _volum: 1
+      _pitch: 1
+  - _key: 4
+    _value:
+      _audioClip: {fileID: 8300000, guid: ae56dca36af12d341ab5054e898555ac, type: 3}
+      _volum: 0.1
       _pitch: 1

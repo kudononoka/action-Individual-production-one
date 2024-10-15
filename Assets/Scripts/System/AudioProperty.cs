@@ -46,7 +46,10 @@ public enum SE
     /// <summary>Playerの攻撃溜め中音</summary>
     PlayerCharge,
     /// <summary>Playerのチャージ終わった後の音</summary>
-    PlayerChargeEnd
+    PlayerChargeEnd,
+
+    /// <summary>Enemy足音</summary>
+    EnemyFootsteps,
 }
 
 /// <summary>どの状態時にBGMを再生するか管理するenum</summary>
@@ -59,5 +62,7 @@ public enum BGM
     /// <summary>ゲームオーバー</summary>
     GameOver,
     /// <summary>ゲームクリア</summary>
-    GameClear
+    GameClear,
+    /// <summary>チュートリアル</summary>
+    Tutorial,
 }
