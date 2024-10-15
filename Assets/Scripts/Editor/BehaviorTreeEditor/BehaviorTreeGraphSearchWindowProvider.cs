@@ -46,6 +46,7 @@ public class BehaviorTreeGraphSearchWindowProvider : ScriptableObject, ISearchWi
             { nameof(Probability), typeof(Probability) },
             { nameof(TargetRotateAroundNode), typeof(TargetRotateAroundNode) },
             { nameof(HpJudge), typeof(HpJudge) },
+            { nameof(SoundPlay), typeof(SoundPlay) },
 
         };
     }
@@ -76,6 +77,7 @@ public class BehaviorTreeGraphSearchWindowProvider : ScriptableObject, ISearchWi
         entries.Add(new SearchTreeEntry(new GUIContent(nameof(Probability))) { level = 1, userData = typeof(Probability).FullName});
         entries.Add(new SearchTreeEntry(new GUIContent(nameof(TargetRotateAroundNode))) { level = 1, userData = typeof(TargetRotateAroundNode).FullName});
         entries.Add(new SearchTreeEntry(new GUIContent(nameof(HpJudge))) { level = 1, userData = typeof(HpJudge).FullName});
+        entries.Add(new SearchTreeEntry(new GUIContent(nameof(SoundPlay))) { level = 1, userData = typeof(SoundPlay).FullName});
 
         return entries;
     }
