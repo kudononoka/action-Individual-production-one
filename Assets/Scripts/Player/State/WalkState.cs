@@ -34,8 +34,6 @@ public class WalkState : PlayerStateBase
     /// <summary>前フレームのロックオン状態</summary>
     bool _pastIsLockon = false;
 
-    PlayerHPSTController _playerHPSTController;
-
     PlayerParameter _playerParameter;
 
     MakeASound _makeASound;
@@ -60,7 +58,6 @@ public class WalkState : PlayerStateBase
         _anim = playerController.PlayerAnim;
         _playerTra = playerController.PlayerTra;
         _cameraController = playerController.CameraController;
-        _playerHPSTController = playerController.PlayerHPSTController;
         _playerParameter = playerController.Parameter;
         _mcTra = Camera.main.transform;
     }
@@ -110,10 +107,10 @@ public class WalkState : PlayerStateBase
         _anim.SetFloat("move", moveDir.magnitude);
 
         //遷移先
-        if (_inputAction.IsAttack && _playerHPSTController.CurrntStValue >= _playerParameter.AttackWeakSTCost)
+        if (_inputAction.IsAttack)
             _playerStateMachine.OnChangeState((int)PlayerStateMachine.StateType.ChargeAttack);
 
-        if(_inputAction.IsEvade && _playerHPSTController.CurrntStValue >= _playerParameter.EvadeSTCost)
+        if(_inputAction.IsEvade)
             _playerStateMachine.OnChangeState((int)PlayerStateMachine.StateType.Evade);
 
         if (moveDir.magnitude <= 0)     //突っ立ってる状態

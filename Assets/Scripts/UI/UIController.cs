@@ -1,4 +1,4 @@
-using DG.Tweening;
+ï»¿using DG.Tweening;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -6,148 +6,51 @@ public class UIController : MonoBehaviour
 {
     [Header("UI")]
 
-    [SerializeField, Tooltip("PlayerHPƒo[")]
+    [SerializeField, Tooltip("PlayerHPãƒãƒ¼")]
     Slider _playerHpVer;
 
-    [SerializeField, Tooltip("PlayerSTƒo[")] 
-    Slider _playerStVer;
-
-    [SerializeField, Tooltip("EnemyHPƒo[")]
+    [SerializeField, Tooltip("EnemyHPãƒãƒ¼")]
     Slider _enemyHpVer;
 
     [SerializeField, Tooltip("PlayerHPText")] 
     Text _playerHpValueText;
 
-    [SerializeField, Tooltip("Enemy‚Ì”Text")]
-    Text _enemyCountText;
-
-    [Header("ƒpƒ‰ƒ[ƒ^[İ’è")]
-    [SerializeField, Tooltip("ƒo[•Ï‰»ŠÔ")] 
+    [Header("ãƒ‘ãƒ©ãƒ¡ãƒ¼ã‚¿ãƒ¼è¨­å®š")]
+    [SerializeField, Tooltip("ãƒãƒ¼å¤‰åŒ–æ™‚é–“")] 
     float _changeTime = 0.3f;
 
-    /// <summary>HPÅ‘å’l</summary>
+    /// <summary>HPæœ€å¤§å€¤</summary>
     int _playerHpMax;
-    /// <summary>Œ»İ‚ÌHP</summary>
-    int _playerHpNow;
-    /// <summary>STÅ‘å’l</summary>
-    float _playerStMax;
-    /// <summary>Œ»İ‚ÌST</summary>
-    float _playerStNow;
 
-    /// <summary>Enemy‚ÌŒ»İ‚ÌHp</summary>
-    int _enemyHpNow;
-    /// <summary>Enemy‚ÌHPÅ‘å’l</summary>
-    int _enemyHpMax;
-
-    int _enemyMaxCount;
-    int _enemyKillCount;
-
-    /// <summary>HP‚ğMax‚Éİ’è‚·‚é</summary>
-    /// <param name="value">HPÅ‘å’l</param>
+    /// <summary>HPã‚’Maxã«è¨­å®šã™ã‚‹</summary>
+    /// <param name="value">HPæœ€å¤§å€¤</param>
     public void PlayerSetUpMaxHP(int value)
     {
-        _playerHpMax = value;
-        _playerHpNow = _playerHpMax;
-        _playerHpVer.maxValue = _playerHpMax;
-        _playerHpVer.value = _playerHpMax;
-        _playerHpValueText.text = $"{_playerHpNow} / {_playerHpMax}";
+        _playerHpVer.maxValue = value;
+        _playerHpVer.value = value;
+        _playerHpValueText.text = $"{_playerHpVer.value} / {_playerHpVer.maxValue}";
     }
 
-    /// <summary>HP‚ğMax‚Éİ’è‚·‚é</summary>
-    /// <param name="value">HPÅ‘å’l</param>
+    /// <summary>HPã‚’Maxã«è¨­å®šã™ã‚‹</summary>
+    /// <param name="value">HPæœ€å¤§å€¤</param>
     public void EnemySetUpMaxHP(int value)
     {
-        _enemyHpMax = value;
-        _enemyHpNow = _enemyHpMax;
-        _enemyHpVer.maxValue = _enemyHpMax;
-        _enemyHpVer.value = _enemyHpMax;
+        _enemyHpVer.maxValue = value;
+        _enemyHpVer.value = value;
     }
 
-    /// <summary>ST‚ğMax‚Éİ’è‚·‚é</summary>
-    /// <param name="value">STÅ‘å’l</param>
-    public void SetUpMaxST(float value)
-    {
-        _playerStMax = value;
-        _playerStNow = _playerStMax;
-        _playerStVer.maxValue = _playerStMax;
-        _playerStVer.value = _playerStMax;
-    }
-
-    public void SetUpEnemyCount(int count)
-    {
-        _enemyKillCount = 0;
-        _enemyMaxCount = count;
-        if (_enemyCountText == null)
-        {
-            _enemyCountText = GameObject.Find("EnemyCount").GetComponent<Text>();
-        }
-        _enemyCountText.text = $"{_enemyKillCount} / {_enemyMaxCount}";
-    }
-
-    /// <summary>Œ»İ‚ÌHP’l‚ğVer‚Ì’l‚Éİ’è</summary>
-    /// <param name="currentValue">Œ»İ‚ÌHP’l</param>
+    /// <summary>ç¾åœ¨ã®HPå€¤ã‚’Verã®å€¤ã«è¨­å®š</summary>
+    /// <param name="currentValue">ç¾åœ¨ã®HPå€¤</param>
     public void PlayerSetCurrentHP(int currentValue)
     {
-        PlayerChangingVerValueHP(currentValue);
+        _playerHpValueText.text = $"{currentValue} / {_playerHpVer.maxValue}";
+        _playerHpVer.DOValue(currentValue, _changeTime);
     }
 
-    /// <summary>Œ»İ‚ÌHP’l‚ğVer‚Ì’l‚Éİ’è</summary>
-    /// <param name="currentValue">Œ»İ‚ÌHP’l</param>
+    /// <summary>ç¾åœ¨ã®HPå€¤ã‚’Verã®å€¤ã«è¨­å®š</summary>
+    /// <param name="currentValue">ç¾åœ¨ã®HPå€¤</param>
     public void EnemySetCurrentHP(int currentValue)
     {
-        EnemyChangingVerValueHP(currentValue);
-    }
-
-    /// <summary>Œ»İ‚ÌST’l‚ğVer‚Ì’l‚Éİ’è</summary>
-    /// <param name="newHpValue">Œ»İ‚ÌST’l</param>
-    public void SetCurrentST(float currentValue)
-    {
-        _playerStNow = currentValue;
-        _playerStVer.value = _playerStNow;
-        //ChangingVerValueSP(currentValue);
-    }
-
-    public void SetCurrentEnemyKillCount(int count)
-    {
-        _enemyKillCount = count;
-        if(_enemyCountText != null)
-        _enemyCountText.text = $"{_enemyKillCount} / {_enemyMaxCount}";
-    }
-
-    /// <summary>DoTween‚ÅVer‚Ì’l‚ğŠŠ‚ç‚©‚É•Ï‰»‚³‚¹‚é</summary>
-    /// <param name="value">İ’è‚µ‚½‚¢HP’l</param>
-    public void PlayerChangingVerValueHP(int value)
-    {
-        DOTween.To(() => _playerHpNow,
-                    x =>
-                    {
-                        _playerHpNow = x;
-                        _playerHpVer.value = _playerHpNow;
-                        _playerHpValueText.text = $"{$"{_playerHpNow} / {_playerHpMax}"}";
-                    }, value, _changeTime);
-    }
-
-    /// <summary>DoTween‚ÅVer‚Ì’l‚ğŠŠ‚ç‚©‚É•Ï‰»‚³‚¹‚é</summary>
-    /// <param name="value">İ’è‚µ‚½‚¢HP’l</param>
-    public void EnemyChangingVerValueHP(int value)
-    {
-        DOTween.To(() => _enemyHpNow,
-                    x =>
-                    {
-                        _enemyHpNow = x;
-                        _enemyHpVer.value = _enemyHpNow;
-                    }, value, _changeTime);
-    }
-
-    /// <summary>DoTween‚ÅVer‚Ì’l‚ğŠŠ‚ç‚©‚É•Ï‰»‚³‚¹‚é</summary>
-    /// <param name="value">İ’è‚µ‚½‚¢ST’l</param>
-    public void ChangingVerValueSP(float value)
-    {
-        DOTween.To(() => _playerStNow,
-                    x =>
-                    {
-                        _playerStNow = x;
-                        _playerStVer.value = _playerStNow;
-                    }, value, _changeTime);
+        _enemyHpVer.DOValue(currentValue, _changeTime);
     }
 }

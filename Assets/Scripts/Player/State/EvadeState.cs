@@ -38,7 +38,7 @@ public class EvadeState : PlayerStateBase
 
     CharacterController _characterController;
 
-    PlayerHPSTController _playerHPSTController;
+    PlayerHPController _playerHPSTController;
 
     PlayerParameter _playerParameter;
 

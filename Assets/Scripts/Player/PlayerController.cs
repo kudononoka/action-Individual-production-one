@@ -28,7 +28,7 @@ public class PlayerController : MonoBehaviour, IDamage, ISlow
     CapsuleCollider _capsuleCollider;
 
     [SerializeField]
-    PlayerHPSTController _playerHPSTController = new();
+    PlayerHPController _playerHPSTController = new();
 
     [SerializeField]
     AttackEffectPlay _attackEffectPlay = new();
@@ -41,8 +41,8 @@ public class PlayerController : MonoBehaviour, IDamage, ISlow
 
     Transform _playerTra;
 
-    bool _isAction = false;
-    public bool IsAction { get => _isAction; set => _isAction = value; }
+    bool _isAlive = true;
+
     public Animator PlayerAnim => _playerModelAnim;
 
     public PlayerInputAction InputAction => _inputAction;
@@ -53,7 +53,7 @@ public class PlayerController : MonoBehaviour, IDamage, ISlow
 
     public CameraController CameraController => _cameraController;
 
-    public PlayerHPSTController PlayerHPSTController => _playerHPSTController;
+    public PlayerHPController PlayerHPSTController => _playerHPSTController;
 
     public Weapon PlayerWeapon => _playerWeapon;
 
@@ -74,9 +74,11 @@ public class PlayerController : MonoBehaviour, IDamage, ISlow
 
         _stateMachine.Init(this);
         _cameraController.Init(_inputAction);
-        _playerHPSTController.Init(_parameter.HPMax, _parameter.STMax, _parameter.StRecoverySpeed);
+        _playerHPSTController.Init(_parameter.HPMax);
 
         _playerWeapon.DamageColliderEnabledSet(false);
+
+        _isAlive = true;
 
     }
 
@@ -89,21 +91,23 @@ public class PlayerController : MonoBehaviour, IDamage, ISlow
 
     void Update()
     {
-        _stateMachine.OnUpdate();
-        _cameraController.OnUpdate();
-
-        //歩いている、立っている状態だったら
-        if(_stateMachine.CurrentState == PlayerStateMachine.StateType.Idle
-            || _stateMachine.CurrentState == PlayerStateMachine.StateType.Walk)
-            _playerHPSTController.RecoveryST();　　　//ST回復
+        if(_isAlive)
+        {
+            _stateMachine.OnUpdate();
+            _cameraController.OnUpdate();
+        }
     }
 
     public void Damage(int damage)
     {
+        if(!_isAlive) return;
+
         AudioManager.Instance.SEPlayOneShot(SE.EnemyAttackHit);
-        if(!_playerHPSTController.HPDown(damage))
+        _isAlive = _playerHPSTController.HPDown(damage);
+        if(!_isAlive)
         {
-            GameManager.Instance.ChangeScene(SceneState.GameOver);
+            _playerModelAnim.SetBool("IsDeath", true);
+            GameManager.Instance.GameEnd(GameState.GameOver);
         }
     }
 

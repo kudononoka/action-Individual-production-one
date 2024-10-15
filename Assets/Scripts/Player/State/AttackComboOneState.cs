@@ -36,8 +36,6 @@ public class AttackComboOneState : PlayerStateBase
 
     Transform _playerTra;
 
-    PlayerHPSTController _playerHPSTController;
-
     PlayerParameter _playerParameter;
 
     Weapon _weapon;
@@ -58,7 +56,6 @@ public class AttackComboOneState : PlayerStateBase
         _playerAnim = playerController.PlayerAnim;
         _playerTra = playerController.PlayerTra;
         _inputAction = playerController.InputAction;
-        _playerHPSTController = playerController.PlayerHPSTController;
         _playerParameter = playerController.Parameter;
         _weapon = playerController.PlayerWeapon;
         _characterController = playerController.CharacterController;
@@ -67,8 +64,6 @@ public class AttackComboOneState : PlayerStateBase
     }
     public override void OnEnter()
     {
-        _playerHPSTController.STDown(_playerParameter.AttackWeakSTCost);
-
         //初期化
         _coolTimer = _coolTime;
 

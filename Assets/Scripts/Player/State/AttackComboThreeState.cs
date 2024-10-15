@@ -43,8 +43,6 @@ public class AttackComboThreeState : PlayerStateBase
 
     Transform _playerTra;
 
-    PlayerHPSTController _playerHPSTController;
-
     PlayerParameter _playerParameter;
 
     Weapon _weapon;
@@ -65,7 +63,6 @@ public class AttackComboThreeState : PlayerStateBase
         _anim = playerController.PlayerAnim;
         _playerTra = playerController.PlayerTra;
         _inputAction = playerController.InputAction;
-        _playerHPSTController = playerController.PlayerHPSTController;
         _playerParameter = playerController.Parameter;
         _weapon = playerController.PlayerWeapon;
         _characterController = playerController.CharacterController;
@@ -74,7 +71,6 @@ public class AttackComboThreeState : PlayerStateBase
     }
     public override void OnEnter()
     {
-        _playerHPSTController.STDown(_playerParameter.AttackStrongSTCost);
 
         _coolTimer = _coolTime;
 

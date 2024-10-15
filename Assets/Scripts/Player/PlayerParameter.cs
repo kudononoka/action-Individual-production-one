@@ -9,12 +9,6 @@ public class PlayerParameter
     [Header("HP最大値")]
     [SerializeField] int _hpMax;
 
-    [Header("ST最大値")]
-    [SerializeField] float _stMax;
-
-    [Header("ST回復速度")]
-    [SerializeField] float _stRecoverySpeed;
-
     [Header("歩行速度")]
     [SerializeField] float _walkSpeed;
 
@@ -33,18 +27,6 @@ public class PlayerParameter
     [Header("方向転換速度")]
     [SerializeField] float _rotateSpeed;
 
-    [Header("弱攻撃ST消費値")]
-    [SerializeField] float _attackWeakSTCost;
-
-    [Header("強攻撃ST消費値")]
-    [SerializeField] float _attackStrongSTCost;
-
-    [Header("回避ST消費値")]
-    [SerializeField] float _evadeSTCost;
-
-    [Header("ガード時敵の攻撃がHitした時のST消費値")]
-    [SerializeField] float _guardHitSTCost;
-
     /// <summary>歩行速度</summary>
     public float WalkSpeed => _walkSpeed;
 
@@ -57,9 +39,6 @@ public class PlayerParameter
     /// <summary>HP最大値</summary>
     public int HPMax => _hpMax;
 
-    /// <summary>ST最大値</summary>
-    public float STMax => _stMax;
-
     /// <summary>弱攻撃力</summary>
     public int AttackWeakPower => _attackWeakPower;
 
@@ -68,20 +47,5 @@ public class PlayerParameter
 
     /// <summary>溜め攻撃力</summary>
     public int AttackChargePower => _attackChargePower;
-
-    /// <summary>弱攻撃にかかるST値</summary>
-    public float AttackWeakSTCost => _attackWeakSTCost;
-
-    /// <summary>強攻撃にかかるST値</summary>
-    public float AttackStrongSTCost => _attackStrongSTCost;
-
-    /// <summary>回避にかかるST値</summary>
-    public float EvadeSTCost => _evadeSTCost;
-
-    /// <summary>カード時敵の攻撃が当たった時にかかるST値</summary>
-    public float GuardHitSTCost => _guardHitSTCost;
-
-    /// <summary>STの回復スピード</summary>
-    public float StRecoverySpeed => _stRecoverySpeed;
 
 }

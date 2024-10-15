@@ -1,13 +1,11 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+ï»¿using UnityEngine;
 using UniRx;
 
 public class UIPresenter : MonoBehaviour
 {
-    [Header("ƒXƒNƒŠƒvƒg")]
+    [Header("ã‚¹ã‚¯ãƒªãƒ—ãƒˆ")]
 
-    [SerializeField, Tooltip("Player‚ÉŠÖ‚·‚éUI‚Ì•\Ž¦‚ðŠÇ—")] 
+    [SerializeField, Tooltip("Playerã«é–¢ã™ã‚‹UIã®è¡¨ç¤ºã‚’ç®¡ç†")] 
     UIController _uiController;
 
     [SerializeField, Tooltip("Player")] 
@@ -18,24 +16,15 @@ public class UIPresenter : MonoBehaviour
 
     void Start()
     {
-        //GameManager
-        GameManager gameManager = GameManager.Instance;
-        //“G”
-        gameManager.EnemyCount.Subscribe(value => _uiController.SetUpEnemyCount(value));
-        gameManager.CurrentKillCount.Skip(1).Subscribe(value => _uiController.SetCurrentEnemyKillCount(value));
-
         //Enemy
         EnemyHPController enemyHPController = _enemyAI.HPController;
         enemyHPController.MaxHpChanged.Subscribe(value => _uiController.EnemySetUpMaxHP(value));
         enemyHPController.CurrentHpChanged.Skip(1).Subscribe(value => _uiController.EnemySetCurrentHP(value));
 
         //Player
-        PlayerHPSTController playerHpStController = _playerConroller.PlayerHPSTController;
+        PlayerHPController playerHpStController = _playerConroller.PlayerHPSTController;
         //HP
         playerHpStController.MaxHpChanged.Subscribe(value => _uiController.PlayerSetUpMaxHP(value));
         playerHpStController.CurrentHpChanged.Skip(1).Subscribe(value => _uiController.PlayerSetCurrentHP(value));
-        //ST
-        playerHpStController.MaxStChanged.Subscribe(value => _uiController.SetUpMaxST(value));
-        playerHpStController.CurrentStChanged.Skip(1).Subscribe(value => _uiController.SetCurrentST(value));
     }
 }

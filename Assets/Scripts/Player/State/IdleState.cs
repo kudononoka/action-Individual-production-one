@@ -6,15 +6,12 @@ public class IdleState : PlayerStateBase
 {
     PlayerInputAction _inputAction;
 
-    PlayerHPSTController _playerHPSTController;
-
     PlayerParameter _playerParameter;
 
     public override void Init()
     {
         PlayerController playerController = _playerStateMachine.PlayerController;
         _inputAction = playerController.InputAction;
-        _playerHPSTController = playerController.PlayerHPSTController;
         _playerParameter = playerController.Parameter;
     }
     public override void OnUpdate()
@@ -25,12 +22,12 @@ public class IdleState : PlayerStateBase
             _playerStateMachine.OnChangeState((int)PlayerStateMachine.StateType.Walk);
         }
 
-        if(_inputAction.IsAttack && _playerHPSTController.CurrntStValue >= _playerParameter.AttackWeakSTCost)
+        if(_inputAction.IsAttack)
         {
             _playerStateMachine.OnChangeState((int)PlayerStateMachine.StateType.ChargeAttack);
         }
 
-        if(_inputAction.IsEvade && _playerHPSTController.CurrntStValue >= _playerParameter.EvadeSTCost)
+        if(_inputAction.IsEvade)
         {
             _playerStateMachine.OnChangeState((int)PlayerStateMachine.StateType.Evade);
         }
